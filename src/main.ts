@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import 'vant/es/toast/style'
 
 const app = createApp(App)
 

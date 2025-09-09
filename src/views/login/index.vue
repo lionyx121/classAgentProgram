@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref, onUnmounted } from 'vue'
 import type { FormInstance } from 'vant'
-import { onSendEmailCode } from '@/api/login'
-
-interface RuleForm {
-    username: string
-    email: string
-    sms: string
-}
+import { onSendEmailCode, onVerifyCode } from '@/api/login'
+import { showSuccessToast, showFailToast } from 'vant';
+import type { codeRes, RuleForm, UserInfoKey } from '@/types/login'
+import { useUserInfoStore } from '@/stores/userinfo'
+import router from '@/router'
 
 const ruleForm = ref<RuleForm>({
     username: '',
@@ -28,7 +26,7 @@ const rules = {
             message: '邮箱格式错误'
         }
     ],
-    code: [
+    sms: [
         { required: true, message: '请输入验证码' },
         { pattern: /^\d{6}$/, message: '验证码格式错误' }
     ]
@@ -41,41 +39,62 @@ const isSendSms = ref(false)
 const contentTime = ref(60)
 
 // 计时器
-let timer: any = null
+let timer: any[] = []
 
 // 发送验证码
 const sendSms = () => {
     ruleFormRef.value?.validate(['username', 'email']).then(async () => {
         isSendSms.value = true
-        timer = setInterval(() => {
+        let time = setInterval(() => {
             contentTime.value--
             if (contentTime.value <= 0) {
-                clearInterval(timer)
+                clearInterval(time)
                 isSendSms.value = false
                 contentTime.value = 60
             }
         }, 1000)
-        console.log('zhou', ruleForm.value)
-        const res = await onSendEmailCode(ruleForm.value)
-        console.log(res)
+        timer.push({key: 'setInterval', value: time})
+        const res: codeRes = await onSendEmailCode(ruleForm.value)
+        res.code === 0 ? showSuccessToast(res.msg) : showFailToast(res.msg)
     }).catch((err) => {
         console.log('校验不通过', err)
     })
 }
 
+const storeList = ['username', 'name', 'email', 'userid']
+const userStroe = useUserInfoStore()
+
 // 登录
 const onLogin = () => {
     ruleFormRef.value?.validate().then(async () => {
         console.log('校验通过')
+        const res: any = await onVerifyCode(ruleForm.value)
+        res.code === 0 ? showSuccessToast(res.msg) : showFailToast(res.msg)
+        if (res.code === 0) {
+            storeList.forEach(item =>{
+                userStroe.updataUserInfo(item as UserInfoKey, res[item])
+            })
+            // 完成将信息存储到本地后跳转到首页'/'
+            let time = setTimeout(() =>{
+                router.replace('/') 
+            }, 1000)
+            timer.push({key: 'setTimeout', value: time})
+        }
     }).catch(() => {
         console.log('校验不通过')
     })
 }
 
+// 清理计时器
 onUnmounted(() => {
-    if (timer) {
-        clearInterval(timer)
-        timer = null
+    while(timer.length > 0){
+        let time = timer.shift()
+        if(time.key === 'setInterval'){
+            clearInterval(time.value)
+        }
+        if(time.key === 'setTimeout'){
+            clearTimeout(time.value)
+        }
     }
 })
 
@@ -96,7 +115,7 @@ onUnmounted(() => {
                     :rules="rules.username" colon />
                 <van-field v-model="ruleForm.email" name="email" label="邮箱" placeholder="请输入邮箱" :rules="rules.email"
                     colon />
-                <van-field v-model="ruleForm.sms" name="sms" center clearable placeholder="请输入邮箱验证码" :rules="rules.code"
+                <van-field v-model="ruleForm.sms" name="sms" center clearable placeholder="请输入邮箱验证码" :rules="rules.sms"
                     maxlength="6">
                     <template #button>
                         <van-button size="small" type="primary" @click="sendSms" :disabled="isSendSms">
