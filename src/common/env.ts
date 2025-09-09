@@ -1,0 +1,1 @@
+export const AGENTSERVERURL = 'http://localhost:5000/'
