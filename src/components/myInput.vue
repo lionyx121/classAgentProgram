@@ -1,7 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { getChatClientId } from '@/api/chat'
+import { isLogin } from '@/common/js/isLogin'
+import { useUserInfoStore } from '@/stores/userInfo'
+import { showFailToast } from 'vant';
+import { useSSE } from '@/common/js/useSSE';
+import { AGENTSERVERURL } from '@/common/env'
+import MarkdownIt from 'markdown-it'
+import { useChatStore } from '@/stores/chat';
+import type { chatKey, ChatItem } from '@/types/chat'
 
-const inputval = ref<string>('')
+const chatStore = useChatStore()
+
+const inputval = ref<string>('') //输入框里面的内容
 
 // 输入框自适应高度
 const onInput = (e: Event) => {
@@ -9,50 +20,115 @@ const onInput = (e: Event) => {
     target.style.height = 'auto' // 先重置
     target.style.height = `${target.scrollHeight}px` // 再撑开
 }
+
+const userStroe = useUserInfoStore()
+
+const { start, stop, messages, isOutputing } = useSSE()
+
+// 发送消息
+const sendMessage = async () => {
+    // 如果输入框内没有内容直接返回
+    if (!inputval.value) return
+    // 判断是否登录
+    if (isLogin()) {
+        try {
+            // 拼接用户的输入信息 将其传入仓库之中
+            chatStore.addHistory({
+                role: 'user',
+                content: inputval.value,
+                createTime: Date.now()
+            } as ChatItem)
+            inputval.value = ''
+
+            // 获取clientid
+            const res: any = await getChatClientId({
+                userid: userStroe.userInfo.userid as string,
+                username: userStroe.userInfo.username as string,
+                questions: chatStore.questions
+            })
+            if (res.code === 1000) {
+                // 利用clientid去建立SSE连接 拼接url
+                const SSEUrl = AGENTSERVERURL + 'api/chat/connetSSE?clientid=' + res?.clientid
+                // 连接SSE
+                start(SSEUrl)
+            } else {
+                showFailToast(res.msg)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+// 停止发送消息
+const onStopSendMessage = () => {
+    stop()
+}
+
+// 监听messages的变化
+const md = new MarkdownIt();
+
+watch(messages, () => {
+    md.render(messages.value)
+})
+
 </script>
 
 <template>
-    <div class="input-box">
-        <!-- 左侧添加图片按钮 -->
-        <div class="btn add">
-            <van-icon name="plus" />
-        </div>
+    <div class="layout">
+        <div class="input-box">
+            <!-- 左侧添加图片按钮 -->
+            <div class="btn add">
+                <van-icon name="plus" />
+            </div>
 
-        <!-- 中间输入框 -->
-        <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput"></textarea>
+            <!-- 中间输入框 -->
+            <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput"></textarea>
 
-        <!-- 右侧发送按钮 -->
-        <div class="btn send" :class="{'active': inputval}">
-            <van-icon name="down" class="icon-down" :class="{'active': inputval}"/>
+            <!-- 右侧发送按钮 -->
+            <div class="btn send" :class="{ 'active': inputval }">
+                <van-icon name="stop-circle-o" v-if="isOutputing" @click="onStopSendMessage" />
+                <van-icon name="down" class="icon-down" @click="sendMessage" v-else />
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.input-box {
+.layout {
     position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 16px);
+    width: 100vw;
+    min-height: 88px;
+    max-height: 152px;
+    background-color: #202020;
+    left: 0;
+    bottom: 0;
+}
+
+.input-box {
+    margin: 0 auto;
+    margin-bottom: 32px;
+    width: calc(100% - 18px);
     min-height: 56px;
     border-radius: 28px;
-    background-color: #212121;
+    background-color: #303030;
 
     display: flex;
     align-items: center;
     /* 单行时让文字垂直居中 */
     padding: 0 56px;
     /* 给左右按钮留位置 */
+    z-index: 100;
+    border: 1px solid #454545;
 }
 
 .btn {
     position: absolute;
-    bottom: 10px;
+    bottom: 43px;
     width: 36px;
     height: 36px;
     border-radius: 36px;
-    background-color: #212121;
+    background-color: #454545;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -62,7 +138,7 @@ const onInput = (e: Event) => {
 
 .add {
     left: 19px;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .send {
@@ -82,6 +158,7 @@ const onInput = (e: Event) => {
 
 #text-area {
     flex: 1;
+    background-color: red;
     border: none;
     background: transparent;
     color: #fff;
@@ -92,7 +169,7 @@ const onInput = (e: Event) => {
 
     min-height: 36px;
     max-height: 120px;
-    padding: 12px 0;
+    padding: 12px 5px;
     /* 让单行时上下有空间，视觉上居中 */
 }
 </style>

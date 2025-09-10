@@ -12,7 +12,8 @@ export interface RuleForm {
 export enum UserInfoKey {
     username = 'username',
     email = 'email',
-    name = 'name'
+    name = 'name',
+    userid = 'userid'
 }
 
 export type UserInfo = {

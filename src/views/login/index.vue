@@ -4,7 +4,7 @@ import type { FormInstance } from 'vant'
 import { onSendEmailCode, onVerifyCode } from '@/api/login'
 import { showSuccessToast, showFailToast } from 'vant';
 import type { codeRes, RuleForm, UserInfoKey } from '@/types/login'
-import { useUserInfoStore } from '@/stores/userinfo'
+import { useUserInfoStore } from '@/stores/userInfo';
 import router from '@/router'
 
 const ruleForm = ref<RuleForm>({
@@ -53,7 +53,7 @@ const sendSms = () => {
                 contentTime.value = 60
             }
         }, 1000)
-        timer.push({key: 'setInterval', value: time})
+        timer.push({ key: 'setInterval', value: time })
         const res: codeRes = await onSendEmailCode(ruleForm.value)
         res.code === 0 ? showSuccessToast(res.msg) : showFailToast(res.msg)
     }).catch((err) => {
@@ -71,14 +71,14 @@ const onLogin = () => {
         const res: any = await onVerifyCode(ruleForm.value)
         res.code === 0 ? showSuccessToast(res.msg) : showFailToast(res.msg)
         if (res.code === 0) {
-            storeList.forEach(item =>{
+            storeList.forEach(item => {
                 userStroe.updataUserInfo(item as UserInfoKey, res[item])
             })
             // 完成将信息存储到本地后跳转到首页'/'
-            let time = setTimeout(() =>{
-                router.replace('/') 
+            let time = setTimeout(() => {
+                router.replace('/')
             }, 1000)
-            timer.push({key: 'setTimeout', value: time})
+            timer.push({ key: 'setTimeout', value: time })
         }
     }).catch(() => {
         console.log('校验不通过')
@@ -87,12 +87,12 @@ const onLogin = () => {
 
 // 清理计时器
 onUnmounted(() => {
-    while(timer.length > 0){
+    while (timer.length > 0) {
         let time = timer.shift()
-        if(time.key === 'setInterval'){
+        if (time.key === 'setInterval') {
             clearInterval(time.value)
         }
-        if(time.key === 'setTimeout'){
+        if (time.key === 'setTimeout') {
             clearTimeout(time.value)
         }
     }

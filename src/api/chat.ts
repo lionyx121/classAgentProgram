@@ -1,5 +1,16 @@
 import request from '@/utils/request'
 
-export const onSendDataToChat = (msg: string) =>{
-    return request.get(`/api/chat?q=${msg}`)
+interface ChatClientIdParams {
+    userid: string
+    username: string
+    questions: any[]
+}
+
+// 获取clientid
+export const getChatClientId = ({userid, username, questions}: ChatClientIdParams): Promise<string> =>{
+    return request.post('/api/chat/getClientId', {
+        userid,
+        username,
+        questions,
+    })
 }

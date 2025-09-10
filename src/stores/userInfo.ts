@@ -12,11 +12,9 @@ export const useUserInfoStore = defineStore('userInfo', () => {
   const userInfo = ref<UserInfo>(stored ? JSON.parse(stored) : {})
   const updataUserInfo = (key: UserInfoKey, value: any): void => {
     userInfo.value[key] = value
-    console.log('zhou', userInfo.value)
   }
 
   watch(userInfo, (val) => {
-    console.log('zhou')
     localStorage.setItem(KEY, JSON.stringify(val))
   }, {deep: true})
 

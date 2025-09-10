@@ -1,30 +1,58 @@
 // src/composables/useSSE.ts
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount, onMounted } from 'vue'
+import { useChatStore } from '@/stores/chat'
+import type { ChatItem } from '@/types/chat'
 
 export function useSSE(withCredentials = false) {
-  const messages = ref<string[]>([])
+  const messages = ref<string>('')
   const status = ref<'idle' | 'open' | 'error'>('idle')
+
+  // 判断当前是否处于输出中
+  const isOutputing = ref<boolean>(false)
+
+  const chatStore = useChatStore()
 
   let es: EventSource | null = null
 
-  const start = (url: string, ) => {
+  const stop = () => {
+    es?.close()
+    isOutputing.value = false
+    es = null
+    status.value = 'idle'
+  }
+
+  const start = (url: string,) => {
     if (es) return
+
+    // 配置大模型回答的数据
+    chatStore.addHistory({
+      role: 'assistant',
+      content: '',
+      createTime: Date.now()
+    } as ChatItem)
+
     es = new EventSource(url, { withCredentials })
 
     es.onopen = () => {
+      isOutputing.value = true
       console.log('连接成功')
     }
 
     es.onmessage = (e) => {
-      messages.value.push(`[message] ${e.data}`)
+      let text = JSON.parse(e.data).text
+      if (text) {
+        // 更新仓库中大模型的回答
+        chatStore.questions[chatStore.questions.length - 1].content += text
+      }
     }
 
     es.addEventListener('ping', (e) => {
-      console.log('ping', e.data)
+      console.log('ping', e.data.text)
     })
 
     es.addEventListener('done', () => {
-      messages.value.push('[done] 服务端结束推送')
+      console.log('SSE服务关闭')
+      isOutputing.value = false
       stop()
     })
 
@@ -33,13 +61,7 @@ export function useSSE(withCredentials = false) {
     }
   }
 
-  const stop = () => {
-    es?.close()
-    es = null
-    status.value = 'idle'
-  }
-
   onBeforeUnmount(stop)
 
-  return { start, stop, messages, status }
+  return { start, stop, messages, status, isOutputing }
 }
