@@ -1,33 +1,61 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { data } from './data' // 你本地的树数据
+
+// ECharts 核心引入
+import * as echarts from 'echarts/core'
+import { TooltipComponent } from 'echarts/components'
+import { TreeChart } from 'echarts/charts'
+import { CanvasRenderer } from 'echarts/renderers'
+
+echarts.use([TooltipComponent, TreeChart, CanvasRenderer])
+
+// Vue3 的 ref 绑定 DOM
+const chartRef = ref<HTMLDivElement | null>(null)
+let chart: echarts.ECharts | null = null
 
 onMounted(() => {
-    const box = document.querySelector('.box')
+  if (!chartRef.value) return
+
+  chart = echarts.init(chartRef.value)
+
+  const option: any = {
+    tooltip: {
+      trigger: 'item',
+      triggerOn: 'mousemove'
+    },
+    series: [
+      {
+        type: 'tree',
+        data,
+        layout: 'radial', // 径向树
+        center: ['50%', '50%'], // 居中
+        radius: '80%', // 大小
+        symbol: 'emptyCircle',
+        symbolSize: 7,
+        initialTreeDepth: 3,
+        animationDurationUpdate: 750,
+        emphasis: {
+          focus: 'descendant'
+        }
+      }
+    ]
+  }
+
+  chart.setOption(option)
 })
 
+const chartWidth = window.innerWidth + 'px'
+
+const chartHeight = window.innerHeight * 0.8 + 'px'
+
+// 组件卸载时销毁实例
+onBeforeUnmount(() => {
+  chart?.dispose()
+})
 </script>
 
 <template>
-    <div class="box">
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-    </div>
+  <!-- 注意：不要用 id，而是用 ref -->
+  <div ref="chartRef" :style="{ width: chartWidth, height: chartHeight }"></div>
 </template>
-
-<style scoped lang="scss">
-.box {
-    background-color: yellow;
-    height: 100vh;
-    overflow: auto;
-
-    div {
-        width: 100%;
-        margin-bottom: 40px;
-        background-color: red;
-        height: 1000px;
-    }
-}
-</style>
