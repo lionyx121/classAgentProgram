@@ -1,0 +1,5 @@
+module.exports = {
+    mongoUrl: 'mongodb://127.0.0.1:27017/classAgentServer',
+    API_KEY: 'sk-96cc3ca87f13416ca5a7af57f4a29635',
+    APPID: '332e1e764fe14dda959c55c422a5b439'
+}
