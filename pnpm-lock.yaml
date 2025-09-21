@@ -26,6 +26,9 @@ importers:
       highlight.js:
         specifier: ^11.11.1
         version: 11.11.1
+      kaomoji:
+        specifier: ^0.1.0
+        version: 0.1.0
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
@@ -1552,6 +1555,10 @@ packages:
   json5@2.2.3:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
+    hasBin: true
+
+  kaomoji@0.1.0:
+    resolution: {integrity: sha512-g/oGuOw6LuzfQSlwvBX3P5qk9S5AyLuHApUP/CCJFjVR6vUh61ZjsAz6Hj0o0RUg9nE/GLNNBbNN/4yFVYpiSg==}
     hasBin: true
 
   kolorist@1.8.0:
@@ -3671,6 +3678,8 @@ snapshots:
   json-schema-traverse@1.0.0: {}
 
   json5@2.2.3: {}
+
+  kaomoji@0.1.0: {}
 
   kolorist@1.8.0: {}
 

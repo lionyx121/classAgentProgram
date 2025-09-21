@@ -1,7 +1,16 @@
-// src/composables/useSSE.ts
 import { ref, onBeforeUnmount, onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import type { ChatItem } from '@/types/chat'
+
+// 将similarity数组转换为markdown格式
+const similarityToMd = (arr: any[]) => {
+  let md = "\n\n 你提的问题可能和以下知识点相关：\n\n";
+  arr.forEach((item, index) => {
+    md += `${index + 1}. **${item.id}** （相关度：${item.cosine.toFixed(3)}）\n`;
+  });
+  return md;
+}
+
 
 export function useSSE(withCredentials = false) {
   const messages = ref<string>('')
@@ -52,6 +61,11 @@ export function useSSE(withCredentials = false) {
 
     es.addEventListener('done', () => {
       console.log('SSE服务关闭')
+
+      const md = similarityToMd(chatStore.similarities)
+      // 加入到大模型回答中
+      chatStore.questions[chatStore.questions.length - 1].content += md
+
       isOutputing.value = false
       stop()
     })

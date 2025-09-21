@@ -6,7 +6,7 @@ import type { UserInfoKey, UserInfo } from '@/types/login'
 const KEY = 'USERINFOKEY'
 
 export const useUserInfoStore = defineStore('userInfo', () => {
-  const stored = localStorage.getItem(KEY)
+  const stored = localStorage.getItem(KEY) || ''
 
   // 优先读取本地存储中的用户信息
   const userInfo = ref<UserInfo>(stored ? JSON.parse(stored) : {})

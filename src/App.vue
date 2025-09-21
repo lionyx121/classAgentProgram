@@ -7,7 +7,6 @@ onMounted(() => {
   isLogin()
 })
 
-
 </script>
 
 <template>

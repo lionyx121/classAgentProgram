@@ -21,15 +21,12 @@
 
 <style scoped lang="scss">
 .layout-header {
-    height: 52px;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     background-color: #212121;
-    position: fixed;
-    top: 0;
-    left: 0;
 
     .layout-header-main {
-        width: 100vw;
+        width: 100%;
         height: 100%;
         padding: 0 8px;
         display: flex;
@@ -49,7 +46,7 @@
             }
         }
 
-        .dialogue{
+        .dialogue {
             position: absolute;
             right: 20px;
         }

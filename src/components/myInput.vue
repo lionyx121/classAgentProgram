@@ -47,6 +47,8 @@ const sendMessage = async () => {
                 questions: chatStore.questions
             })
             if (res.code === 1000) {
+                // 保存这次的similarity
+                chatStore.updateSimilarity(res?.similarity)
                 // 利用clientid去建立SSE连接 拼接url
                 const SSEUrl = AGENTSERVERURL + 'api/chat/connetSSE?clientid=' + res?.clientid
                 // 连接SSE
@@ -75,40 +77,30 @@ watch(messages, () => {
 </script>
 
 <template>
-    <div class="layout">
-        <div class="input-box">
-            <!-- 左侧添加图片按钮 -->
-            <div class="btn add">
-                <van-icon name="plus" />
-            </div>
+    <div class="input-box">
+        <!-- 左侧添加图片按钮 -->
+        <div class="btn add">
+            <van-icon name="plus" />
+        </div>
 
-            <!-- 中间输入框 -->
-            <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput"></textarea>
+        <!-- 中间输入框 -->
+        <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput"></textarea>
 
-            <!-- 右侧发送按钮 -->
-            <div class="btn send" :class="{ 'active': inputval }">
-                <van-icon name="stop-circle-o" v-if="isOutputing" @click="onStopSendMessage" />
-                <van-icon name="down" class="icon-down" @click="sendMessage" v-else />
-            </div>
+        <!-- 右侧发送按钮 -->
+        <div class="btn send" :class="{ 'active': inputval }">
+            <van-icon name="stop-circle-o" v-if="isOutputing" @click="onStopSendMessage" />
+            <van-icon name="down" class="icon-down" @click="sendMessage" v-else />
         </div>
     </div>
 </template>
 
 <style scoped lang="scss">
-.layout {
-    position: fixed;
-    width: 100vw;
-    min-height: 88px;
-    max-height: 152px;
-    background-color: #202020;
-    left: 0;
-    bottom: 0;
-}
 
 .input-box {
     margin: 0 auto;
     margin-bottom: 32px;
     width: calc(100% - 18px);
+    max-width: 700px;
     min-height: 56px;
     border-radius: 28px;
     background-color: #303030;
@@ -120,11 +112,12 @@ watch(messages, () => {
     /* 给左右按钮留位置 */
     z-index: 100;
     border: 1px solid #454545;
+    position: relative;
 }
 
 .btn {
     position: absolute;
-    bottom: 43px;
+    bottom: 10px;
     width: 36px;
     height: 36px;
     border-radius: 36px;

@@ -5,11 +5,22 @@ import type { ChatItem } from '@/types/chat'
 export const useChatStore = defineStore('chat', () => {
     // 维护一个数组去储存用户的聊天记录
     const questions = ref<ChatItem[]>([])
+    // 维护一个数组去储存similarity
+    const similarities = ref<any[]>([])
+
     const addHistory = (item: ChatItem) => {
         questions.value.push(item)
     }
+
+    const updateSimilarity = (arr: any[]) => {
+        similarities.value = arr
+        console.log('zhou', similarities.value)
+    }
+
     return {
         questions,
-        addHistory
+        similarities,
+        addHistory,
+        updateSimilarity
     }
 })

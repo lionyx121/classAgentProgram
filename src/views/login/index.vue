@@ -109,7 +109,7 @@ onUnmounted(() => {
         </div>
 
         <!-- 表单：统一指定在 blur 时校验 -->
-        <van-form validate-first validate-trigger="onBlur" ref="ruleFormRef">
+        <van-form validate-first validate-trigger="onBlur" ref="ruleFormRef" class="loginForm">
             <van-cell-group inset class="input-cell-group" scroll-to-error>
                 <van-field v-model="ruleForm.username" name="username" label="学号" placeholder="请输入学号"
                     :rules="rules.username" colon />
@@ -141,6 +141,11 @@ onUnmounted(() => {
     height: 100vh;
     border-top: 1px solid #000;
     position: relative;
+
+    .loginForm {
+        max-width: 500px;
+        margin: 0 auto;
+    }
 
     .top-title {
         width: 368px;
