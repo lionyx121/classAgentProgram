@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const User = require('../../models/user')
+const jwt = require('jsonwebtoken');
 
 // 使用 Nodemailer 发送邮件
 const transporter = nodemailer.createTransport({
@@ -81,6 +82,10 @@ router.post('/sendCode', async (req, res) => {
 router.post('/verifyCode', async (req, res) => {
     try {
         const { sms, email, username } = req.body
+
+        // 封装要塞入cookie里面的数据
+        const payload = { sms, email, username };
+
         // 检验验证码是否正确
         if (userMap.get(email).code !== sms) {
             res.status(200).json({ msg: '验证码错误', code: 1001 })
@@ -93,6 +98,16 @@ router.post('/verifyCode', async (req, res) => {
             } else {
                 // 验证成功
                 const user = await User.findOne({ username }).lean()
+
+                // 签发 token
+                const token = jwt.sign(payload, 'my_secret_key', { expiresIn: '2h' });
+
+                // 放 cookie
+                res.cookie('token', token, {
+                    httpOnly: true,   // JS 不能读，防止 XSS
+                    secure: false,    // true 只允许 https，这里本地先关掉
+                    sameSite: 'strict'
+                });
 
                 // 如果存在用户的信息 && 信息中有userid
                 if (user && user.userid) {
