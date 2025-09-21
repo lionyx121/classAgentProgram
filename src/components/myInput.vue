@@ -84,7 +84,7 @@ watch(messages, () => {
         </div>
 
         <!-- 中间输入框 -->
-        <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput"></textarea>
+        <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput" @keydown.enter.prevent="sendMessage"></textarea>
 
         <!-- 右侧发送按钮 -->
         <div class="btn send" :class="{ 'active': inputval }">

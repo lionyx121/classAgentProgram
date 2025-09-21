@@ -59,7 +59,7 @@ const chatStore = useChatStore()
         color: #fff;
         padding: 8px 14px;
         border-radius: 16px;
-        font-size: 14px;
+        font-size: 17px;
         line-height: 1.4;
         word-break: break-word;
         max-width: 70%;
