@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const { getEmbedding } = require('../../utils/RAG/getRagData');
 
 const User = require('../../models/user')
 
@@ -15,10 +16,22 @@ const getRandomString = () => {
 const userMap = new Map()
 
 // 获取从前端拿到的userid、username、questions 去改变map中的值 并生成一个clientid返回给前端
-router.post('/getClientId', (req, res) => {
+// 我们还需要返回这个问题可能和什么相关给前端，让前端拼接相关的知识点喂给大模型，并且可以进行展示
+router.post('/getClientId', async (req, res) => {
   try {
     const { userid, username, questions } = req.body
     const clientid = getRandomString()
+    const content = questions[questions.length - 1].content
+    // 调用getEmbedding函数获取相似度高的数据
+    const similarity = await getEmbedding(content)
+
+    let str = '相关知识点：'
+    // 对最后一项question的content根据similarity添加说明
+    for (let i = 0; i < similarity.length; i++) {
+      str += `${similarity[i].id}(${similarity[i].cosine.toString().slice(0, 7)})、`
+    }
+    questions[questions.length - 1].content += str
+
     const data = {
       userid,
       username,
@@ -28,7 +41,8 @@ router.post('/getClientId', (req, res) => {
     res.status(200).json({
       code: 1000,
       msg: '获取clientid成功',
-      clientid
+      clientid,
+      similarity
     })
   } catch (error) {
     res.status(400).json({
@@ -78,7 +92,6 @@ router.get('/connetSSE', async (req, res) => {
   };
 
   const url = `https://dashscope.aliyuncs.com/api/v1/apps/${appId}/completion`;
-  // const prompt = (req.query.q || '冯晨的邮箱是多少').toString();
 
   // 请求体：按你的应用模型需要调整
   const body = {
@@ -208,7 +221,7 @@ router.get('/connetSSE', async (req, res) => {
         { username },
         {
           $push: {
-            history: { chatHistory: questions } 
+            history: { chatHistory: questions }
           }
         }
       )

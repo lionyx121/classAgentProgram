@@ -3,7 +3,8 @@ const { graphList, graphNameList, fullData, aliyunData } = require('./data')
 const fs = require('fs')
 const OpenAI = require("openai");
 const apiKey = require('../../config/env').API_KEY
-const graphEmbeddingList = require('./output.json')
+const graphEmbeddingList = require('./output.json');
+const { get } = require('http');
 
 // todo 我希望写一个函数能建立一个这样的数据结构
 /**
@@ -154,11 +155,11 @@ const openai = new OpenAI({
 // }
 
 
-async function getEmbedding(arr) {
+async function getEmbedding(str, maxOutputLength = 3) {
     try {
         const completion = await openai.embeddings.create({
             model: "text-embedding-v4",
-            input: arr,
+            input: str,
             dimensions: 1024
         });
 
@@ -166,17 +167,14 @@ async function getEmbedding(arr) {
         const embeddingList = completion.data[0]['embedding']
 
         // 获取最相近的问题
-        const similarity = getHighSimilarityData(embeddingList, 50)
+        const similarity = getHighSimilarityData(embeddingList, maxOutputLength)
 
-        console.log(similarity)
-        return embeddingList
+        return similarity
     } catch (error) {
         console.error("❌ 出错:", error);
     }
 }
 
-// 获取
-getEmbedding(['拉普拉斯变换性质']).then(val => {
-    console.log(val)
-})
-
+module.exports = {
+    getEmbedding
+}
