@@ -7,5 +7,6 @@ export enum chatKey {
 export interface ChatItem {
     role: chatKey,
     content: string,
-    createTime: number
+    createTime: number,
+    isDone?: boolean
 }

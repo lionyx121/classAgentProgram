@@ -37,7 +37,8 @@ export function useSSE(withCredentials = false) {
     chatStore.addHistory({
       role: 'assistant',
       content: '',
-      createTime: Date.now()
+      createTime: Date.now(),
+      isDone: false
     } as ChatItem)
 
     es = new EventSource(url, { withCredentials })

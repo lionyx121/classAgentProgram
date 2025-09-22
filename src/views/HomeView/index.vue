@@ -3,23 +3,29 @@ import homeHeader from './components/homeHeader.vue';
 import homeBottom from './components/homeBottom.vue';
 import homeMain from './components/homeMain.vue';
 import { useLayoutStore } from '@/stores/layout';
-import { watch, nextTick } from 'vue'
+import { watch, nextTick, ref } from 'vue'
 import { useChatStore } from '@/stores/chat';
 
 const layoutStore = useLayoutStore()
 const chatStore = useChatStore()
 
-watch(
-    () => chatStore.questions,
-    async () => {
-        await nextTick()
-        const layout = document.querySelector('.main')
-        if (layout) {
-            layout.scrollTop = layout.scrollHeight
-        }
-    },
-    { deep: true }
-)
+const autoScroll = ref(true) // 是否自动滚动到底部
+
+const scrollToBottom = async () => {
+    if (!autoScroll.value) return
+    await nextTick() // 等待 DOM 更新
+    const layout = document.querySelector(".main") as HTMLElement
+    if (layout) {
+        layout.scrollTop = layout.scrollHeight
+    }
+}
+
+const handleScroll = (e: Event) => {
+    const el = e.target as HTMLElement
+    const isBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 50 // 距离底部50px以内
+
+    autoScroll.value = isBottom
+}
 </script>
 
 
@@ -33,8 +39,8 @@ watch(
                 <homeHeader></homeHeader>
             </div>
             <!-- 中间 -->
-            <div class="main">
-                <homeMain></homeMain>
+            <div class="main" @scroll="handleScroll">
+                <homeMain @content-update="scrollToBottom"></homeMain>
             </div>
             <!-- 底部 -->
             <div class="footer">

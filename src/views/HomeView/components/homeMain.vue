@@ -5,6 +5,8 @@ import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
 import kaomoji from "kaomoji";
+import { ref, watch } from 'vue';
+import { throttle } from '@/common/js/utils';
 
 const md: any = new MarkdownIt({
     highlight: (str, lang) => {
@@ -20,6 +22,40 @@ const md: any = new MarkdownIt({
 
 const chatStore = useChatStore()
 
+const showData = ref('')
+const isTypeWriting = ref(false)
+
+const emit = defineEmits(["content-update"])
+
+// 模拟打字机效果
+const typeWriter = () => {
+    isTypeWriting.value = true
+    showData.value = ''
+    let timer = setInterval(() => {
+        // case1如果当前content里面没有东西 content = '' 时return
+        if (chatStore.questions[chatStore.questions.length - 1].content === '') return
+        // case2如果当前content里面有内容了，并且showData的长度小于content的长度
+        if (chatStore.questions[chatStore.questions.length - 1].content.length > showData.value.length) {
+            showData.value += chatStore.questions[chatStore.questions.length - 1].content[showData.value.length]
+            // todo 加一个节流
+            if (showData.value.length % 3 === 0) {
+                emit("content-update")
+            }
+        }
+        // case3如果当前content里面有内容了，并且showData的长度等于content的长度
+        if (chatStore.questions[chatStore.questions.length - 1].content.length === showData.value.length) {
+            // 把isDone设置为true
+            chatStore.questions[chatStore.questions.length - 1].isDone = true
+            clearInterval(timer)
+        }
+    }, 40)
+}
+
+watch(() => chatStore.questions.length, () => {
+    if (chatStore.questions.length % 2 === 0) {
+        typeWriter()
+    }
+})
 
 </script>
 
@@ -30,7 +66,10 @@ const chatStore = useChatStore()
             <div v-if="item.role === 'user'" class="user">
                 {{ item.content }}
             </div>
-            <div v-else-if="item.role === 'assistant' && item.content" v-html="md.render(item.content)"
+            <div v-else-if="item.role === 'assistant' && item.content && item.isDone" v-html="md.render(item.content)"
+                class="markdown-body">
+            </div>
+            <div v-else-if="item.role === 'assistant' && item.content && !item.isDone" v-html="md.render(showData)"
                 class="markdown-body">
             </div>
             <span v-else-if="item.role === 'assistant' && !item.content" class="dots-loading" aria-label="loading">
@@ -59,7 +98,7 @@ const chatStore = useChatStore()
         color: #fff;
         padding: 8px 14px;
         border-radius: 16px;
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1.4;
         word-break: break-word;
         max-width: 70%;
