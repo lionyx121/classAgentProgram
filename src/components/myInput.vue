@@ -87,9 +87,9 @@ watch(messages, () => {
         <textarea id="text-area" placeholder="请输入内容" rows="1" v-model="inputval" @input="onInput" @keydown.enter.prevent="sendMessage"></textarea>
 
         <!-- 右侧发送按钮 -->
-        <div class="btn send" :class="{ 'active': inputval }">
+        <div class="btn send active">
             <van-icon name="stop-circle-o" v-if="isOutputing" @click="onStopSendMessage" />
-            <van-icon name="down" class="icon-down" @click="sendMessage" v-else />
+            <van-icon name="guide-o" class="icon-down" @click="sendMessage" v-else />
         </div>
     </div>
 </template>
@@ -138,10 +138,6 @@ watch(messages, () => {
     right: 19px;
     background-color: #858585;
     color: #2F2F2F;
-
-    .icon-down {
-        transform: rotate(180deg);
-    }
 }
 
 .active {

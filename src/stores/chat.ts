@@ -14,7 +14,6 @@ export const useChatStore = defineStore('chat', () => {
 
     const updateSimilarity = (arr: any[]) => {
         similarities.value = arr
-        console.log('zhou', similarities.value)
     }
 
     return {

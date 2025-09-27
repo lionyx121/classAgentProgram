@@ -2,6 +2,8 @@
 import homeHeader from './components/homeHeader.vue';
 import homeBottom from './components/homeBottom.vue';
 import homeMain from './components/homeMain.vue';
+import slider from './components/slider.vue';
+
 import { useLayoutStore } from '@/stores/layout';
 import { watch, nextTick, ref } from 'vue'
 import { useChatStore } from '@/stores/chat';
@@ -32,7 +34,9 @@ const handleScroll = (e: Event) => {
 <template>
     <div class="layout">
         <!-- 侧边栏 当屏幕宽度<760时不显示 -->
-        <div class="slider" v-if="layoutStore.isSilderShow"></div>
+        <div class="slider" v-if="layoutStore.isSilderShow">
+            <slider></slider>
+        </div>
         <div class="layout-right">
             <!-- 顶部 -->
             <div class="header">

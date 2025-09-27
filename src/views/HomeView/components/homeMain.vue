@@ -5,8 +5,10 @@ import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import 'highlight.js/styles/github-dark.css'
 import kaomoji from "kaomoji";
-import { ref, watch } from 'vue';
-import { throttle } from '@/common/js/utils';
+import { ref, watch, onUnmounted } from 'vue';
+import { useSSE } from '@/common/js/useSSE';
+
+const { isOutputing } = useSSE()
 
 const md: any = new MarkdownIt({
     highlight: (str, lang) => {
@@ -27,25 +29,31 @@ const isTypeWriting = ref(false)
 
 const emit = defineEmits(["content-update"])
 
+let timer: any = null
 // 模拟打字机效果
 const typeWriter = () => {
     isTypeWriting.value = true
     showData.value = ''
-    let timer = setInterval(() => {
+    if (timer) {
+        clearInterval(timer)
+        timer = null
+    }
+    timer = setInterval(() => {
+        const lastMsg = chatStore.questions[chatStore.questions.length - 1]
         // case1如果当前content里面没有东西 content = '' 时return
-        if (chatStore.questions[chatStore.questions.length - 1].content === '') return
-        // case2如果当前content里面有内容了，并且showData的长度小于content的长度
-        if (chatStore.questions[chatStore.questions.length - 1].content.length > showData.value.length) {
-            showData.value += chatStore.questions[chatStore.questions.length - 1].content[showData.value.length]
-            // todo 加一个节流
+        if (lastMsg.content === '') return
+
+        // 打字输出
+        if (lastMsg.content.length > showData.value.length) {
+            showData.value += lastMsg.content[showData.value.length]
             if (showData.value.length % 3 === 0) {
                 emit("content-update")
             }
         }
-        // case3如果当前content里面有内容了，并且showData的长度等于content的长度
-        if (chatStore.questions[chatStore.questions.length - 1].content.length === showData.value.length) {
-            // 把isDone设置为true
-            chatStore.questions[chatStore.questions.length - 1].isDone = true
+
+        // 结束判断：内容追平 + SSE 已关闭
+        if (lastMsg.content.length === showData.value.length && !isOutputing.value) {
+            lastMsg.isDone = true
             clearInterval(timer)
         }
     }, 40)
@@ -53,8 +61,14 @@ const typeWriter = () => {
 
 watch(() => chatStore.questions.length, () => {
     if (chatStore.questions.length % 2 === 0) {
-        typeWriter()
+        setTimeout(() => {
+            typeWriter()
+        }, 2000)
     }
+})
+
+onUnmounted(() => {
+    if (timer) clearInterval(timer)
 })
 
 </script>

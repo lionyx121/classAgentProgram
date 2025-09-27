@@ -1,4 +1,4 @@
-import { ref, onBeforeUnmount, onMounted } from 'vue'
+import { ref, onBeforeUnmount, toRefs } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import type { ChatItem } from '@/types/chat'
 
@@ -67,7 +67,6 @@ export function useSSE(withCredentials = false) {
       // 加入到大模型回答中
       chatStore.questions[chatStore.questions.length - 1].content += md
 
-      isOutputing.value = false
       stop()
     })
 
@@ -78,5 +77,5 @@ export function useSSE(withCredentials = false) {
 
   onBeforeUnmount(stop)
 
-  return { start, stop, messages, status, isOutputing }
+  return { start, stop, ...toRefs({ messages, status, isOutputing }) }
 }
