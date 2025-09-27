@@ -23,6 +23,9 @@ const chatHistoryManySchema = new mongoose.Schema({
     chatHistory: {
         type: [chatHistoryOneSchema],
         default: []
+    },
+    title: {
+        type: String,
     }
 })
 

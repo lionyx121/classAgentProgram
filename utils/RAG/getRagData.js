@@ -79,8 +79,8 @@ const getAliyunData = () => {
 }
 
 // 计算余弦相似度越接近1说明二者越相似，越接近-1越不相似
-const cosineSimilarity = (vecA, vecB) =>{
-    if(vecA.length !== vecB.length) {
+const cosineSimilarity = (vecA, vecB) => {
+    if (vecA.length !== vecB.length) {
         console.warn('计算余弦相似度的二者长度应该相等')
         return
     }
@@ -88,7 +88,7 @@ const cosineSimilarity = (vecA, vecB) =>{
     let normalA = 0
     let normalB = 0
 
-    for(let i = 0; i < vecA.length; i++){
+    for (let i = 0; i < vecA.length; i++) {
         dot += vecA[i] * vecB[i]
         normalA += vecA[i] * vecA[i]
         normalB += vecB[i] * vecB[i]
@@ -99,9 +99,9 @@ const cosineSimilarity = (vecA, vecB) =>{
 
 // 获取相似度高数据从知识图谱中
 // vecA 是用户输入问题的向量表 maxOutputLength是返回多少条数据
-const getHighSimilarityData = (vecA, maxOutputLength) =>{
+const getHighSimilarityData = (vecA, maxOutputLength) => {
     const cosineSimilarityList = []
-    for(let i = 0; i < graphEmbeddingList.length; i++){
+    for (let i = 0; i < graphEmbeddingList.length; i++) {
         const cosine = cosineSimilarity(vecA, graphEmbeddingList[i].embedding)
         cosineSimilarityList.push({
             id: graphEmbeddingList[i].id,
@@ -175,6 +175,24 @@ async function getEmbedding(str, maxOutputLength = 3) {
     }
 }
 
+async function getTitle(str) {
+    const completion = await openai.chat.completions.create({
+        model: "qwen-plus",  //此处以qwen-plus为例，可按需更换模型名称。模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
+        messages: [
+            {
+                role: "system",
+                content: "你是一个标题生成助手，请严格按照以下规则输出标题：\n\
+1. 根据用户提供的问题内容提炼核心主题。\n\
+2. 用简洁的中文表达，不要包含标点符号和引号。\n\
+3. 标题长度必须在8到10个汉字之间。\n\
+4. 只输出标题文本，不要解释说明。"},
+            { role: "user", content: str }
+        ],
+    });
+    return completion.choices[0].message.content
+}
+
 module.exports = {
-    getEmbedding
+    getEmbedding,
+    getTitle
 }

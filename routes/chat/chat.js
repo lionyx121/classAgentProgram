@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { getEmbedding } = require('../../utils/RAG/getRagData');
+const { getEmbedding, getTitle } = require('../../utils/RAG/getRagData');
 
 const User = require('../../models/user')
 
@@ -27,27 +27,27 @@ router.post('/getClientId', async (req, res) => {
 
     let str = '相关知识点：'
     // 对最后一项question的content根据similarity添加说明
-    for (let i = 0; i < similarity.length; i++) {
-      str += `${similarity[i].id}(${similarity[i].cosine.toString().slice(0, 7)})、`
-    }
-    questions[questions.length - 1].content += str
+    str += `${similarity[0].id}(${similarity[0].cosine.toString().slice(0, 7)})、`
+    questions[questions.length - 1].content += '它可能与这个知识点相关' + str
 
     const data = {
       userid,
       username,
-      questions
+      questions,
     }
     userMap.set(clientid, data)
     res.status(200).json({
       code: 1000,
       msg: '获取clientid成功',
       clientid,
-      similarity
+      similarity,
     })
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       code: 1001,
-      msg: '获取clientid失败'
+      msg: '获取clientid失败',
+      error
     })
   }
 })
@@ -65,7 +65,7 @@ router.get('/connetSSE', async (req, res) => {
   }
 
   // 从userMap中去获得相关的信息
-  const { username, userid, questions } = userMap.get(clientid)
+  const { username, userid, questions, title } = userMap.get(clientid)
 
   // ---- 给前端（浏览器）设置 SSE 头 ----
   res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
@@ -97,7 +97,7 @@ router.get('/connetSSE', async (req, res) => {
   const body = {
     input: {
       messages: questions,
-      prompt: "在最后帮我用8个字总结用户本次的提问"
+      prompt: "你是一位信号与系统的老师，请你根据用户的问题和相关知识点，回答用户的问题"
     },
     parameters: {
       incremental_output: true,
@@ -215,13 +215,25 @@ router.get('/connetSSE', async (req, res) => {
       }
     )
 
+    let title = ''
+    if (questions.length % 10 === 2) {
+      // 获取标题 
+      let userQuestion = ''
+      questions.forEach(item => {
+        userQuestion += item.content
+      })
+      title = await getTitle(userQuestion)
+    }
+
+    console.log(title)
+
     // 如果没有找到（matchedCount === 0），说明要插入新的
     if (res.matchedCount === 0) {
       await User.updateOne(
         { username },
         {
           $push: {
-            history: { chatHistory: questions }
+            history: { chatHistory: questions, title }
           }
         }
       )
