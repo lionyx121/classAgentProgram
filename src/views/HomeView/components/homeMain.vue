@@ -56,7 +56,7 @@ const typeWriter = () => {
             lastMsg.isDone = true
             clearInterval(timer)
         }
-    }, 40)
+    }, 30)
 }
 
 watch(() => chatStore.questions.length, () => {

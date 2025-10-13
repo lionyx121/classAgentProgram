@@ -14,3 +14,9 @@ export const getChatClientId = ({userid, username, questions}: ChatClientIdParam
         questions,
     })
 }
+
+// 获取聊天历史记录
+export const getChatHistory = ({username}: {username: string}) =>{
+    const url = `/api/chat/getHistory?username=${username}`
+    return request.get(url)
+}

@@ -6,6 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { VantResolver } from '@vant/auto-import-resolver';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,10 +14,10 @@ export default defineConfig({
     vue(),
     vueDevTools(),
     AutoImport({
-      resolvers: [VantResolver()],
+      resolvers: [VantResolver(), ElementPlusResolver()],
     }),
     Components({
-      resolvers: [VantResolver()],
+      resolvers: [VantResolver(), ElementPlusResolver()],
     }),
   ],
   resolve: {
@@ -25,4 +26,6 @@ export default defineConfig({
     },
   },
 })
+
+
 

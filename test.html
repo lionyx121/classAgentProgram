@@ -7,12 +7,16 @@
   </head>
   <body>
     <script>
-      const map = new Map();
-      map.set(1, 2);
-      map.set(2, 2);
-      map.set(3, 2);
-      const targetKey = map.keys().next().value;
-      console.log(targetKey)
+      class person {
+        constructor(name) {
+          this.name = name;
+        }
+        sayHi () {
+          console.log('HI')
+        }
+      }
+      const p = new person("zhou");
+      console.log(p)
     </script>
   </body>
 </html>

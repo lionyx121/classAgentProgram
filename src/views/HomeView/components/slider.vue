@@ -1,19 +1,22 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useLayoutStore } from '@/stores/layout'    
+import { ref, computed, watch } from 'vue'
+import { useLayoutStore } from '@/stores/layout'
+import { useChatStore } from '@/stores/chat'
+import { useRouter } from 'vue-router'
+import ActionMenu from '@/components/ActionMenu.vue'
 
 const layoutStore = useLayoutStore()
+const chatStore = useChatStore()
 
 const itemHeight = 40          // 每个元素高度
- // 一次最多显示多少条
-const visibleCount = computed(() =>{
+// 一次最多显示多少条
+const visibleCount = computed(() => {
     return Math.floor((layoutStore.showHeight - 200) / itemHeight)
-})       
+})
 
-const dataList = ref<string[]>([])
-for (let i = 0; i < 100; i++) {
-    dataList.value.push(`Item ${i + 1}`)
-}
+// 历史记录里面展示的聊天标题
+const dataList = ref<any[]>([])
+
 const scrollTop = ref(0)
 
 const start = computed(() => Math.floor((scrollTop.value / itemHeight) + 0.5))
@@ -22,6 +25,75 @@ const visibleList = computed(() => dataList.value.slice(start.value, start.value
 
 const onScroll = (e: Event) => {
     scrollTop.value = (e.target as HTMLElement).scrollTop
+}
+
+watch(() => chatStore.historyList, (newVal) => {
+    dataList.value = newVal
+})
+
+const router = useRouter()
+// 去学习路径
+const toLabelGraph = () => {
+    router.push({
+        path: '/demo3',
+    })
+}
+
+// 点击了历史记录
+const onHistoryClick = (item: any) => {
+    router.push({ path: '/main' })
+    chatStore.updateQuestions(item._id)
+}
+
+// 新聊天
+const onNewChat = () => {
+    router.push({ path: '/main' })
+    chatStore.clearQuestions()
+}
+
+// 判断是否需要展示菜单按钮
+const isMenushow = ref<number>(-1)
+
+const onHistoryEnter = (item: any) => {
+    isMenushow.value = item._id
+}
+
+const onHistoryLeave = (e: Event) => {
+    isMenushow.value = -1
+}
+
+// 配置菜单文件
+const menu = ref({
+    menuList: [
+        [
+            {
+                title: '学习路径',
+                icon: 'View',
+            },
+            {
+                title: '重命名',
+                icon: 'EditPen',
+            }
+        ],
+        [
+            {
+                title: '删除',
+                icon: 'Delete',
+                type: 'danger',
+            }
+        ],
+    ],
+    top: 0,
+    itemValue: {}
+})
+
+const isMenuVisible = ref(false)
+// 点击菜单按钮
+const onMenuClick = (item: any, e: MouseEvent) => {
+    e.stopPropagation()
+    isMenuVisible.value = true
+    menu.value.top = e.clientY
+    menu.value.itemValue = item
 }
 
 </script>
@@ -35,7 +107,7 @@ const onScroll = (e: Event) => {
         </div>
         <div class="func">
             <!-- 新聊天 -->
-            <div class="funcBox">
+            <div class="funcBox" @click="onNewChat">
                 <van-icon name="edit" size="20" />
                 <span>新聊天</span>
             </div>
@@ -45,7 +117,7 @@ const onScroll = (e: Event) => {
                 <span>搜索聊天</span>
             </div>
             <!-- 学习路径 -->
-            <div class="funcBox">
+            <div class="funcBox" @click="toLabelGraph">
                 <van-icon name="eye-o" size="20" />
                 <span>学习路径</span>
             </div>
@@ -57,17 +129,26 @@ const onScroll = (e: Event) => {
             <!-- 占位容器，撑起滚动条高度 -->
             <div :style="{ height: dataList.length * itemHeight + 'px', position: 'relative' }">
                 <!-- 渲染可见部分 -->
-                <div v-for="(item, i) in visibleList" :key="i" :style="{
+                <div v-for="(item, i) in visibleList" @click="onHistoryClick(item)" :key="i" :style="{
                     position: 'absolute',
                     top: ((start + i) * itemHeight) + 'px',
                     height: itemHeight + 'px',
                     lineHeight: itemHeight + 'px',
-                }" class="item">
-                    {{ item }}
+                }" class="item" :class="{ 'active': i === chatStore.activeIndex }" @mouseenter="onHistoryEnter(item)"
+                    @mouseleave="onHistoryLeave">
+                    <!-- 标题 -->
+                    <p>{{ item.title }}</p>
+                    <!-- 省略号 -->
+                    <van-icon name="ellipsis" class="ellipsis" v-if="isMenushow === item._id"
+                        @click="onMenuClick(item, $event)" size="20" />
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- 菜单 -->
+    <ActionMenu :menuList="menu.menuList" :top="menu.top" :itemValue="menu.itemValue" @close="isMenuVisible = false"
+        v-if="isMenuVisible" />
 </template>
 
 <style scoped lang="scss">
@@ -137,10 +218,29 @@ const onScroll = (e: Event) => {
             border-radius: 15px;
             color: #fff;
             padding-left: 15px;
+            font-size: 14px;
+            position: relative;
+            cursor: pointer;
+            transition: all .5s;
+
+            .ellipsis {
+                position: absolute;
+                width: 35px;
+                height: 100%;
+                right: 17px;
+                top: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
         }
 
         .item:hover {
             background-color: #303030;
+        }
+
+        .active {
+            background-color: #242424;
         }
     }
 }
