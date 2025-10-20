@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useLayoutStore } from '@/stores/layout'
 import { useChatStore } from '@/stores/chat'
 import { useRouter } from 'vue-router'
@@ -41,6 +41,7 @@ const toLabelGraph = () => {
 
 // 点击了历史记录
 const onHistoryClick = (item: any) => {
+    console.log('history')
     router.push({ path: '/main' })
     chatStore.updateQuestions(item._id)
 }
@@ -89,9 +90,10 @@ const menu = ref({
 
 const isMenuVisible = ref(false)
 // 点击菜单按钮
-const onMenuClick = (item: any, e: MouseEvent) => {
+const onMenuClick = async (item: any, e: MouseEvent) => {
     e.stopPropagation()
     isMenuVisible.value = true
+    await nextTick()
     menu.value.top = e.clientY
     menu.value.itemValue = item
 }

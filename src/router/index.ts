@@ -4,6 +4,7 @@ import login from '@/views/login/index.vue'
 import test from '@/views/test/index.vue'
 import demo2 from '@/views/demo2/index.vue'
 import demo3 from '@/views/demo3/index.vue'
+import todoList from '@/views/todoList/index.vue'
 import homeMain from '@/views/HomeView/components/homeMain.vue'
 
 const router = createRouter({
@@ -22,7 +23,8 @@ const router = createRouter({
     { path: '/login', component: login },
     { path: '/test', component: test },
     { path: '/demo2', component: demo2 },
-    { path: '/demo3', component: demo3 }
+    { path: '/demo3', component: demo3 },
+    { path: '/todoList', component: todoList },
   ],
 })
 

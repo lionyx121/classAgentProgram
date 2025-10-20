@@ -51,6 +51,8 @@ watch(() => route.path, (newPath) => {
     console.log(isGraph.value)
 }, { immediate: true })
 
+const test = ref(null)
+console.log(test)
 </script>
 
 
@@ -63,7 +65,7 @@ watch(() => route.path, (newPath) => {
         <div class="layout-right">
             <!-- 顶部 -->
             <div class="header">
-                <homeHeader></homeHeader>
+                <homeHeader ref="test"></homeHeader>
             </div>
             <!-- 中间 -->
             <div class="main" @scroll="handleScroll">
