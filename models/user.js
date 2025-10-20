@@ -15,6 +15,10 @@ const chatHistoryOneSchema = new mongoose.Schema({
     createTime: {
         type: Date,
         default: Date.now
+    },
+    isDone: {
+        type: Boolean,
+        default: true
     }
 })
 
@@ -27,6 +31,22 @@ const chatHistoryManySchema = new mongoose.Schema({
     title: {
         type: String,
     }
+})
+
+const embeddingSchema = new mongoose.Schema({
+    className: {
+        type: String,
+        default: ''
+    },
+    classKey: {
+        type: String,
+        default: ''
+    },
+    pride: {
+        type: Number,
+        default: 0
+    },
+    time: { type: Date, default: Date.now },
 })
 
 const userSchema = new mongoose.Schema({
@@ -54,7 +74,12 @@ const userSchema = new mongoose.Schema({
     history: {
         type: [chatHistoryManySchema],
         default: []
+    },
+    // 知识点向量表
+    embeddings: {
+        type: [embeddingSchema],
+        default: {}
     }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

@@ -13,11 +13,13 @@ app.use(express.json());
 const chatRoutes = require('./routes/chat/chat');
 const loginRoutes = require('./routes/login/login');
 const userRoutes = require('./routes/user/user')
+const classDataRoutes = require('./routes/classData/classData')
 
 // 路由
 app.use('/api/chat', chatRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/classData', classDataRoutes);
 
 app.get('/', (req, res) => {
   res.send('连接成功')

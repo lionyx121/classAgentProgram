@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const { getEmbedding, getTitle } = require('../../utils/RAG/getRagData');
+const { getEmbedding, getTitle, updateEmbedding, scoreQuestion } = require('../../utils/RAG/getRagData');
 
 const User = require('../../models/user')
+const Class = require('../../models/classData')
 
 const { API_KEY: apiKey, APPID: appId } = require('../../config/env');
 
@@ -22,13 +23,48 @@ router.post('/getClientId', async (req, res) => {
     const { userid, username, questions } = req.body
     const clientid = getRandomString()
     const content = questions[questions.length - 1].content
+
     // 调用getEmbedding函数获取相似度高的数据
     const similarity = await getEmbedding(content)
 
-    let str = '相关知识点：'
-    // 对最后一项question的content根据similarity添加说明
-    str += `${similarity[0].id}(${similarity[0].cosine.toString().slice(0, 7)})、`
-    questions[questions.length - 1].content += '它可能与这个知识点相关' + str
+    // 获取similarity中相关知识点的标题
+    const similarityTitle = similarity.map(item =>{
+      if(item.cosine > 0.5) return item.id
+    })
+
+    // console.log(similarity)
+    // console.log(similarityTitle)
+    
+    // 调用scoreQuestion获取用户当前提问问题的评分
+    const prideData = await scoreQuestion(content, similarityTitle)
+
+    console.log(prideData)
+
+    // 更新用户知识点向量表
+    const user = await User.findOne({ userid }).lean()
+    const oldEmbedding = user.embeddings || []
+    const newEmbedding = updateEmbedding(oldEmbedding, similarity)
+    await User.updateOne(
+      { userid },
+      { $set: { embeddings: newEmbedding } }
+    )
+
+    // 如果这个知识点相关性>0.5更新classData中askCount的次数
+    await Promise.all(
+      similarity
+        .filter(item => item.cosine > 0.5)
+        .map(item =>
+          Class.findOneAndUpdate(
+            { className: item.id },
+            { $inc: { askCount: 1 } }
+          )
+        )
+    )
+
+    // let str = '相关知识点：'
+    // // 对最后一项question的content根据similarity添加说明
+    // str += `${similarity[0].id}(${similarity[0].cosine.toString().slice(0, 7)})、`
+    // questions[questions.length - 1].content += '它可能与这个知识点相关' + str
 
     const data = {
       userid,
@@ -65,7 +101,7 @@ router.get('/connetSSE', async (req, res) => {
   }
 
   // 从userMap中去获得相关的信息
-  const { username, userid, questions, title } = userMap.get(clientid)
+  const { username, userid, questions } = userMap.get(clientid)
 
   // ---- 给前端（浏览器）设置 SSE 头 ----
   res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
@@ -225,8 +261,6 @@ router.get('/connetSSE', async (req, res) => {
       title = await getTitle(userQuestion)
     }
 
-    console.log(title)
-
     // 如果没有找到（matchedCount === 0），说明要插入新的
     if (res.matchedCount === 0) {
       await User.updateOne(
@@ -242,5 +276,52 @@ router.get('/connetSSE', async (req, res) => {
     if (upstream?.data?.destroy) upstream.data.destroy();
   });
 });
+
+// 获取对话历史记录
+router.get('/getHistory', async (req, res) => {
+  try {
+    const { username } = req.query
+    if (!username) {
+      return res.status(400).json({ success: false, message: 'Missing username' })
+    }
+
+    const user = await User.findOne({ username })
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' })
+    }
+
+    // 生成一个基于最后更新时间或最后一条消息的 ETag
+    const history = user.history || []
+    const lastUpdate = user.updatedAt || new Date()
+    const etag = `"${Buffer.from(String(lastUpdate)).toString('base64')}"`
+
+    // 协商缓存：如果客户端带了匹配的 ETag 或 Last-Modified，则直接返回 304
+    if (
+      req.headers['if-none-match'] === etag
+    ) {
+      return res.status(304).end()
+    }
+
+    // 设置响应头
+    res.setHeader('ETag', etag)
+    res.setHeader('Last-Modified', lastUpdate.toUTCString())
+    res.setHeader('Cache-Control', 'no-cache') // 表示每次都要协商
+
+    return res.status(200).json({
+      success: true,
+      data: history,
+      count: history.length,
+    })
+  } catch (error) {
+    console.error(error)
+    return res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+    })
+  }
+})
+
+
+
 
 module.exports = router;

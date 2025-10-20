@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const User = require('../../models/user')
-const jwt = require('jsonwebtoken');
+const Class = require('../../models/classData')
+// const jwt = require('jsonwebtoken');
 
 // 使用 Nodemailer 发送邮件
 const transporter = nodemailer.createTransport({
@@ -98,36 +99,50 @@ router.post('/verifyCode', async (req, res) => {
             } else {
                 // 验证成功
                 const user = await User.findOne({ username }).lean()
-
-                // 签发 token
-                const token = jwt.sign(payload, 'my_secret_key', { expiresIn: '2h' });
-
-                // 放 cookie
-                res.cookie('token', token, {
-                    httpOnly: true,   // JS 不能读，防止 XSS
-                    secure: false,    // true 只允许 https，这里本地先关掉
-                    sameSite: 'strict'
-                });
-
                 // 如果存在用户的信息 && 信息中有userid
                 if (user && user.userid) {
-                    res.status(200).json({ msg: '验证成功', code: 0, userid: user.userid, name: user.name, email, username })
-                    // 验证成功后，删除该用户的验证码信息
+                    res.status(200).json({
+                        msg: '验证成功',
+                        code: 0,
+                        userid: user.userid,
+                        name: user.name || username, // ✅ name兜底
+                        email,
+                        username
+                    })
                     userMap.delete(email)
                     return
-                } else {
-                    // 说明没有改用户的信息或者第一次登录
-                    // 生成一个随机的userid
+                }
+                else {
+                    const doc = await Class.findOne({})
+                    let length = 0
+                    if (doc) {
+                        if (doc.data instanceof Map) {
+                            length = doc.data.size
+                        } else if (typeof doc.data === 'object') {
+                            length = Object.keys(doc.data).length
+                        }
+                    }
+
+                    const embeddings = []
+                    for (let i = 0; i < length; i++) {
+                        embeddings.push({ className: doc.data[i].className, classKey: doc.data[i].classKey, pride: 0 })
+                    }
+
                     const userid = (username + 'lionyx' + Math.random().toString().slice(2, 8)).split('').reverse().join('')
-                    // 保存用户的信息
                     await User.updateOne(
                         { username },
-                        { $set: { userid, email } },
+                        { $set: { userid, email, embeddings, name: username } }, // ✅ 初始化name
                         { upsert: true }
                     )
-                    res.status(200).json({ msg: '验证成功', code: 0, userid, name: user.name, email, username })
 
-                    // 验证成功后，删除该用户的验证码信息
+                    res.status(200).json({
+                        msg: '验证成功',
+                        code: 0,
+                        userid,
+                        name: username, // ✅ 改为安全字段
+                        email,
+                        username
+                    })
                     userMap.delete(email)
                 }
             }
