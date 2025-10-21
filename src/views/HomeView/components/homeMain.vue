@@ -1,57 +1,38 @@
 <script setup lang="ts">
-import 'github-markdown-css';
-import { useChatStore } from '@/stores/chat';
-import MarkdownIt from 'markdown-it'
-import hljs from 'highlight.js'
-import 'highlight.js/styles/github-dark.css'
-import kaomoji from "kaomoji";
-import { ref, watch, onUnmounted } from 'vue';
-import { useSSE } from '@/common/js/useSSE';
+import 'github-markdown-css'
+import { useChatStore } from '@/stores/chat'
+import kaomoji from 'kaomoji'
+import { ref, watch, onUnmounted } from 'vue'
+import { useSSE } from '@/common/js/useSSE'
+import md from '@/common/js/useMd'
 
 const { isOutputing } = useSSE()
-
-const md: any = new MarkdownIt({
-    highlight: (str, lang) => {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
-                    }</code></pre>`
-            } catch (__) { }
-        }
-        return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`
-    }
-})
-
 const chatStore = useChatStore()
-
 const showData = ref('')
 const isTypeWriting = ref(false)
+const emit = defineEmits(['content-update'])
 
-const emit = defineEmits(["content-update"])
 
+// 打字机效果
 let timer: any = null
-// 模拟打字机效果
 const typeWriter = () => {
     isTypeWriting.value = true
     showData.value = ''
-    if (timer) {
-        clearInterval(timer)
-        timer = null
-    }
+    if (timer) clearInterval(timer)
+
     timer = setInterval(() => {
         const lastMsg = chatStore.questions[chatStore.questions.length - 1]
-        // case1如果当前content里面没有东西 content = '' 时return
-        if (lastMsg.content === '') return
+        if (!lastMsg || !lastMsg.content) return
 
         // 打字输出
         if (lastMsg.content.length > showData.value.length) {
             showData.value += lastMsg.content[showData.value.length]
             if (showData.value.length % 3 === 0) {
-                emit("content-update")
+                emit('content-update')
             }
         }
 
-        // 结束判断：内容追平 + SSE 已关闭
+        // 输出完成
         if (lastMsg.content.length === showData.value.length && !isOutputing.value) {
             lastMsg.isDone = true
             clearInterval(timer)
@@ -59,44 +40,50 @@ const typeWriter = () => {
     }, 30)
 }
 
-watch(() => chatStore.questions.length, () => {
-    if (chatStore.questions.length % 2 === 0) {
-        setTimeout(() => {
-            typeWriter()
-        }, 2000)
-    }
-})
-
+watch(
+    () => chatStore.questions.length,
+    () => {
+        if (chatStore.questions.length % 2 === 0) {
+            setTimeout(() => {
+                typeWriter()
+            }, 2000)
+        }
+    },
+)
 onUnmounted(() => {
     if (timer) clearInterval(timer)
 })
-
 </script>
 
 <template>
-    <!-- 当有对话的时候 -->
+    <!-- 有对话时 -->
     <div v-if="chatStore.questions.length">
         <div class="box" v-for="(item, index) in chatStore.questions" :key="index">
+            <!-- 用户消息 -->
             <div v-if="item.role === 'user'" class="user">
                 {{ item.content }}
             </div>
+
+            <!-- 助手完成输出 -->
             <div v-else-if="item.role === 'assistant' && item.content && item.isDone" v-html="md.render(item.content)"
-                class="markdown-body">
-            </div>
+                class="markdown-body"></div>
+
+            <!-- 助手输出中 -->
             <div v-else-if="item.role === 'assistant' && item.content && !item.isDone" v-html="md.render(showData)"
-                class="markdown-body">
-            </div>
+                class="markdown-body"></div>
+
+            <!-- 助手思考中 -->
             <span v-else-if="item.role === 'assistant' && !item.content" class="dots-loading" aria-label="loading">
                 <i></i><i></i><i></i>
             </span>
         </div>
     </div>
-    <!-- 没有对话的兜底处理 -->
+
+    <!-- 没有历史对话 -->
     <div v-else class="nohistory">
         <div>What Can I Help For You Today?</div>
         <div>{{ kaomoji.happy() }}</div>
     </div>
-
 </template>
 
 <style scoped lang="scss">

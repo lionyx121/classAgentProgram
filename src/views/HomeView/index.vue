@@ -83,6 +83,7 @@ console.log(test)
 .layout {
     height: 100vh;
     display: flex;
+    overflow: hidden;
 
     .slider {
         width: 260px;
