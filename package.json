@@ -23,14 +23,12 @@
     "github-markdown-css": "^5.8.1",
     "highlight.js": "^11.11.1",
     "kaomoji": "^0.1.0",
-    "katex": "^0.16.25",
     "markdown-it": "^14.1.0",
-    "markdown-it-katex": "^2.0.3",
+    "markdown-it-mathjax3": "^5.2.0",
     "pinia": "^3.0.3",
     "vant": "^4.9.21",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1",
-    "vue3-d3-network": "^1.0.2"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",

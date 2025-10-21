@@ -170,6 +170,17 @@ onUnmounted(() => {
     max-width: 100% !important;
     margin: 10px 0;
 
+    // :deep(.katex) {
+    //     font-size: 1.1em;
+    //     vertical-align: middle;
+    // }
+
+    // :deep(.katex-display) {
+    //     font-size: 1.25em;
+    //     margin: 12px 0;
+    //     text-align: center;
+    // }
+
     :deep(tr) {
         background-color: #171717;
     }

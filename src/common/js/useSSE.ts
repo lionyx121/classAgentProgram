@@ -51,8 +51,15 @@ export function useSSE(withCredentials = false) {
     es.onmessage = (e) => {
       let text = JSON.parse(e.data).text
       if (text) {
-        // 更新仓库中大模型的回答
-        chatStore.questions[chatStore.questions.length - 1].content += text
+        let ans = ''
+        const strList = text.split('')
+        for (let i = 0; i < strList.length; i++) {
+          if ((strList[i] === ' ' && strList[i - 1] === '$') || (strList[i] === ' ' && strList[i + 1] === '$')) {
+            continue
+          }
+          ans += strList[i]
+        }
+        chatStore.questions[chatStore.questions.length - 1].content += ans
       }
     }
 
@@ -64,6 +71,8 @@ export function useSSE(withCredentials = false) {
       console.log('SSE服务关闭')
 
       const md = similarityToMd(chatStore.similarities)
+      // 清空similarity
+      chatStore.updateSimilarity([])
       // 加入到大模型回答中
       chatStore.questions[chatStore.questions.length - 1].content += md
 

@@ -162,6 +162,7 @@ const onMenuClick = async (item: any, e: MouseEvent) => {
     height: 190px;
     border-bottom: 1px solid #242424;
     z-index: 99;
+    background-color: #181818;
 
     .logo {
         height: 60px;
