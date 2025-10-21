@@ -170,6 +170,22 @@ onUnmounted(() => {
     max-width: 100% !important;
     margin: 10px 0;
 
+    :deep(tr) {
+        background-color: #171717;
+    }
+
+    :deep(td) {
+        background-color: #171717;
+    }
+
+    :deep(th) {
+        background-color: #171717;
+    }
+
+    :deep(table) {
+        overflow: hidden;
+    }
+
     :deep(hr) {
         height: 1px;
         background-color: #424242;
