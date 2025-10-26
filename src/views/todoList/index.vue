@@ -18,7 +18,7 @@ md.use(mdMathjax3)
     <article class="markdown-body layout">
         <!-- ✅ 渲染行内和块级数学公式 -->
         <div v-html="md.render(`
-$Y(z) - 0.5z^{-1}Y(z) = X(z)$
+$f(t)$ 和 $ g(t) $
 `)"></div>
     </article>
 </template>

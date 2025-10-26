@@ -133,7 +133,6 @@ export const useGrapgData = (fullData: any, graphNameList: any) => {
 
         showData['data'].push(val)
 
-        console.log("showData", showData)
         return showData
     }
 

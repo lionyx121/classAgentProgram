@@ -86,8 +86,6 @@ onMounted(() => {
   myChart.value.setOption(option)
 
   const zr = myChart.value.getZr()
-  console.log(zr)
-
   // ✅ 自适应屏幕大小
   window.addEventListener("resize", () => {
     console.log('width', zr.getWidth())

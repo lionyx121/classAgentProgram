@@ -4,6 +4,7 @@ import { useLayoutStore } from '@/stores/layout'
 import { useChatStore } from '@/stores/chat'
 import { useRouter } from 'vue-router'
 import ActionMenu from '@/components/ActionMenu.vue'
+import { useSSE } from '@/common/js/useSSE'
 
 const layoutStore = useLayoutStore()
 const chatStore = useChatStore()
@@ -46,8 +47,11 @@ const onHistoryClick = (item: any) => {
     chatStore.updateQuestions(item._id)
 }
 
+const { stop } = useSSE()
 // 新聊天
 const onNewChat = () => {
+    // 我们点击新聊天的时候需要首先关闭SSE
+    stop()
     router.push({ path: '/main' })
     chatStore.clearQuestions()
 }

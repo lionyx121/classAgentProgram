@@ -23,7 +23,7 @@ const onInput = (e: Event) => {
 
 const userStroe = useUserInfoStore()
 
-const { start, stop, messages, isOutputing } = useSSE()
+const { start, stop, messages } = useSSE()
 
 // 发送消息
 const sendMessage = async () => {
@@ -88,7 +88,7 @@ watch(messages, () => {
 
         <!-- 右侧发送按钮 -->
         <div class="btn send active">
-            <van-icon name="stop-circle-o" v-if="isOutputing" @click="onStopSendMessage" />
+            <van-icon name="stop-circle-o" v-if="chatStore.isOutputing" @click="onStopSendMessage" />
             <van-icon name="guide-o" class="icon-down" @click="sendMessage" v-else />
         </div>
     </div>

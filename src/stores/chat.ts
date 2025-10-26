@@ -13,6 +13,8 @@ export const useChatStore = defineStore('chat', () => {
     const historyList = ref<any[]>([])
     // 当前选中的历史记录是哪一个 如果没有的话就是-1
     const activeIndex = ref(-1)
+    // 当前是否还处于输出的状态
+    const isOutputing = ref(false)
 
     const userInfoStore = useUserInfoStore()
 
@@ -40,7 +42,6 @@ export const useChatStore = defineStore('chat', () => {
         questions.value = target.chatHistory
         await nextTick() // 等待 DOM 更新
         const layout = document.querySelector(".main") as HTMLElement
-        console.log(layout)
         if (layout) {
             layout.scrollTop = layout.scrollHeight
         }
@@ -59,6 +60,11 @@ export const useChatStore = defineStore('chat', () => {
         activeIndex.value = historyList.value.findIndex(item => item.chatHistory[0].createTime === target)
     }, { deep: true })
 
+    // 更新isoutputing的值
+    const updataIsOutputing = (flag = false) => {
+        isOutputing.value = flag
+    }
+
     return {
         questions,
         similarities,
@@ -68,6 +74,8 @@ export const useChatStore = defineStore('chat', () => {
         updataChatHistory,
         activeIndex,
         updateQuestions,
-        clearQuestions
+        clearQuestions,
+        isOutputing,
+        updataIsOutputing
     }
 })

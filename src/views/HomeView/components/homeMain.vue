@@ -6,7 +6,6 @@ import { ref, watch, onUnmounted } from 'vue'
 import { useSSE } from '@/common/js/useSSE'
 import md from '@/common/js/useMd'
 
-const { isOutputing } = useSSE()
 const chatStore = useChatStore()
 const showData = ref('')
 const isTypeWriting = ref(false)
@@ -33,7 +32,7 @@ const typeWriter = () => {
         }
 
         // 输出完成
-        if (lastMsg.content.length === showData.value.length && !isOutputing.value) {
+        if (lastMsg.content.length === showData.value.length && !chatStore.isOutputing) {
             lastMsg.isDone = true
             clearInterval(timer)
         }
@@ -44,9 +43,7 @@ watch(
     () => chatStore.questions.length,
     () => {
         if (chatStore.questions.length % 2 === 0) {
-            setTimeout(() => {
-                typeWriter()
-            }, 2000)
+            typeWriter()
         }
     },
 )

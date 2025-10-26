@@ -16,16 +16,14 @@ export function useSSE(withCredentials = false) {
   const messages = ref<string>('')
   const status = ref<'idle' | 'open' | 'error'>('idle')
 
-  // 判断当前是否处于输出中
-  const isOutputing = ref<boolean>(false)
-
   const chatStore = useChatStore()
 
   let es: EventSource | null = null
 
   const stop = () => {
     es?.close()
-    isOutputing.value = false
+    // 我们需要更新isoutputing的状态为false
+    chatStore.updataIsOutputing()
     es = null
     status.value = 'idle'
   }
@@ -44,13 +42,14 @@ export function useSSE(withCredentials = false) {
     es = new EventSource(url, { withCredentials })
 
     es.onopen = () => {
-      isOutputing.value = true
+      chatStore.updataIsOutputing(true)
       console.log('连接成功')
     }
 
     es.onmessage = (e) => {
       let text = JSON.parse(e.data).text
       if (text) {
+        // 对数学公式进行特定处理
         let ans = ''
         const strList = text.split('')
         for (let i = 0; i < strList.length; i++) {
@@ -86,5 +85,5 @@ export function useSSE(withCredentials = false) {
 
   onBeforeUnmount(stop)
 
-  return { start, stop, ...toRefs({ messages, status, isOutputing }) }
+  return { start, stop, messages, status }
 }
