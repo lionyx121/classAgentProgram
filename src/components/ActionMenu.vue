@@ -27,16 +27,17 @@ const props = defineProps({
     }
 })
 
+
 const actionMenu = ref<HTMLElement | null>(null)
 
 watch(() => props.top, (newVal, oldVal) => {
-    if(!actionMenu.value) return
+    if (!actionMenu.value) return
     if (innerHeight - newVal > actionMenu.value.clientHeight) {
         actionMenu.value.style.top = `${newVal}px`
     } else {
         actionMenu.value.style.bottom = `${innerHeight - newVal - actionMenu.value.clientHeight}px`
     }
-})
+}, {immediate: true})
 
 const emit = defineEmits(['close'])
 

@@ -2,11 +2,12 @@ import { ref, onBeforeUnmount, toRefs } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import type { ChatItem } from '@/types/chat'
 
-// 将similarity数组转换为markdown格式
-const similarityToMd = (arr: any[]) => {
-  let md = "\n\n 你提的问题可能和以下知识点相关：\n\n";
+// 将recommendQuestions数组转换为markdown格式
+const recommendQuestionsToMd = (arr: any[]) => {
+  if (!arr.length) return
+  let md = "\n\n 您可能对这些问题感兴趣：\n\n";
   arr.forEach((item, index) => {
-    md += `${index + 1}. **${item.id}** （相关度：${item.cosine.toFixed(3)}）\n`;
+    md += `${index + 1}. **${item}** \n`;
   });
   return md;
 }
@@ -49,16 +50,7 @@ export function useSSE(withCredentials = false) {
     es.onmessage = (e) => {
       let text = JSON.parse(e.data).text
       if (text) {
-        // 对数学公式进行特定处理
-        let ans = ''
-        const strList = text.split('')
-        for (let i = 0; i < strList.length; i++) {
-          if ((strList[i] === ' ' && strList[i - 1] === '$') || (strList[i] === ' ' && strList[i + 1] === '$')) {
-            continue
-          }
-          ans += strList[i]
-        }
-        chatStore.questions[chatStore.questions.length - 1].content += ans
+        chatStore.questions[chatStore.questions.length - 1].content += text
       }
     }
 
@@ -69,9 +61,9 @@ export function useSSE(withCredentials = false) {
     es.addEventListener('done', () => {
       console.log('SSE服务关闭')
 
-      const md = similarityToMd(chatStore.similarities)
-      // 清空similarity
-      chatStore.updateSimilarity([])
+      const md = recommendQuestionsToMd(chatStore.recommendQuestions)
+      // 清空recommendQuestions
+      chatStore.updateRecommendQuestions([])
       // 加入到大模型回答中
       chatStore.questions[chatStore.questions.length - 1].content += md
 

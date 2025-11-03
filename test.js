@@ -1,11 +1,7 @@
+const test1 = [1, 2]
+const test2 = JSON.parse(JSON.stringify(test1))
 
-let text = '（注意：有时需要归一化因子，如 $ 1/2\pi $，取决于傅里叶变换的定义方式）'
-let ans = ''
-const strList = text.split('')
-for (let i = 0; i < strList.length; i++) {
-    if ((strList[i] === ' ' && strList[i - 1] === '$') || (strList[i] === ' ' && strList[i + 1] === '$')) {
-        continue
-    }
-    ans += strList[i]
-}
-console.log(ans)
+test2[0] = 3
+
+console.log(test1)
+console.log(test2)

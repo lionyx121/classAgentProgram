@@ -7,9 +7,12 @@ import { useLayoutStore } from '@/stores/layout';
 import { watch, nextTick, ref, onMounted, onUnmounted } from 'vue'
 import { useChatStore } from '@/stores/chat';
 import { useRoute } from 'vue-router';
+import { getInitRoot } from '@/api/root'
+import { useEchartsStore } from '@/stores/echarts';
 
 const layoutStore = useLayoutStore()
 const chatStore = useChatStore()
+const echartsStore = useEchartsStore()
 
 const autoScroll = ref(true) // 是否自动滚动到底部
 
@@ -31,7 +34,13 @@ const handleScroll = (e: Event) => {
 
 let timer: any = null
 // 当组件挂载完成时，更新聊天历史记录
-onMounted(() => {
+onMounted(async () => {
+    // 去查看相关echarts数据是否有更新
+    const { rootData } = await getInitRoot()
+
+    // 更新echarts数据
+    echartsStore.updataData(rootData)
+
     chatStore.updataChatHistory()
     // 开启一个30s的短轮询去更新历史记录
     timer = setInterval(() => {
@@ -47,12 +56,10 @@ onUnmounted(() => {
 const route = useRoute();
 const isGraph = ref(false)
 watch(() => route.path, (newPath) => {
-    isGraph.value = newPath.indexOf('/demo') !== -1
-    console.log(isGraph.value)
+    isGraph.value = newPath.indexOf('/echarts') !== -1
 }, { immediate: true })
 
 const test = ref(null)
-console.log(test)
 </script>
 
 

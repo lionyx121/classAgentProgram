@@ -47,8 +47,8 @@ const sendMessage = async () => {
                 questions: chatStore.questions
             })
             if (res.code === 1000) {
-                // 保存这次的similarity
-                chatStore.updateSimilarity(res?.similarity)
+                // 保存这次的recommendQuestions
+                chatStore.updateRecommendQuestions(res?.recommendQuestions)
                 // 利用clientid去建立SSE连接 拼接url
                 const SSEUrl = AGENTSERVERURL + 'api/chat/connetSSE?clientid=' + res?.clientid
                 // 连接SSE

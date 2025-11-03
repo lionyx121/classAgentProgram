@@ -7,8 +7,8 @@ import { useUserInfoStore } from './userInfo'
 export const useChatStore = defineStore('chat', () => {
     // 维护一个数组去储存用户的聊天记录
     const questions = ref<ChatItem[]>([])
-    // 维护一个数组去储存similarity
-    const similarities = ref<any[]>([])
+    // 给用户推荐的问题
+    const recommendQuestions = ref<any[]>([])
     // 用户聊天的历史记录
     const historyList = ref<any[]>([])
     // 当前选中的历史记录是哪一个 如果没有的话就是-1
@@ -22,8 +22,8 @@ export const useChatStore = defineStore('chat', () => {
         questions.value.push(item)
     }
 
-    const updateSimilarity = (arr: any[]) => {
-        similarities.value = arr
+    const updateRecommendQuestions = (arr: any[]) => {
+        recommendQuestions.value = arr
     }
 
     // 更新聊天历史记录
@@ -67,10 +67,10 @@ export const useChatStore = defineStore('chat', () => {
 
     return {
         questions,
-        similarities,
+        recommendQuestions,
         historyList,
         addHistory,
-        updateSimilarity,
+        updateRecommendQuestions,
         updataChatHistory,
         activeIndex,
         updateQuestions,

@@ -2,16 +2,18 @@
 import * as echarts from "echarts"
 import { onMounted, ref } from "vue"
 import { useGrapgData } from "./getGrapgData.js"
-import { fullData, graphNameList, echatNode } from "./data.js"
+import { useEchartsStore } from "@/stores/echarts.js"
 import { useRoute } from "vue-router"
+
+const { echatNode, fullData, graphNameList } = useEchartsStore()
 
 const myChart = ref<echarts.EChartsType | null>(null)
 const { getShowData } = useGrapgData(fullData, graphNameList)
 const router = useRoute()
 
 onMounted(() => {
-  const target = router.query.id || '1'
-  const graphData = getShowData(target, echatNode['data'])
+  const target: any = router.query.id || '1'
+  const graphData: any = getShowData(target, echatNode['data'])
 
   // ✅ 初始化图表实例
   myChart.value = echarts.init(document.getElementById('main')!)
@@ -88,8 +90,6 @@ onMounted(() => {
   const zr = myChart.value.getZr()
   // ✅ 自适应屏幕大小
   window.addEventListener("resize", () => {
-    console.log('width', zr.getWidth())
-    console.log('height', zr.getHeight())
     myChart.value?.resize()
   })
 
@@ -119,8 +119,5 @@ onMounted(() => {
 #main {
   height: calc(100vh - 60px);
   background-color: #212121;
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
 }
 </style>

@@ -1,17 +1,5 @@
 <script setup lang="ts">
-import MarkdownIt from 'markdown-it'
-import mdMathjax3 from 'markdown-it-mathjax3'
-import 'github-markdown-css'
-
-// 初始化 MarkdownIt
-const md = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true,
-})
-
-// 启用 MathJax3 插件
-md.use(mdMathjax3)
+import md from '@/common/js/useMd';
 </script>
 
 <template>

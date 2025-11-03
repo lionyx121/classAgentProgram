@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { onMounted, ref, onBeforeUnmount } from 'vue'
-import data from './data.json'
 import { useRouter } from 'vue-router'
+import { useEchartsStore } from "@/stores/echarts.js"
 
 const chartRef = ref<HTMLDivElement | null>(null)
 let myChart: echarts.ECharts | null = null
 
 const router = useRouter()
+const { echartsLabelData } = useEchartsStore()
 
 // 2️⃣ 生命周期
 onMounted(async () => {
@@ -18,16 +19,11 @@ onMounted(async () => {
     myChart.showLoading()
 
     try {
-        const graph = data
+        const graph = echartsLabelData
         myChart.hideLoading()
 
         const option: echarts.EChartsOption = {
             tooltip: {},
-            // legend: [
-            //     {
-            //         data: graph.categories.map((a: any) => a.name)
-            //     }
-            // ],
             series: [
                 {
                     name: 'Les Miserables',
@@ -73,7 +69,7 @@ onMounted(async () => {
 
     myChart.on('click', (params: any) => {
         if (params.dataType === 'node') {
-            router.push({ path: '/demo2', query: { id: params.data.id } })
+            router.push({ path: '/echartsGraph', query: { id: params.data.id } })
         }
     })
 })
