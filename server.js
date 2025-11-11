@@ -14,12 +14,14 @@ const chatRoutes = require('./routes/chat/chat');
 const loginRoutes = require('./routes/login/login');
 const userRoutes = require('./routes/user/user')
 const classDataRoutes = require('./routes/classData/classData')
+const practice = require('./routes/practice/practice')
 
 // 路由
 app.use('/api/chat', chatRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/classData', classDataRoutes);
+app.use('/api/practice', practice);
 
 app.get('/', (req, res) => {
   res.send('连接成功')

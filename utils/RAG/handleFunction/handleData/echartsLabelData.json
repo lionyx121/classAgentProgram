@@ -1,0 +1,2181 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "信号介绍",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "20",
+      "name": "信号分类",
+      "category": 1,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "24",
+      "name": "连续性分类",
+      "category": 1,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "29",
+      "name": "离散信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "30",
+      "name": "连续信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "25",
+      "name": "确定性分类",
+      "category": 1,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "31",
+      "name": "确定信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "32",
+      "name": "随机信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "26",
+      "name": "周期性分类",
+      "category": 1,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "33",
+      "name": "周期信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "118",
+      "name": "冲激串",
+      "category": 1,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "34",
+      "name": "非周期信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "27",
+      "name": "能量和功率分类",
+      "category": 1,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "35",
+      "name": "能量信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "36",
+      "name": "功率信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "28",
+      "name": "对称性分类",
+      "category": 1,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "37",
+      "name": "奇信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "38",
+      "name": "偶信号",
+      "category": 1,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "21",
+      "name": "信号变换",
+      "category": 2,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "39",
+      "name": "反转",
+      "category": 2,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "40",
+      "name": "平移",
+      "category": 2,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "41",
+      "name": "尺度变换",
+      "category": 2,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "22",
+      "name": "信号运算",
+      "category": 3,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "42",
+      "name": "加法",
+      "category": 3,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "43",
+      "name": "乘法",
+      "category": 3,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "44",
+      "name": "微分",
+      "category": 3,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "45",
+      "name": "积分",
+      "category": 3,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "23",
+      "name": "基本信号",
+      "category": 4,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "46",
+      "name": "冲激信号",
+      "category": 4,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "87",
+      "name": "典型信号傅里叶变换",
+      "category": 4,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "47",
+      "name": "阶跃信号",
+      "category": 4,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "48",
+      "name": "三角信号",
+      "category": 4,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "49",
+      "name": "实指数信号",
+      "category": 4,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "50",
+      "name": "复指数信号",
+      "category": 4,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "2",
+      "name": "系统介绍",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "51",
+      "name": "系统性质",
+      "category": 5,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "54",
+      "name": "线性",
+      "category": 5,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "55",
+      "name": "时不变性",
+      "category": 5,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "56",
+      "name": "因果性",
+      "category": 5,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "57",
+      "name": "稳定性",
+      "category": 5,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "159",
+      "name": "jw 轴",
+      "category": 5,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "127",
+      "name": "单位圆",
+      "category": 5,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "58",
+      "name": "记忆性",
+      "category": 5,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "59",
+      "name": "可逆性",
+      "category": 5,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "52",
+      "name": "系统表示",
+      "category": 6,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "60",
+      "name": "方程",
+      "category": 6,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "15",
+      "name": "LTI系统复频域分析",
+      "category": 6,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "5",
+      "name": "电路系统时域分析",
+      "category": 6,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "3",
+      "name": "LTI系统时域分析",
+      "category": 6
+    },
+    {
+      "id": "69",
+      "name": "激励",
+      "category": 6
+    },
+    {
+      "id": "4",
+      "name": "卷积计算",
+      "category": 6
+    },
+    {
+      "id": "71",
+      "name": "卷积性质",
+      "category": 6
+    },
+    {
+      "id": "73",
+      "name": "微分",
+      "category": 6
+    },
+    {
+      "id": "74",
+      "name": "积分",
+      "category": 6
+    },
+    {
+      "id": "75",
+      "name": "微分积分",
+      "category": 6
+    },
+    {
+      "id": "76",
+      "name": "时移性质",
+      "category": 6
+    },
+    {
+      "id": "77",
+      "name": "与冲激函数及其各阶导数卷积",
+      "category": 6
+    },
+    {
+      "id": "78",
+      "name": "与阶跃函数卷积",
+      "category": 6
+    },
+    {
+      "id": "72",
+      "name": "计算方法",
+      "category": 6
+    },
+    {
+      "id": "79",
+      "name": "图解法",
+      "category": 6
+    },
+    {
+      "id": "80",
+      "name": "解析法",
+      "category": 6
+    },
+    {
+      "id": "81",
+      "name": "性质法",
+      "category": 6
+    },
+    {
+      "id": "61",
+      "name": "系统函数",
+      "category": 6
+    },
+    {
+      "id": "154",
+      "name": "h(t)",
+      "category": 6
+    },
+    {
+      "id": "155",
+      "name": "H(jw)",
+      "category": 6
+    },
+    {
+      "id": "156",
+      "name": "H(s)",
+      "category": 6
+    },
+    {
+      "id": "13",
+      "name": "拉普拉斯变换和收敛域",
+      "category": 6
+    },
+    {
+      "id": "119",
+      "name": "收敛域（s域）",
+      "category": 6
+    },
+    {
+      "id": "120",
+      "name": "时限信号（s域）",
+      "category": 6
+    },
+    {
+      "id": "140",
+      "name": "时限序列（z域）",
+      "category": 6
+    },
+    {
+      "id": "121",
+      "name": "左边信号（s域）",
+      "category": 6
+    },
+    {
+      "id": "141",
+      "name": "左边序列（z域）",
+      "category": 6
+    },
+    {
+      "id": "122",
+      "name": "右边信号（s域）",
+      "category": 6
+    },
+    {
+      "id": "142",
+      "name": "右边序列（z域）",
+      "category": 6
+    },
+    {
+      "id": "123",
+      "name": "双边信号（s域）",
+      "category": 6
+    },
+    {
+      "id": "143",
+      "name": "双边序列（z域）",
+      "category": 6
+    },
+    {
+      "id": "124",
+      "name": "极点（s域）",
+      "category": 6
+    },
+    {
+      "id": "144",
+      "name": "极点（z域）",
+      "category": 6
+    },
+    {
+      "id": "157",
+      "name": "H(z)",
+      "category": 6
+    },
+    {
+      "id": "145",
+      "name": "零点（z域）",
+      "category": 6
+    },
+    {
+      "id": "139",
+      "name": "收敛域（z域）",
+      "category": 6
+    },
+    {
+      "id": "125",
+      "name": "零点（s域）",
+      "category": 6
+    },
+    {
+      "id": "7",
+      "name": "非周期信号傅里叶变换",
+      "category": 6
+    },
+    {
+      "id": "88",
+      "name": "频谱分析",
+      "category": 6
+    },
+    {
+      "id": "89",
+      "name": "幅度频谱",
+      "category": 6
+    },
+    {
+      "id": "90",
+      "name": "相位频谱",
+      "category": 6
+    },
+    {
+      "id": "6",
+      "name": "周期信号傅里叶级数分析",
+      "category": 6
+    },
+    {
+      "id": "83",
+      "name": "高等数学",
+      "category": 6
+    },
+    {
+      "id": "84",
+      "name": "数学物理方法",
+      "category": 6
+    },
+    {
+      "id": "126",
+      "name": "控制原理",
+      "category": 6
+    },
+    {
+      "id": "70",
+      "name": "响应",
+      "category": 6
+    },
+    {
+      "id": "64",
+      "name": "零输入响应",
+      "category": 6
+    },
+    {
+      "id": "65",
+      "name": "零状态响应",
+      "category": 6
+    },
+    {
+      "id": "66",
+      "name": "冲激响应",
+      "category": 6
+    },
+    {
+      "id": "67",
+      "name": "阶跃响应",
+      "category": 6
+    },
+    {
+      "id": "82",
+      "name": "电路分析基础",
+      "category": 6
+    },
+    {
+      "id": "103",
+      "name": "LTI系统频域分析",
+      "category": 6,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "10",
+      "name": "滤波器",
+      "category": 6
+    },
+    {
+      "id": "104",
+      "name": "理想滤波器",
+      "category": 6
+    },
+    {
+      "id": "106",
+      "name": "理想低通",
+      "category": 6
+    },
+    {
+      "id": "107",
+      "name": "理想高通",
+      "category": 6
+    },
+    {
+      "id": "108",
+      "name": "理想带通",
+      "category": 6
+    },
+    {
+      "id": "109",
+      "name": "理想带阻",
+      "category": 6
+    },
+    {
+      "id": "105",
+      "name": "实际滤波器",
+      "category": 6
+    },
+    {
+      "id": "114",
+      "name": "数字信号处理",
+      "category": 6
+    },
+    {
+      "id": "11",
+      "name": "通信系统",
+      "category": 6
+    },
+    {
+      "id": "110",
+      "name": "调制",
+      "category": 6
+    },
+    {
+      "id": "112",
+      "name": "频谱搬移",
+      "category": 6
+    },
+    {
+      "id": "94",
+      "name": "频移特性",
+      "category": 6
+    },
+    {
+      "id": "96",
+      "name": "时域卷积定理（频域）",
+      "category": 6
+    },
+    {
+      "id": "111",
+      "name": "解调",
+      "category": 6
+    },
+    {
+      "id": "113",
+      "name": "通信原理",
+      "category": 6
+    },
+    {
+      "id": "93",
+      "name": "时移特性（频域）",
+      "category": 6
+    },
+    {
+      "id": "98",
+      "name": "时域微分（频域）",
+      "category": 6
+    },
+    {
+      "id": "9",
+      "name": "周期信号傅里叶变换",
+      "category": 6
+    },
+    {
+      "id": "8",
+      "name": "傅里叶变换性质",
+      "category": 6
+    },
+    {
+      "id": "91",
+      "name": "对偶性（频域）",
+      "category": 6
+    },
+    {
+      "id": "92",
+      "name": "线性（频域）",
+      "category": 6
+    },
+    {
+      "id": "95",
+      "name": "尺度变换特性（频域）",
+      "category": 6
+    },
+    {
+      "id": "97",
+      "name": "频域卷积定理",
+      "category": 6
+    },
+    {
+      "id": "99",
+      "name": "时域积分（频域）",
+      "category": 6
+    },
+    {
+      "id": "100",
+      "name": "频域微分",
+      "category": 6
+    },
+    {
+      "id": "101",
+      "name": "频域积分",
+      "category": 6
+    },
+    {
+      "id": "102",
+      "name": "帕斯瓦尔定理",
+      "category": 6
+    },
+    {
+      "id": "138",
+      "name": "典型信号拉普拉斯变换",
+      "category": 6,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "134",
+      "name": "时域卷积定理（s变换）",
+      "category": 6,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "151",
+      "name": "卷积性质（z变换）",
+      "category": 6
+    },
+    {
+      "id": "132",
+      "name": "时域微分（s变换）",
+      "category": 6,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "62",
+      "name": "框图",
+      "category": 6,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "19",
+      "name": "LTI系统Z域分析",
+      "category": 6,
+      "symbolSize": 6.32
+    },
+    {
+      "id": "17",
+      "name": "Z变换和收敛域",
+      "category": 6,
+      "symbolSize": 2.67
+    },
+    {
+      "id": "63",
+      "name": "流图",
+      "category": 6,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "53",
+      "name": "系统分析方法",
+      "category": 7,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "12",
+      "name": "抽样定理",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "115",
+      "name": "采样频率",
+      "category": 8,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "116",
+      "name": "奈奎斯特频率",
+      "category": 9,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "117",
+      "name": "混叠",
+      "category": 10,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "14",
+      "name": "拉普拉斯变换性质",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "128",
+      "name": "线性（s变换）",
+      "category": 11,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "146",
+      "name": "线性（z变换）",
+      "category": 11,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "129",
+      "name": "时移特性（s变换）",
+      "category": 12,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "147",
+      "name": "时移特性（z变换）",
+      "category": 12,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "130",
+      "name": "s域移位",
+      "category": 13,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "131",
+      "name": "时间尺度变换（s变换）",
+      "category": 14,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "148",
+      "name": "尺度变换（z变换）",
+      "category": 14,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "133",
+      "name": "时域积分（s变换）",
+      "category": 15,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "135",
+      "name": "s域微分",
+      "category": 16,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "150",
+      "name": "z域微分",
+      "category": 16,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "136",
+      "name": "初值定理（s变换）",
+      "category": 17,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "152",
+      "name": "初值定理（z变换）",
+      "category": 17,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "137",
+      "name": "中值定理（s变换）",
+      "category": 18,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "153",
+      "name": "中值定理（z变换）",
+      "category": 18,
+      "symbolSize": 13.64
+    },
+    {
+      "id": "16",
+      "name": "电路系统s域分析",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "18",
+      "name": "Z变换性质",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "149",
+      "name": "时间反转",
+      "category": 19,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "68",
+      "name": "任意激励下的响应",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "85",
+      "name": "矩形脉冲信号",
+      "category": 0
+    },
+    {
+      "id": "86",
+      "name": "直流信号",
+      "category": 0
+    },
+    {
+      "id": "158",
+      "name": "h[n]",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "160",
+      "name": "信号与系统",
+      "category": 0,
+      "symbolSize": 33.33
+    },
+    {
+      "id": "161",
+      "name": "信号",
+      "category": 20,
+      "symbolSize": 22.78
+    },
+    {
+      "id": "162",
+      "name": "系统",
+      "category": 21,
+      "symbolSize": 22.78
+    }
+  ],
+  "links": [
+    {
+      "source": "1",
+      "target": "20"
+    },
+    {
+      "source": "20",
+      "target": "24"
+    },
+    {
+      "source": "24",
+      "target": "29"
+    },
+    {
+      "source": "24",
+      "target": "30"
+    },
+    {
+      "source": "20",
+      "target": "25"
+    },
+    {
+      "source": "25",
+      "target": "31"
+    },
+    {
+      "source": "25",
+      "target": "32"
+    },
+    {
+      "source": "20",
+      "target": "26"
+    },
+    {
+      "source": "26",
+      "target": "33"
+    },
+    {
+      "source": "33",
+      "target": "118"
+    },
+    {
+      "source": "26",
+      "target": "34"
+    },
+    {
+      "source": "20",
+      "target": "27"
+    },
+    {
+      "source": "27",
+      "target": "35"
+    },
+    {
+      "source": "27",
+      "target": "36"
+    },
+    {
+      "source": "20",
+      "target": "28"
+    },
+    {
+      "source": "28",
+      "target": "37"
+    },
+    {
+      "source": "28",
+      "target": "38"
+    },
+    {
+      "source": "1",
+      "target": "21"
+    },
+    {
+      "source": "21",
+      "target": "39"
+    },
+    {
+      "source": "21",
+      "target": "40"
+    },
+    {
+      "source": "21",
+      "target": "41"
+    },
+    {
+      "source": "1",
+      "target": "22"
+    },
+    {
+      "source": "22",
+      "target": "42"
+    },
+    {
+      "source": "22",
+      "target": "43"
+    },
+    {
+      "source": "22",
+      "target": "44"
+    },
+    {
+      "source": "22",
+      "target": "45"
+    },
+    {
+      "source": "1",
+      "target": "23"
+    },
+    {
+      "source": "23",
+      "target": "46"
+    },
+    {
+      "source": "46",
+      "target": "87"
+    },
+    {
+      "source": "23",
+      "target": "47"
+    },
+    {
+      "source": "23",
+      "target": "48"
+    },
+    {
+      "source": "23",
+      "target": "49"
+    },
+    {
+      "source": "49",
+      "target": "87"
+    },
+    {
+      "source": "23",
+      "target": "50"
+    },
+    {
+      "source": "2",
+      "target": "51"
+    },
+    {
+      "source": "51",
+      "target": "54"
+    },
+    {
+      "source": "51",
+      "target": "55"
+    },
+    {
+      "source": "51",
+      "target": "56"
+    },
+    {
+      "source": "51",
+      "target": "57"
+    },
+    {
+      "source": "57",
+      "target": "159"
+    },
+    {
+      "source": "57",
+      "target": "127"
+    },
+    {
+      "source": "51",
+      "target": "58"
+    },
+    {
+      "source": "51",
+      "target": "59"
+    },
+    {
+      "source": "2",
+      "target": "52"
+    },
+    {
+      "source": "52",
+      "target": "60"
+    },
+    {
+      "source": "60",
+      "target": "15"
+    },
+    {
+      "source": "15",
+      "target": "5"
+    },
+    {
+      "source": "5",
+      "target": "3"
+    },
+    {
+      "source": "3",
+      "target": "69"
+    },
+    {
+      "source": "69",
+      "target": "4"
+    },
+    {
+      "source": "4",
+      "target": "71"
+    },
+    {
+      "source": "71",
+      "target": "73"
+    },
+    {
+      "source": "71",
+      "target": "74"
+    },
+    {
+      "source": "71",
+      "target": "75"
+    },
+    {
+      "source": "71",
+      "target": "76"
+    },
+    {
+      "source": "71",
+      "target": "77"
+    },
+    {
+      "source": "71",
+      "target": "78"
+    },
+    {
+      "source": "4",
+      "target": "72"
+    },
+    {
+      "source": "72",
+      "target": "79"
+    },
+    {
+      "source": "72",
+      "target": "80"
+    },
+    {
+      "source": "72",
+      "target": "81"
+    },
+    {
+      "source": "4",
+      "target": "21"
+    },
+    {
+      "source": "4",
+      "target": "54"
+    },
+    {
+      "source": "4",
+      "target": "55"
+    },
+    {
+      "source": "69",
+      "target": "61"
+    },
+    {
+      "source": "61",
+      "target": "154"
+    },
+    {
+      "source": "61",
+      "target": "155"
+    },
+    {
+      "source": "155",
+      "target": "154"
+    },
+    {
+      "source": "155",
+      "target": "56"
+    },
+    {
+      "source": "61",
+      "target": "156"
+    },
+    {
+      "source": "156",
+      "target": "13"
+    },
+    {
+      "source": "13",
+      "target": "119"
+    },
+    {
+      "source": "119",
+      "target": "120"
+    },
+    {
+      "source": "120",
+      "target": "140"
+    },
+    {
+      "source": "119",
+      "target": "121"
+    },
+    {
+      "source": "121",
+      "target": "141"
+    },
+    {
+      "source": "119",
+      "target": "122"
+    },
+    {
+      "source": "122",
+      "target": "142"
+    },
+    {
+      "source": "119",
+      "target": "123"
+    },
+    {
+      "source": "123",
+      "target": "143"
+    },
+    {
+      "source": "119",
+      "target": "124"
+    },
+    {
+      "source": "124",
+      "target": "56"
+    },
+    {
+      "source": "124",
+      "target": "144"
+    },
+    {
+      "source": "144",
+      "target": "157"
+    },
+    {
+      "source": "157",
+      "target": "144"
+    },
+    {
+      "source": "157",
+      "target": "145"
+    },
+    {
+      "source": "145",
+      "target": "157"
+    },
+    {
+      "source": "144",
+      "target": "57"
+    },
+    {
+      "source": "144",
+      "target": "139"
+    },
+    {
+      "source": "124",
+      "target": "156"
+    },
+    {
+      "source": "124",
+      "target": "57"
+    },
+    {
+      "source": "124",
+      "target": "119"
+    },
+    {
+      "source": "119",
+      "target": "125"
+    },
+    {
+      "source": "125",
+      "target": "145"
+    },
+    {
+      "source": "125",
+      "target": "156"
+    },
+    {
+      "source": "119",
+      "target": "139"
+    },
+    {
+      "source": "13",
+      "target": "7"
+    },
+    {
+      "source": "7",
+      "target": "87"
+    },
+    {
+      "source": "7",
+      "target": "88"
+    },
+    {
+      "source": "88",
+      "target": "89"
+    },
+    {
+      "source": "88",
+      "target": "90"
+    },
+    {
+      "source": "88",
+      "target": "155"
+    },
+    {
+      "source": "7",
+      "target": "6"
+    },
+    {
+      "source": "6",
+      "target": "83"
+    },
+    {
+      "source": "6",
+      "target": "84"
+    },
+    {
+      "source": "6",
+      "target": "33"
+    },
+    {
+      "source": "6",
+      "target": "48"
+    },
+    {
+      "source": "6",
+      "target": "50"
+    },
+    {
+      "source": "13",
+      "target": "84"
+    },
+    {
+      "source": "13",
+      "target": "126"
+    },
+    {
+      "source": "156",
+      "target": "154"
+    },
+    {
+      "source": "156",
+      "target": "124"
+    },
+    {
+      "source": "156",
+      "target": "125"
+    },
+    {
+      "source": "61",
+      "target": "157"
+    },
+    {
+      "source": "61",
+      "target": "15"
+    },
+    {
+      "source": "3",
+      "target": "70"
+    },
+    {
+      "source": "70",
+      "target": "64"
+    },
+    {
+      "source": "70",
+      "target": "65"
+    },
+    {
+      "source": "65",
+      "target": "66"
+    },
+    {
+      "source": "66",
+      "target": "46"
+    },
+    {
+      "source": "66",
+      "target": "154"
+    },
+    {
+      "source": "65",
+      "target": "67"
+    },
+    {
+      "source": "67",
+      "target": "47"
+    },
+    {
+      "source": "3",
+      "target": "4"
+    },
+    {
+      "source": "5",
+      "target": "82"
+    },
+    {
+      "source": "5",
+      "target": "4"
+    },
+    {
+      "source": "5",
+      "target": "154"
+    },
+    {
+      "source": "15",
+      "target": "103"
+    },
+    {
+      "source": "103",
+      "target": "10"
+    },
+    {
+      "source": "10",
+      "target": "104"
+    },
+    {
+      "source": "104",
+      "target": "106"
+    },
+    {
+      "source": "104",
+      "target": "107"
+    },
+    {
+      "source": "107",
+      "target": "106"
+    },
+    {
+      "source": "104",
+      "target": "108"
+    },
+    {
+      "source": "108",
+      "target": "106"
+    },
+    {
+      "source": "104",
+      "target": "109"
+    },
+    {
+      "source": "109",
+      "target": "106"
+    },
+    {
+      "source": "104",
+      "target": "66"
+    },
+    {
+      "source": "10",
+      "target": "105"
+    },
+    {
+      "source": "105",
+      "target": "5"
+    },
+    {
+      "source": "10",
+      "target": "7"
+    },
+    {
+      "source": "10",
+      "target": "82"
+    },
+    {
+      "source": "10",
+      "target": "56"
+    },
+    {
+      "source": "10",
+      "target": "57"
+    },
+    {
+      "source": "10",
+      "target": "114"
+    },
+    {
+      "source": "103",
+      "target": "11"
+    },
+    {
+      "source": "11",
+      "target": "110"
+    },
+    {
+      "source": "110",
+      "target": "112"
+    },
+    {
+      "source": "112",
+      "target": "94"
+    },
+    {
+      "source": "112",
+      "target": "96"
+    },
+    {
+      "source": "11",
+      "target": "111"
+    },
+    {
+      "source": "111",
+      "target": "112"
+    },
+    {
+      "source": "11",
+      "target": "7"
+    },
+    {
+      "source": "11",
+      "target": "10"
+    },
+    {
+      "source": "11",
+      "target": "113"
+    },
+    {
+      "source": "103",
+      "target": "93"
+    },
+    {
+      "source": "103",
+      "target": "94"
+    },
+    {
+      "source": "103",
+      "target": "96"
+    },
+    {
+      "source": "103",
+      "target": "98"
+    },
+    {
+      "source": "103",
+      "target": "9"
+    },
+    {
+      "source": "9",
+      "target": "6"
+    },
+    {
+      "source": "9",
+      "target": "7"
+    },
+    {
+      "source": "9",
+      "target": "8"
+    },
+    {
+      "source": "8",
+      "target": "91"
+    },
+    {
+      "source": "8",
+      "target": "92"
+    },
+    {
+      "source": "8",
+      "target": "93"
+    },
+    {
+      "source": "8",
+      "target": "94"
+    },
+    {
+      "source": "8",
+      "target": "95"
+    },
+    {
+      "source": "8",
+      "target": "96"
+    },
+    {
+      "source": "8",
+      "target": "97"
+    },
+    {
+      "source": "8",
+      "target": "98"
+    },
+    {
+      "source": "8",
+      "target": "99"
+    },
+    {
+      "source": "8",
+      "target": "100"
+    },
+    {
+      "source": "8",
+      "target": "101"
+    },
+    {
+      "source": "8",
+      "target": "102"
+    },
+    {
+      "source": "8",
+      "target": "7"
+    },
+    {
+      "source": "8",
+      "target": "87"
+    },
+    {
+      "source": "8",
+      "target": "4"
+    },
+    {
+      "source": "9",
+      "target": "46"
+    },
+    {
+      "source": "103",
+      "target": "5"
+    },
+    {
+      "source": "103",
+      "target": "155"
+    },
+    {
+      "source": "15",
+      "target": "124"
+    },
+    {
+      "source": "15",
+      "target": "125"
+    },
+    {
+      "source": "15",
+      "target": "119"
+    },
+    {
+      "source": "15",
+      "target": "138"
+    },
+    {
+      "source": "138",
+      "target": "46"
+    },
+    {
+      "source": "138",
+      "target": "47"
+    },
+    {
+      "source": "138",
+      "target": "48"
+    },
+    {
+      "source": "15",
+      "target": "134"
+    },
+    {
+      "source": "134",
+      "target": "96"
+    },
+    {
+      "source": "134",
+      "target": "151"
+    },
+    {
+      "source": "15",
+      "target": "132"
+    },
+    {
+      "source": "132",
+      "target": "97"
+    },
+    {
+      "source": "15",
+      "target": "10"
+    },
+    {
+      "source": "15",
+      "target": "156"
+    },
+    {
+      "source": "52",
+      "target": "61"
+    },
+    {
+      "source": "52",
+      "target": "62"
+    },
+    {
+      "source": "62",
+      "target": "15"
+    },
+    {
+      "source": "62",
+      "target": "19"
+    },
+    {
+      "source": "19",
+      "target": "15"
+    },
+    {
+      "source": "19",
+      "target": "17"
+    },
+    {
+      "source": "17",
+      "target": "139"
+    },
+    {
+      "source": "17",
+      "target": "140"
+    },
+    {
+      "source": "17",
+      "target": "141"
+    },
+    {
+      "source": "17",
+      "target": "142"
+    },
+    {
+      "source": "17",
+      "target": "143"
+    },
+    {
+      "source": "17",
+      "target": "144"
+    },
+    {
+      "source": "17",
+      "target": "145"
+    },
+    {
+      "source": "17",
+      "target": "13"
+    },
+    {
+      "source": "17",
+      "target": "29"
+    },
+    {
+      "source": "17",
+      "target": "83"
+    },
+    {
+      "source": "17",
+      "target": "84"
+    },
+    {
+      "source": "19",
+      "target": "157"
+    },
+    {
+      "source": "52",
+      "target": "63"
+    },
+    {
+      "source": "63",
+      "target": "15"
+    },
+    {
+      "source": "2",
+      "target": "53"
+    },
+    {
+      "source": "53",
+      "target": "5"
+    },
+    {
+      "source": "53",
+      "target": "10"
+    },
+    {
+      "source": "53",
+      "target": "11"
+    },
+    {
+      "source": "53",
+      "target": "15"
+    },
+    {
+      "source": "53",
+      "target": "19"
+    },
+    {
+      "source": "2",
+      "target": "1"
+    },
+    {
+      "source": "12",
+      "target": "115"
+    },
+    {
+      "source": "12",
+      "target": "116"
+    },
+    {
+      "source": "12",
+      "target": "117"
+    },
+    {
+      "source": "12",
+      "target": "29"
+    },
+    {
+      "source": "12",
+      "target": "7"
+    },
+    {
+      "source": "12",
+      "target": "97"
+    },
+    {
+      "source": "12",
+      "target": "9"
+    },
+    {
+      "source": "12",
+      "target": "118"
+    },
+    {
+      "source": "12",
+      "target": "4"
+    },
+    {
+      "source": "12",
+      "target": "10"
+    },
+    {
+      "source": "12",
+      "target": "46"
+    },
+    {
+      "source": "12",
+      "target": "114"
+    },
+    {
+      "source": "14",
+      "target": "128"
+    },
+    {
+      "source": "128",
+      "target": "92"
+    },
+    {
+      "source": "128",
+      "target": "146"
+    },
+    {
+      "source": "14",
+      "target": "129"
+    },
+    {
+      "source": "129",
+      "target": "93"
+    },
+    {
+      "source": "129",
+      "target": "147"
+    },
+    {
+      "source": "14",
+      "target": "130"
+    },
+    {
+      "source": "130",
+      "target": "94"
+    },
+    {
+      "source": "14",
+      "target": "131"
+    },
+    {
+      "source": "131",
+      "target": "95"
+    },
+    {
+      "source": "131",
+      "target": "4"
+    },
+    {
+      "source": "131",
+      "target": "148"
+    },
+    {
+      "source": "14",
+      "target": "132"
+    },
+    {
+      "source": "14",
+      "target": "133"
+    },
+    {
+      "source": "133",
+      "target": "98"
+    },
+    {
+      "source": "14",
+      "target": "134"
+    },
+    {
+      "source": "14",
+      "target": "135"
+    },
+    {
+      "source": "135",
+      "target": "100"
+    },
+    {
+      "source": "135",
+      "target": "150"
+    },
+    {
+      "source": "14",
+      "target": "136"
+    },
+    {
+      "source": "136",
+      "target": "152"
+    },
+    {
+      "source": "14",
+      "target": "137"
+    },
+    {
+      "source": "137",
+      "target": "153"
+    },
+    {
+      "source": "14",
+      "target": "8"
+    },
+    {
+      "source": "14",
+      "target": "13"
+    },
+    {
+      "source": "16",
+      "target": "5"
+    },
+    {
+      "source": "16",
+      "target": "105"
+    },
+    {
+      "source": "16",
+      "target": "14"
+    },
+    {
+      "source": "16",
+      "target": "15"
+    },
+    {
+      "source": "16",
+      "target": "128"
+    },
+    {
+      "source": "16",
+      "target": "132"
+    },
+    {
+      "source": "16",
+      "target": "133"
+    },
+    {
+      "source": "16",
+      "target": "82"
+    },
+    {
+      "source": "16",
+      "target": "156"
+    },
+    {
+      "source": "16",
+      "target": "66"
+    },
+    {
+      "source": "16",
+      "target": "56"
+    },
+    {
+      "source": "16",
+      "target": "57"
+    },
+    {
+      "source": "18",
+      "target": "146"
+    },
+    {
+      "source": "18",
+      "target": "147"
+    },
+    {
+      "source": "18",
+      "target": "148"
+    },
+    {
+      "source": "18",
+      "target": "149"
+    },
+    {
+      "source": "18",
+      "target": "150"
+    },
+    {
+      "source": "18",
+      "target": "151"
+    },
+    {
+      "source": "18",
+      "target": "152"
+    },
+    {
+      "source": "18",
+      "target": "153"
+    },
+    {
+      "source": "18",
+      "target": "17"
+    },
+    {
+      "source": "68",
+      "target": "66"
+    },
+    {
+      "source": "68",
+      "target": "4"
+    },
+    {
+      "source": "85",
+      "target": "87"
+    },
+    {
+      "source": "86",
+      "target": "87"
+    },
+    {
+      "source": "158",
+      "target": "157"
+    },
+    {
+      "source": "158",
+      "target": "56"
+    },
+    {
+      "source": "160",
+      "target": "161"
+    },
+    {
+      "source": "161",
+      "target": "6"
+    },
+    {
+      "source": "161",
+      "target": "7"
+    },
+    {
+      "source": "161",
+      "target": "8"
+    },
+    {
+      "source": "161",
+      "target": "9"
+    },
+    {
+      "source": "161",
+      "target": "12"
+    },
+    {
+      "source": "161",
+      "target": "13"
+    },
+    {
+      "source": "161",
+      "target": "14"
+    },
+    {
+      "source": "161",
+      "target": "17"
+    },
+    {
+      "source": "161",
+      "target": "18"
+    },
+    {
+      "source": "160",
+      "target": "162"
+    },
+    {
+      "source": "162",
+      "target": "3"
+    },
+    {
+      "source": "162",
+      "target": "103"
+    },
+    {
+      "source": "162",
+      "target": "5"
+    },
+    {
+      "source": "162",
+      "target": "15"
+    },
+    {
+      "source": "162",
+      "target": "16"
+    },
+    {
+      "source": "162",
+      "target": "19"
+    }
+  ],
+  "categories": [
+    {
+      "name": "信号介绍"
+    },
+    {
+      "name": "信号分类"
+    },
+    {
+      "name": "信号变换"
+    },
+    {
+      "name": "信号运算"
+    },
+    {
+      "name": "基本信号"
+    },
+    {
+      "name": "系统性质"
+    },
+    {
+      "name": "系统表示"
+    },
+    {
+      "name": "系统分析方法"
+    },
+    {
+      "name": "采样频率"
+    },
+    {
+      "name": "奈奎斯特频率"
+    },
+    {
+      "name": "混叠"
+    },
+    {
+      "name": "线性（s变换）"
+    },
+    {
+      "name": "时移特性（s变换）"
+    },
+    {
+      "name": "s域移位"
+    },
+    {
+      "name": "时间尺度变换（s变换）"
+    },
+    {
+      "name": "时域积分（s变换）"
+    },
+    {
+      "name": "s域微分"
+    },
+    {
+      "name": "初值定理（s变换）"
+    },
+    {
+      "name": "中值定理（s变换）"
+    },
+    {
+      "name": "时间反转"
+    },
+    {
+      "name": "信号"
+    },
+    {
+      "name": "系统"
+    }
+  ],
+  "hash": "53929790"
+}

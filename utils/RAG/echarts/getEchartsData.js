@@ -1,18 +1,18 @@
 // 获取echarts数据 力导向图
 function generateGraphData(fullData, graphNameList) {
     const colorList = [
-        "#00B4D8",
-        "#0096C7",
-        "#023EBA",
-        "#03045E",
-        "#4361EE",
-        "#4895EF",
-        "#56CFE1",
-        "#72EFDD",
-        "#80FFDB",
+        "#3B82F6", // 蓝色：掌握程度很低（冷静）
+        "#06B6D4", // 青色：刚开始理解
+        "#10B981", // 绿色：基本掌握
+        "#84CC16", // 黄绿：较熟练
+        "#FACC15", // 黄色：熟练
+        "#FB923C", // 橙色：掌握良好
+        "#F97316", // 深橙：接近精通
+        "#EF4444", // 红色：精通、高亮
+        "#B91C1C"  // 深红：专家级
     ]
 
-    const graphData = { data: [] }
+    const graphData = { data: [], hash: Math.random().toString().slice(2, 10) }
     const graphSet = new Set()
 
     function getGraphData(obj, key, index) {
@@ -41,22 +41,9 @@ function generateGraphData(fullData, graphNameList) {
         })
     }
 
-    // 确保输出目录存在
-    const outputDir = path.join(__dirname, 'graphData')
-
-    if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true })
-    }
-
     for (const key in fullData) {
         getGraphData(fullData[key], key, 0)
     }
-
-    // ✅ 循环结束后只保存一次
-    const outputPath = path.join(outputDir, 'echartsData.json')
-    fs.writeFileSync(outputPath, JSON.stringify(graphData, null, 2))
-
-    console.log('✅ 图数据已成功写入到: ', outputPath)
 
     return graphData
 }
@@ -65,7 +52,7 @@ function generateGraphData(fullData, graphNameList) {
 function labelGraphData(fullData, graphNameList) {
     const sizeList = [33.33, 22.78, 13.64, 6.32, 2.67]
 
-    const labelData = { nodes: [], links: [], categories: [] }
+    const labelData = { nodes: [], links: [], categories: [], hash: Math.random().toString().slice(2, 10) }
     const labelSet = new Set()
     const categoryName = []
 
@@ -137,18 +124,10 @@ function labelGraphData(fullData, graphNameList) {
         })
     }
 
-    // 确保输出目录存在
-    const outputDir = path.join(__dirname, 'labelData')
-
-    if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, { recursive: true })
-    }
-
-    // ✅ 循环结束后只保存一次
-    const outputPath = path.join(outputDir, 'labelData.json')
-    fs.writeFileSync(outputPath, JSON.stringify(labelData, null, 2))
-
-    console.log('✅ 图数据已成功写入到: ', outputPath)
-
     return labelData
+}
+
+module.exports = {
+    generateGraphData,
+    labelGraphData
 }

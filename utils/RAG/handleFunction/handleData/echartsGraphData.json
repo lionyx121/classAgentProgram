@@ -1,0 +1,2198 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "name": "信号介绍",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "20",
+      "name": "信号分类",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "24",
+      "name": "连续性分类",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "29",
+      "name": "离散信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "30",
+      "name": "连续信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "25",
+      "name": "确定性分类",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "31",
+      "name": "确定信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "32",
+      "name": "随机信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "26",
+      "name": "周期性分类",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "33",
+      "name": "周期信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "118",
+      "name": "冲激串",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "34",
+      "name": "非周期信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "27",
+      "name": "能量和功率分类",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "35",
+      "name": "能量信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "36",
+      "name": "功率信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "28",
+      "name": "对称性分类",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "37",
+      "name": "奇信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "38",
+      "name": "偶信号",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "21",
+      "name": "信号变换",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "39",
+      "name": "反转",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "40",
+      "name": "平移",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "41",
+      "name": "尺度变换",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "22",
+      "name": "信号运算",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "42",
+      "name": "加法",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "43",
+      "name": "乘法",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "44",
+      "name": "微分",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "45",
+      "name": "积分",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "23",
+      "name": "基本信号",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "46",
+      "name": "冲激信号",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "87",
+      "name": "典型信号傅里叶变换",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "47",
+      "name": "阶跃信号",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "48",
+      "name": "三角信号",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "49",
+      "name": "实指数信号",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "50",
+      "name": "复指数信号",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "2",
+      "name": "系统介绍",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "51",
+      "name": "系统性质",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "54",
+      "name": "线性",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "55",
+      "name": "时不变性",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "56",
+      "name": "因果性",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "57",
+      "name": "稳定性",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "159",
+      "name": "jw 轴",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "127",
+      "name": "单位圆",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "58",
+      "name": "记忆性",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "59",
+      "name": "可逆性",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "52",
+      "name": "系统表示",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "60",
+      "name": "方程",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "15",
+      "name": "LTI系统复频域分析",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "5",
+      "name": "电路系统时域分析",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "3",
+      "name": "LTI系统时域分析",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "69",
+      "name": "激励",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "4",
+      "name": "卷积计算",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "71",
+      "name": "卷积性质",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "73",
+      "name": "微分",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "74",
+      "name": "积分",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "75",
+      "name": "微分积分",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "76",
+      "name": "时移性质",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "77",
+      "name": "与冲激函数及其各阶导数卷积",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "78",
+      "name": "与阶跃函数卷积",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "72",
+      "name": "计算方法",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "79",
+      "name": "图解法",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "80",
+      "name": "解析法",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "81",
+      "name": "性质法",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "61",
+      "name": "系统函数",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "154",
+      "name": "h(t)",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "155",
+      "name": "H(jw)",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "156",
+      "name": "H(s)",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "13",
+      "name": "拉普拉斯变换和收敛域",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "119",
+      "name": "收敛域（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "120",
+      "name": "时限信号（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "140",
+      "name": "时限序列（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "121",
+      "name": "左边信号（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "141",
+      "name": "左边序列（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "122",
+      "name": "右边信号（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "142",
+      "name": "右边序列（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "123",
+      "name": "双边信号（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "143",
+      "name": "双边序列（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "124",
+      "name": "极点（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "144",
+      "name": "极点（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "157",
+      "name": "H(z)",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "145",
+      "name": "零点（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "139",
+      "name": "收敛域（z域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "125",
+      "name": "零点（s域）",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "7",
+      "name": "非周期信号傅里叶变换",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "88",
+      "name": "频谱分析",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "89",
+      "name": "幅度频谱",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "90",
+      "name": "相位频谱",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "6",
+      "name": "周期信号傅里叶级数分析",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "83",
+      "name": "高等数学",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "84",
+      "name": "数学物理方法",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "126",
+      "name": "控制原理",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "70",
+      "name": "响应",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "64",
+      "name": "零输入响应",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "65",
+      "name": "零状态响应",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "66",
+      "name": "冲激响应",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "67",
+      "name": "阶跃响应",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "82",
+      "name": "电路分析基础",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "103",
+      "name": "LTI系统频域分析",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "10",
+      "name": "滤波器",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "104",
+      "name": "理想滤波器",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "106",
+      "name": "理想低通",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "107",
+      "name": "理想高通",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "108",
+      "name": "理想带通",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "109",
+      "name": "理想带阻",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "105",
+      "name": "实际滤波器",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "114",
+      "name": "数字信号处理",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "11",
+      "name": "通信系统",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "110",
+      "name": "调制",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "112",
+      "name": "频谱搬移",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "94",
+      "name": "频移特性",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "96",
+      "name": "时域卷积定理（频域）",
+      "color": "#B91C1C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "111",
+      "name": "解调",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "113",
+      "name": "通信原理",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "93",
+      "name": "时移特性（频域）",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "98",
+      "name": "时域微分（频域）",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "9",
+      "name": "周期信号傅里叶变换",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "8",
+      "name": "傅里叶变换性质",
+      "color": "#F97316",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "91",
+      "name": "对偶性（频域）",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "92",
+      "name": "线性（频域）",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "95",
+      "name": "尺度变换特性（频域）",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "97",
+      "name": "频域卷积定理",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "99",
+      "name": "时域积分（频域）",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "100",
+      "name": "频域微分",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "101",
+      "name": "频域积分",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "102",
+      "name": "帕斯瓦尔定理",
+      "color": "#EF4444",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "138",
+      "name": "典型信号拉普拉斯变换",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "134",
+      "name": "时域卷积定理（s变换）",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "151",
+      "name": "卷积性质（z变换）",
+      "color": "#FB923C",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "132",
+      "name": "时域微分（s变换）",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "62",
+      "name": "框图",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "19",
+      "name": "LTI系统Z域分析",
+      "color": "#84CC16",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "17",
+      "name": "Z变换和收敛域",
+      "color": "#FACC15",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "63",
+      "name": "流图",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "53",
+      "name": "系统分析方法",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "1",
+      "name": "信号介绍",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "3",
+      "name": "LTI系统时域分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "4",
+      "name": "卷积计算",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "5",
+      "name": "电路系统时域分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "6",
+      "name": "周期信号傅里叶级数分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "7",
+      "name": "非周期信号傅里叶变换",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "8",
+      "name": "傅里叶变换性质",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "9",
+      "name": "周期信号傅里叶变换",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "10",
+      "name": "滤波器",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "11",
+      "name": "通信系统",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "12",
+      "name": "抽样定理",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "115",
+      "name": "采样频率",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "116",
+      "name": "奈奎斯特频率",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "117",
+      "name": "混叠",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "13",
+      "name": "拉普拉斯变换和收敛域",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "14",
+      "name": "拉普拉斯变换性质",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "128",
+      "name": "线性（s变换）",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "146",
+      "name": "线性（z变换）",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "129",
+      "name": "时移特性（s变换）",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "147",
+      "name": "时移特性（z变换）",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "130",
+      "name": "s域移位",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "131",
+      "name": "时间尺度变换（s变换）",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "148",
+      "name": "尺度变换（z变换）",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "133",
+      "name": "时域积分（s变换）",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "135",
+      "name": "s域微分",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "150",
+      "name": "z域微分",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "136",
+      "name": "初值定理（s变换）",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "152",
+      "name": "初值定理（z变换）",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "137",
+      "name": "中值定理（s变换）",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "153",
+      "name": "中值定理（z变换）",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "15",
+      "name": "LTI系统复频域分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "16",
+      "name": "电路系统s域分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "14",
+      "name": "拉普拉斯变换性质",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "17",
+      "name": "Z变换和收敛域",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "18",
+      "name": "Z变换性质",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "149",
+      "name": "时间反转",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "19",
+      "name": "LTI系统Z域分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "20",
+      "name": "信号分类",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "21",
+      "name": "信号变换",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "22",
+      "name": "信号运算",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "23",
+      "name": "基本信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "24",
+      "name": "连续性分类",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "25",
+      "name": "确定性分类",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "26",
+      "name": "周期性分类",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "27",
+      "name": "能量和功率分类",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "28",
+      "name": "对称性分类",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "29",
+      "name": "离散信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "30",
+      "name": "连续信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "31",
+      "name": "确定信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "32",
+      "name": "随机信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "33",
+      "name": "周期信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "34",
+      "name": "非周期信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "35",
+      "name": "能量信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "36",
+      "name": "功率信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "37",
+      "name": "奇信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "38",
+      "name": "偶信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "39",
+      "name": "反转",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "40",
+      "name": "平移",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "41",
+      "name": "尺度变换",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "42",
+      "name": "加法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "43",
+      "name": "乘法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "44",
+      "name": "微分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "45",
+      "name": "积分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "46",
+      "name": "冲激信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "47",
+      "name": "阶跃信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "48",
+      "name": "三角信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "49",
+      "name": "实指数信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "50",
+      "name": "复指数信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "51",
+      "name": "系统性质",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "52",
+      "name": "系统表示",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "53",
+      "name": "系统分析方法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "54",
+      "name": "线性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "55",
+      "name": "时不变性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "56",
+      "name": "因果性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "57",
+      "name": "稳定性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "58",
+      "name": "记忆性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "59",
+      "name": "可逆性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "60",
+      "name": "方程",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "61",
+      "name": "系统函数",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "62",
+      "name": "框图",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "63",
+      "name": "流图",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "64",
+      "name": "零输入响应",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "65",
+      "name": "零状态响应",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "66",
+      "name": "冲激响应",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "67",
+      "name": "阶跃响应",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "68",
+      "name": "任意激励下的响应",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "69",
+      "name": "激励",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "70",
+      "name": "响应",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "71",
+      "name": "卷积性质",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "72",
+      "name": "计算方法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "73",
+      "name": "微分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "74",
+      "name": "积分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "75",
+      "name": "微分积分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "76",
+      "name": "时移性质",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "77",
+      "name": "与冲激函数及其各阶导数卷积",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "78",
+      "name": "与阶跃函数卷积",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "79",
+      "name": "图解法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "80",
+      "name": "解析法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "81",
+      "name": "性质法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "82",
+      "name": "电路分析基础",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "83",
+      "name": "高等数学",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "84",
+      "name": "数学物理方法",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "85",
+      "name": "矩形脉冲信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "86",
+      "name": "直流信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "87",
+      "name": "典型信号傅里叶变换",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "88",
+      "name": "频谱分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "89",
+      "name": "幅度频谱",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "90",
+      "name": "相位频谱",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "91",
+      "name": "对偶性（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "92",
+      "name": "线性（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "93",
+      "name": "时移特性（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "94",
+      "name": "频移特性",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "95",
+      "name": "尺度变换特性（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "96",
+      "name": "时域卷积定理（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "97",
+      "name": "频域卷积定理",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "98",
+      "name": "时域微分（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "99",
+      "name": "时域积分（频域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "100",
+      "name": "频域微分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "101",
+      "name": "频域积分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "102",
+      "name": "帕斯瓦尔定理",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "103",
+      "name": "LTI系统频域分析",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "104",
+      "name": "理想滤波器",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "105",
+      "name": "实际滤波器",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "106",
+      "name": "理想低通",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "107",
+      "name": "理想高通",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "108",
+      "name": "理想带通",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "109",
+      "name": "理想带阻",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "110",
+      "name": "调制",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "111",
+      "name": "解调",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "112",
+      "name": "频谱搬移",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "113",
+      "name": "通信原理",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "114",
+      "name": "数字信号处理",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "115",
+      "name": "采样频率",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "116",
+      "name": "奈奎斯特频率",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "117",
+      "name": "混叠",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "118",
+      "name": "冲激串",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "119",
+      "name": "收敛域（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "120",
+      "name": "时限信号（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "121",
+      "name": "左边信号（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "122",
+      "name": "右边信号（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "123",
+      "name": "双边信号（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "124",
+      "name": "极点（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "125",
+      "name": "零点（s域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "126",
+      "name": "控制原理",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "127",
+      "name": "单位圆",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "128",
+      "name": "线性（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "129",
+      "name": "时移特性（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "130",
+      "name": "s域移位",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "131",
+      "name": "时间尺度变换（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "132",
+      "name": "时域微分（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "133",
+      "name": "时域积分（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "134",
+      "name": "时域卷积定理（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "135",
+      "name": "s域微分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "136",
+      "name": "初值定理（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "137",
+      "name": "中值定理（s变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "138",
+      "name": "典型信号拉普拉斯变换",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "139",
+      "name": "收敛域（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "140",
+      "name": "时限序列（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "141",
+      "name": "左边序列（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "142",
+      "name": "右边序列（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "143",
+      "name": "双边序列（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "144",
+      "name": "极点（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "145",
+      "name": "零点（z域）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "146",
+      "name": "线性（z变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "147",
+      "name": "时移特性（z变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "148",
+      "name": "尺度变换（z变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "149",
+      "name": "时间反转",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "150",
+      "name": "z域微分",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "151",
+      "name": "卷积性质（z变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "152",
+      "name": "初值定理（z变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "153",
+      "name": "中值定理（z变换）",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "154",
+      "name": "h(t)",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "155",
+      "name": "H(jw)",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "156",
+      "name": "H(s)",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "157",
+      "name": "H(z)",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "158",
+      "name": "h[n]",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "159",
+      "name": "jw 轴",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "160",
+      "name": "信号与系统",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "161",
+      "name": "信号",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "12",
+      "name": "抽样定理",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "18",
+      "name": "Z变换性质",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "162",
+      "name": "系统",
+      "color": "#06B6D4",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "16",
+      "name": "电路系统s域分析",
+      "color": "#10B981",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "161",
+      "name": "信号",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    },
+    {
+      "id": "162",
+      "name": "系统",
+      "color": "#3B82F6",
+      "symbolSize": 20,
+      "draggable": true
+    }
+  ],
+  "hash": "37519871"
+}

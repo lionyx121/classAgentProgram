@@ -25,25 +25,23 @@ router.post('/getClientId', async (req, res) => {
     const content = questions[questions.length - 1].content
 
     // 调用getEmbedding函数获取相似度高的数据
-    const similarity = await getEmbedding(content)
+    const similarityData = await getEmbedding(content)
+    const similarityList = similarityData.filter(item => item.cosine > 0.4)
+
+    const similarity = similarityList.splice(0, 3)
 
     // 获取similarity中相关知识点的标题
-    const similarityTitle = similarity.map(item =>{
-      if(item.cosine > 0.5) return item.id
+    const similarityTitle = similarity.map(item => {
+      if (item.cosine > 0.5) return item.id
     })
 
-    // console.log(similarity)
-    // console.log(similarityTitle)
-    
-    // 调用scoreQuestion获取用户当前提问问题的评分
+    // 调用scoreQuestion获取用户当前提问问题的评分, 同时生成用户可能感兴趣题目的问题
     const prideData = await scoreQuestion(content, similarityTitle)
-
-    console.log(prideData)
 
     // 更新用户知识点向量表
     const user = await User.findOne({ userid }).lean()
     const oldEmbedding = user.embeddings || []
-    const newEmbedding = updateEmbedding(oldEmbedding, similarity)
+    const newEmbedding = updateEmbedding(oldEmbedding, similarityList)
     await User.updateOne(
       { userid },
       { $set: { embeddings: newEmbedding } }
@@ -61,15 +59,11 @@ router.post('/getClientId', async (req, res) => {
         )
     )
 
-    // let str = '相关知识点：'
-    // // 对最后一项question的content根据similarity添加说明
-    // str += `${similarity[0].id}(${similarity[0].cosine.toString().slice(0, 7)})、`
-    // questions[questions.length - 1].content += '它可能与这个知识点相关' + str
-
     const data = {
       userid,
       username,
       questions,
+      similarityList
     }
     userMap.set(clientid, data)
     res.status(200).json({
@@ -77,13 +71,14 @@ router.post('/getClientId', async (req, res) => {
       msg: '获取clientid成功',
       clientid,
       similarity,
+      recommendQuestions: prideData.questions
     })
   } catch (error) {
-    console.log(error)
+    console.error('❌ /getClientId 出错详情：', error)
     res.status(400).json({
       code: 1001,
       msg: '获取clientid失败',
-      error
+      error: error.message || error
     })
   }
 })
@@ -101,7 +96,7 @@ router.get('/connetSSE', async (req, res) => {
   }
 
   // 从userMap中去获得相关的信息
-  const { username, userid, questions } = userMap.get(clientid)
+  const { username, userid, questions, similarityList } = userMap.get(clientid)
 
   // ---- 给前端（浏览器）设置 SSE 头 ----
   res.setHeader('Content-Type', 'text/event-stream; charset=utf-8');
@@ -274,6 +269,28 @@ router.get('/connetSSE', async (req, res) => {
     }
     clearInterval(heartbeat);
     if (upstream?.data?.destroy) upstream.data.destroy();
+
+    // 更新timeline
+    await User.updateOne(
+      {
+        username,
+        "history.chatHistory.0.createTime": firstCreateTime
+      },
+      {
+        $push: {
+          "history.$.timeLine.timeLineEmbedding": {
+            time: new Date(),
+            classList: similarityList // ← 本次问答相关的知识点数组
+          }
+        }
+      }
+    )
+
+    // 清理当前usermap里面的clientid防止内存过大
+    if (userMap.has(clientid)) {
+      userMap.delete(clientid)
+      console.log(`🧹 已清理 clientid=${clientid} 对应的会话缓存`)
+    }
   });
 });
 
@@ -317,11 +334,10 @@ router.get('/getHistory', async (req, res) => {
     return res.status(500).json({
       success: false,
       message: 'Internal server error',
+      error: error.message || error
     })
   }
 })
-
-
 
 
 module.exports = router;

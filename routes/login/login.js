@@ -73,9 +73,8 @@ router.post('/sendCode', async (req, res) => {
             text: `您的验证码是 ${code}，有效期 5 分钟。`
         })
         res.json({ msg: '验证码已发送', code: 0 })
-    } catch (err) {
-        console.error(err)
-        res.status(400).json({ msg: '邮件发送失败' })
+    } catch (error) {
+        res.status(400).json({ msg: '邮件发送失败', error: error.message || error })
     }
 });
 
@@ -125,7 +124,7 @@ router.post('/verifyCode', async (req, res) => {
 
                     const embeddings = []
                     for (let i = 0; i < length; i++) {
-                        embeddings.push({ className: doc.data[i].className, classKey: doc.data[i].classKey, pride: 0 })
+                        embeddings.push({ className: doc.data[i].className, classKey: doc.data[i].classKey, interest: 0, mastery: 0 })
                     }
 
                     const userid = (username + 'lionyx' + Math.random().toString().slice(2, 8)).split('').reverse().join('')
@@ -148,7 +147,7 @@ router.post('/verifyCode', async (req, res) => {
             }
         }
     } catch (error) {
-        res.status(400).json({ msg: '参数错误', error, code: 1001 })
+        res.status(400).json({ msg: '参数错误', error: error.message || error, code: 1001 })
     }
 })
 
