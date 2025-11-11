@@ -11,7 +11,6 @@ const showData = ref('')
 const isTypeWriting = ref(false)
 const emit = defineEmits(['content-update'])
 
-
 // 打字机效果
 let timer: any = null
 const typeWriter = () => {

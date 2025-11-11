@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { nextTick, ref, watch } from 'vue'
-import { useLayoutStore } from '@/stores/layout'
 import { useChatStore } from '@/stores/chat'
 import { useRouter } from 'vue-router'
 import ActionMenu from '@/components/ActionMenu.vue'
 import { useSSE } from '@/common/js/useSSE'
+import { usePracticeStore } from '@/stores/practice'
+import mockData from '@/views/practice/mock'
 
-const layoutStore = useLayoutStore()
 const chatStore = useChatStore()
+const practiceStore = usePracticeStore()
 const dataList = ref<any[]>([])
 
 watch(() => chatStore.historyList, (newVal) => {
@@ -39,8 +40,10 @@ const onHistoryEnter = (item: any) => {
     isMenushow.value = item._id
 }
 const onHistoryLeave = () => {
+    practiceStore.updateQuestionShow(mockData[0])
     isMenushow.value = -1
 }
+
 
 // 菜单
 const menu = ref({
@@ -65,6 +68,10 @@ const onMenuClick = async (item: any, e: MouseEvent) => {
     menu.value.top = e.clientY
     menu.value.itemValue = item
 }
+
+const Topractice = () => {
+    router.push({ path: '/practice' })
+}
 </script>
 
 <template>
@@ -79,7 +86,7 @@ const onMenuClick = async (item: any, e: MouseEvent) => {
                 <van-icon name="edit" size="20" />
                 <span>新聊天</span>
             </div>
-            <div class="funcBox">
+            <div class="funcBox" @click="Topractice">
                 <van-icon name="search" size="20" />
                 <span>练习一下</span>
             </div>

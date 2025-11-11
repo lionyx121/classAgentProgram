@@ -55,8 +55,11 @@ onUnmounted(() => {
 
 const route = useRoute();
 const isGraph = ref(false)
+
+
 watch(() => route.path, (newPath) => {
-    isGraph.value = newPath.indexOf('/echarts') !== -1
+    // 只有main的时候需要展示输入框
+    isGraph.value = newPath !== '/main'
 }, { immediate: true })
 
 const test = ref(null)
