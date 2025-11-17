@@ -4,13 +4,20 @@ import { AGENTSERVERURL } from '@/common/env.ts'
 const instance = axios.create({
   baseURL: AGENTSERVERURL,
   timeout: 10000,
-  headers: { "X-Custom-Header": "foobar", "Content-Type": "application/json" },
+  headers: { "X-Custom-Header": "foobar" },
 });
 
 // 添加请求拦截器
 instance.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
+    
+    // 如果当前的数据中有formdata类型的数据我们就不加config.headers['Content-Type'] = 'application/json'请求头
+    if (Object.prototype.toString.call(config.data) === '[object FormData]') {
+      delete config.headers['Content-Type']
+    } else {
+      config.headers['Content-Type'] = 'application/json'
+    }
     return config;
   },
   function (error) {

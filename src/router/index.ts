@@ -7,6 +7,7 @@ import echartsLabel from '@/views/echartsLabel/index.vue'
 import todoList from '@/views/todoList/index.vue'
 import practice from '@/views/practice/index.vue'
 import homeMain from '@/views/HomeView/components/homeMain.vue'
+import option from '@/views/option/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +26,7 @@ const router = createRouter({
     { path: '/login', component: login },
     { path: '/test', component: test },
     { path: '/todoList', component: todoList },
+    { path: '/option', component: option },
   ],
 })
 

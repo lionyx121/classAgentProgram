@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import mockData from './mock'
 import md from '@/common/js/useMd';
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { usePracticeStore } from '@/stores/practice'
+
+onMounted(() => {
+    practiceStore.initQuestionShow()
+})
 
 // 当前滑入的选项
 const optionSlider = ref<string | null>(null)
@@ -10,15 +13,15 @@ const optionSlider = ref<string | null>(null)
 // 正确的选项
 const optionRight = ref<string | null>(null)
 
-// 错误的选项
+// 错误的选项（用户选择的）
 const optionWrong = ref<string | null>(null)
 
-// 鼠标滑入选项中
-const optionEnter = (optionKey: string) => {
-    if (optionWrong.value) return
+const practiceStore = usePracticeStore()
 
-    // 否则，将滑入的选项设为当前滑入的选项
-    optionSlider.value = optionKey
+// 鼠标滑入选项中
+const optionEnter = (key: string) => {
+    if (optionWrong.value) return
+    optionSlider.value = key
 }
 
 // 鼠标滑出
@@ -29,47 +32,58 @@ const optionLeave = () => {
 // 点击选项
 const optionClick = (optionItem: any, optionKey: string) => {
     if (optionWrong.value) return
-    // 对optionRight和optionWrong赋值
-    optionRight.value = optionItem['answer']
+
+    const current = practiceStore.questionShow[practiceStore.currentQuestionIndex]
+
+    // 正确答案 key（如 "A", "B"...）
+    const right = current.answer
+
+    optionRight.value = right
     optionWrong.value = optionKey
 }
 
-const practiceStore = usePracticeStore()
-
-// 清空当前的选项
+// 清空当前状态
 const clearOption = () => {
     optionSlider.value = null
     optionRight.value = null
     optionWrong.value = null
 }
 
-// 点击下一题
-const changeQuestion = (isnext = false) => {
-    // 点击下一题
-    clearOption()
-    if (isnext) {
-        practiceStore.updateQuestionShow(mockData[1])
+// 切换题目
+const changeQuestion = (isNext = true) => {
+    const len = practiceStore.questionShow.length
+    let index = practiceStore.currentQuestionIndex
+
+    if (isNext) {
+        index = Math.min(index + 1, len - 1)
     } else {
-        practiceStore.updateQuestionShow(mockData[0])
+        index = Math.max(index - 1, 0)
     }
+
+    practiceStore.currentQuestionIndex = index
+    clearOption()
 }
 </script>
 
+
 <template>
-    <div class="layout" v-if="practiceStore.questionShow">
+    <div class="layout" v-if="practiceStore.questionShow.length > 0">
         <!-- 题目部分 -->
-        <div class="questionBox" v-for="(item, index) in practiceStore.questionShow">
+        <div class="questionBox">
             <!-- 标题部分 -->
-            <div v-html="md.render(`(${index + 1})、${item.title}`)" class="questionBox-title"></div>
+            <div v-html="md.render(`(${practiceStore.currentQuestionIndex + 1})、${practiceStore.questionShow[practiceStore.currentQuestionIndex].title}`)"
+                class="questionBox-title"></div>
             <!-- 标题的图片部分 -->
-            <div class="option-img">
+            <!-- <div class="option-img">
                 <img src="./temp/data.png">
-            </div>
+            </div> -->
 
             <!-- 选项部分 -->
-            <div class="questionBox-options" v-for="(optionItem, optionKey) in item.options"
+            <div class="questionBox-options"
+                v-for="(optionItem, optionKey) in (({ _id, ...rest }) => rest)(practiceStore.questionShow[practiceStore.currentQuestionIndex].options)"
                 :class="{ isSlider: optionKey === optionSlider, selectRight: optionKey === optionRight, selectWrong: optionKey === optionWrong }"
-                @mouseenter="optionEnter(optionKey)" @mouseleave="optionLeave" @click="optionClick(item, optionKey)">
+                @mouseenter="optionEnter(optionKey)" @mouseleave="optionLeave"
+                @click="optionClick(optionItem, optionKey)">
                 <div class="item-box">
                     <!-- 左侧圆圈 -->
                     <div class="option-number">
@@ -78,8 +92,7 @@ const changeQuestion = (isnext = false) => {
                     <!-- 右侧内容 -->
                     <div class="option-container" v-html="md.render(optionItem)"></div>
                     <!-- 内容可能是图片 -->
-                    <img src="./temp/optionA.png" class="item-img">
-
+                    <!-- <img src="./temp/optionA.png" class="item-img"> -->
 
                     <!-- 是否正确 -->
                     <el-icon v-if="optionKey === optionRight">
@@ -99,7 +112,8 @@ const changeQuestion = (isnext = false) => {
             </div>
 
             <!-- 解析部分 -->
-            <div v-html="md.render(`解析：${item.analysis}`)" class="questionBox-analysis" v-if="optionWrong"></div>
+            <div v-html="md.render(`解析：${practiceStore.questionShow[practiceStore.currentQuestionIndex].analysis}`)"
+                class="questionBox-analysis" v-if="optionWrong"></div>
         </div>
     </div>
 </template>

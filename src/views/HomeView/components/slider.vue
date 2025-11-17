@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router'
 import ActionMenu from '@/components/ActionMenu.vue'
 import { useSSE } from '@/common/js/useSSE'
 import { usePracticeStore } from '@/stores/practice'
-import mockData from '@/views/practice/mock'
 
 const chatStore = useChatStore()
 const practiceStore = usePracticeStore()
@@ -40,10 +39,8 @@ const onHistoryEnter = (item: any) => {
     isMenushow.value = item._id
 }
 const onHistoryLeave = () => {
-    practiceStore.updateQuestionShow(mockData[0])
     isMenushow.value = -1
 }
-
 
 // 菜单
 const menu = ref({
