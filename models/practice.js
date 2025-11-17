@@ -64,7 +64,11 @@ const classItemSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    key: {
+    numberKey: {
+        type: String,
+        required: true,
+    },
+    strKey: {
         type: String,
         required: true,
     },
