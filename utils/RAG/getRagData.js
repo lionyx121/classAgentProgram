@@ -128,21 +128,8 @@ async function scoreQuestion(str, relatedTopics = []) {
 
 ---
 
-### 评分标准（0~10）
-请根据**理解深度与提问质量**（而非知识点重要性）评分：
+请根据理解深度与提问质量（而非知识点重要性）为问题打分，分数范围为 0.00000 ~ 1.00000，允许小数，精确到小数点后 5 位。评分区间说明如下：0.00000 ~ 0.20000：无意义或无关提问（如：闲聊、寒暄、不涉及知识点，例如：“你好”、“随便讲讲信号？”）。0.20001 ~ 0.50000：基础概念级提问（表面理解、定义类问题，例如：“什么是冲激信号？”、“系统函数是什么意思？”）。0.50001 ~ 0.70000：应用或分析级提问（能将概念用于分析、理解系统行为，例如：“冲激响应如何描述系统特性？”、“为什么卷积能表示系统输出？”）。0.70001 ~ 0.90000：综合思考或跨知识点提问（能综合多个概念提出关联性问题，例如：“系统函数极点位置与系统稳定性的关系？”、“傅里叶变换如何帮助理解卷积运算？”）。0.90001 ~ 1.00000：高阶推理或研究级提问（涉及推理、拓展或创新问题，例如：“如何利用冲激响应推导系统在非线性条件下的稳态输出？”、“若系统极点随时间变化，如何判断其瞬时稳定性？”）。最终输出仅包含一个符合范围的数值。
 
-- **0~2分**：无意义、闲聊或与知识点无关  
-  例："你好"、"帮我讲讲信号"
-- **3~5分**：基础或概念性提问，体现初步理解  
-  例："什么是冲激信号"、"系统函数是什么意思"
-- **6~7分**：能联系知识点进行应用或分析  
-  例："冲激响应如何描述系统特性"
-- **8~9分**：具有综合性或创新思考  
-  例："系统函数极点位置与系统稳定性的关系"
-- **10分**：研究级或推理性问题  
-  例："如何利用冲激响应推导系统在非线性条件下的稳态输出"
-
----
 
 ### 延伸问题生成要求
 1. 结合这些知识点，生成 2~4 个用户可能感兴趣的深层或相关问题；
@@ -152,23 +139,18 @@ async function scoreQuestion(str, relatedTopics = []) {
 
 ---
 
-### 示例
-输入：
-问题：系统函数的极点和零点有什么意义
-相关知识点：系统函数、极点、零点
-
-输出：
 {
   "interest": {
-    "系统函数": 7.5,
-    "极点": 8,
-    "零点": 8
+    "系统函数": 0.75000,
+    "极点": 0.80000,
+    "零点": 0.80000
   },
   "questions": [
     "如何通过极点和零点位置判断系统稳定性？",
     "极点分布对系统的频率响应有何影响？"
   ]
-}`
+}
+`
 
     // 2️⃣ 如果没有相关知识点，只打单一分
     if (!relatedTopics || relatedTopics.length === 0) {
@@ -215,34 +197,50 @@ async function scoreQuestion(str, relatedTopics = []) {
 
 
 // 更新用户知识点向量表
-// lambda -> 时间衰减因子，默认 0.0495 (半衰期约14天)
-const updateEmbedding = (embedding, similarity, lambda = Math.log(2) / 14) => {
+const updateEmbedding = (embedding, similarity, mastery = {}) => {
+    const lambdaInterest = Math.log(2) / 3  // 🔥 interest：3 天半衰期（较快）
+    const lambdaMastery = Math.log(2) / 14   // 🔥 mastery：14 天半衰期（较慢）
+
     // 1️⃣ 时间衰减
     const timeDecayEmbedding = embedding.map(item => {
         const deltaDays = item.time ? (Date.now() - new Date(item.time)) / (1000 * 60 * 60 * 24) : 0
-        const decay = Math.exp(-lambda * deltaDays)
+
         return {
             ...item,
-            interest: item.interest * decay
+            interest: item.interest * Math.exp(-lambdaInterest * deltaDays),
+            mastery: item.mastery * Math.exp(-lambdaMastery * deltaDays)
         }
     })
 
-    // 2️⃣ 相似度加权
+    console.log(similarity)
+
+    // 2️⃣ 兴趣interest加权
+    // 2️⃣ 兴趣 interest 加权（指数平滑）
     similarity.forEach(sim => {
-        if (sim.cosine > 0.5) {
+        if (sim.cosine > 0.3) {
             const target = timeDecayEmbedding.find(t => t.className === sim.id)
             if (target) {
-                target.interest += sim.cosine
-                target.time = Date.now() // ✅ 更新该维度的时间戳
+                const weight = 0.3 // 行为影响程度（可调）
+
+                // 更新公式（指数移动平均）
+                target.interest = target.interest * (1 - weight) + sim.cosine * weight
+
+                // 限制区间
+                target.interest = Math.min(1, Math.max(0, target.interest))
+
+                target.time = Date.now()
             }
         }
     })
 
-    // 3️⃣ 归一化
-    let sum = Math.sqrt(timeDecayEmbedding.reduce((s, i) => s + i.interest ** 2, 0))
-
-    if (sum === 0) return timeDecayEmbedding
-    timeDecayEmbedding.forEach(i => { i.interest /= sum })
+    // 3️⃣ 掌握mastery加权
+    Object.keys(mastery).forEach(key => {
+        const target = timeDecayEmbedding.find(t => t.className === key)
+        if (target) {
+            target.mastery = Math.min(1, (target.mastery + mastery[key] * 0.5))
+            target.time = Date.now() // ✅ 更新该维度的时间戳
+        }
+    })
 
     return timeDecayEmbedding
 }

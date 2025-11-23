@@ -72,6 +72,18 @@ const userSchema = new mongoose.Schema({
     embeddings: {
         type: [embeddingSchema],
         default: []
+    },
+
+    // 管理用户做对、错的题库
+    practiceRecord: {
+        correct: {
+            type: [String],
+            default: []
+        },
+        wrong: {
+            type: [String],
+            default: []
+        }
     }
 
 }, { timestamps: true })

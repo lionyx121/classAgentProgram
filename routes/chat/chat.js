@@ -35,13 +35,13 @@ router.post('/getClientId', async (req, res) => {
       if (item.cosine > 0.5) return item.id
     })
 
-    // 调用scoreQuestion获取用户当前提问问题的评分, 同时生成用户可能感兴趣题目的问题
+    // 调用获取用户当前提问问题的评分, 同时生成用户可能感兴趣题目的问题
     const prideData = await scoreQuestion(content, similarityTitle)
 
     // 更新用户知识点向量表
     const user = await User.findOne({ userid }).lean()
     const oldEmbedding = user.embeddings || []
-    const newEmbedding = updateEmbedding(oldEmbedding, similarityList)
+    const newEmbedding = updateEmbedding(oldEmbedding, similarityList, prideData.interest)
     await User.updateOne(
       { userid },
       { $set: { embeddings: newEmbedding } }

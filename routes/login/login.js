@@ -127,10 +127,16 @@ router.post('/verifyCode', async (req, res) => {
                         embeddings.push({ className: doc.data[i].className, classKey: doc.data[i].classKey, interest: 0, mastery: 0 })
                     }
 
+                    // 初始化用户的做对、错的题库
+                    const practiceRecord = {
+                        correct: [],
+                        wrong: []
+                    }
+
                     const userid = (username + 'lionyx' + Math.random().toString().slice(2, 8)).split('').reverse().join('')
                     await User.updateOne(
                         { username },
-                        { $set: { userid, email, embeddings, name: username } }, // ✅ 初始化name
+                        { $set: { userid, email, embeddings, name: username, practiceRecord } }, // ✅ 初始化name
                         { upsert: true }
                     )
 
