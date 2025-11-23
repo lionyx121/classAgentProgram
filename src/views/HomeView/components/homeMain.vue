@@ -3,7 +3,6 @@ import 'github-markdown-css'
 import { useChatStore } from '@/stores/chat'
 import kaomoji from 'kaomoji'
 import { ref, watch, onUnmounted } from 'vue'
-import { useSSE } from '@/common/js/useSSE'
 import md from '@/common/js/useMd'
 
 const chatStore = useChatStore()

@@ -21,7 +21,7 @@ const scrollToBottom = async () => {
     await nextTick() // 等待 DOM 更新
     const layout = document.querySelector(".main") as HTMLElement
     if (layout) {
-        layout.scrollTop = layout.scrollHeight
+        layout.scrollTop = layout.scrollHeight + 50
     }
 }
 
@@ -42,10 +42,10 @@ onMounted(async () => {
     echartsStore.updataData(rootData)
 
     chatStore.updataChatHistory()
-    // 开启一个30s的短轮询去更新历史记录
+    // 开启一个7s的短轮询去更新历史记录
     timer = setInterval(() => {
         chatStore.updataChatHistory()
-    }, 5000)
+    }, 7000)
 })
 
 onUnmounted(() => {
@@ -83,7 +83,7 @@ const test = ref(null)
             </div>
             <!-- 底部 -->
             <div class="footer" v-if="!isGraph">
-                <homeBottom></homeBottom>
+                <homeBottom @content-update="scrollToBottom"></homeBottom>
             </div>
         </div>
     </div>
@@ -141,6 +141,7 @@ const test = ref(null)
         .footer {
             min-height: 88px;
             max-height: 152px;
+            margin-top: 10px;
             overflow-y: auto;
         }
     }
