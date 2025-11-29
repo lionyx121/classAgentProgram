@@ -15,6 +15,10 @@ interface questionShow {
     answer: string,
     analysis: string,
     relatedKnowledgePoints: string[],
+    userSelect: string,
+    key: string,
+    DifficultyLevel: Number,
+    similarity: any
 }
 
 export const usePracticeStore = defineStore('practice', () => {
@@ -44,10 +48,16 @@ export const usePracticeStore = defineStore('practice', () => {
         questionShow.value = [newVal]
     }
 
+    // 当用户点击了选项之后，更新questionShow去记录用户的选择
+    const updateUserSelect = (select: string) => {
+        questionShow.value[currentQuestionIndex.value].userSelect = select
+    }
+
     return {
         questionShow,
         updateQuestionShow,
         initQuestionShow,
-        currentQuestionIndex
+        currentQuestionIndex,
+        updateUserSelect
     }
 })

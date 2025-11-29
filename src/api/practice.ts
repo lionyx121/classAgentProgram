@@ -7,3 +7,14 @@ export const uploadsPracticeData = (data: FormData) => {
 export const getPracticeData = (username: string): any => {
     return request.post('/api/practice/getPractice', { username })
 }
+
+export const submitAnswer = ({ username, questionKey, DifficultyLevel, similarity, seletcOption, selectResult }: any): any => {
+    return request.post('/api/practice/submitAnswer', {
+        username,
+        questionKey,
+        DifficultyLevel,
+        similarity,
+        seletcOption,
+        selectResult,
+    })
+}

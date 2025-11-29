@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import md from '@/common/js/useMd';
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { usePracticeStore } from '@/stores/practice'
+import { submitAnswer } from '@/api/practice'
+import { useUserInfoStore } from '@/stores/userInfo'
 
 onMounted(() => {
     practiceStore.initQuestionShow()
@@ -17,6 +19,7 @@ const optionRight = ref<string | null>(null)
 const optionWrong = ref<string | null>(null)
 
 const practiceStore = usePracticeStore()
+const userStore = useUserInfoStore()
 
 // 鼠标滑入选项中
 const optionEnter = (key: string) => {
@@ -30,16 +33,27 @@ const optionLeave = () => {
 }
 
 // 点击选项
-const optionClick = (optionItem: any, optionKey: string) => {
+const optionClick = async (optionItem: any, optionKey: string) => {
     if (optionWrong.value) return
 
     const current = practiceStore.questionShow[practiceStore.currentQuestionIndex]
+    // 更新用户选择
+    practiceStore.updateUserSelect(optionKey)
 
     // 正确答案 key（如 "A", "B"...）
     const right = current.answer
 
     optionRight.value = right
     optionWrong.value = optionKey
+
+    const res = await submitAnswer({
+        username: userStore.userInfo.username,
+        questionKey: current.key,
+        DifficultyLevel: current.DifficultyLevel,
+        similarity: current.similarity,
+        seletcOption: optionWrong.value,
+        selectResult: optionWrong.value === right ? 'right' : 'wrong',
+    })
 }
 
 // 清空当前状态
@@ -63,6 +77,16 @@ const changeQuestion = (isNext = true) => {
     practiceStore.currentQuestionIndex = index
     clearOption()
 }
+
+// 记录用户选择
+watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
+    const current = practiceStore.questionShow[practiceStore.currentQuestionIndex]
+    if (current.userSelect) {
+        optionWrong.value = current.userSelect
+        optionRight.value = current.answer
+    }
+})
+
 </script>
 
 

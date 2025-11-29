@@ -4,7 +4,7 @@ import type { ChatItem } from '@/types/chat'
 
 // 将recommendQuestions数组转换为markdown格式
 const recommendQuestionsToMd = (arr: any[]) => {
-  if (!arr.length) return
+  if (!arr) return
   let md = "\n\n 您可能对这些问题感兴趣：\n\n";
   arr.forEach((item, index) => {
     md += `${index + 1}. **${item}** \n`;

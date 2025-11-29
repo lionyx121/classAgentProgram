@@ -33,10 +33,6 @@ const sendMessage = async () => {
     // 判断是否登录
     if (isLogin()) {
         try {
-            // 更新isOutputing为true
-            chatStore.updataIsThinking(true)
-            console.log('zhou', chatStore.isThinking)
-
             // 拼接用户的输入信息 将其传入仓库之中
             chatStore.addHistory({
                 role: 'user',
@@ -52,10 +48,6 @@ const sendMessage = async () => {
                 username: userStroe.userInfo.username as string,
                 questions: chatStore.questions
             })
-            setTimeout(() => {
-                // 更新isOutputing为false
-                chatStore.updataIsThinking(false)
-            }, 500)
             if (res.code === 1000) {
                 // 保存这次的recommendQuestions
                 chatStore.updateRecommendQuestions(res?.recommendQuestions)
