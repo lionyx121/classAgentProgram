@@ -48,6 +48,40 @@ const chatHistoryManySchema = new mongoose.Schema({
     timeLine: { type: timeLineSchema }
 })
 
+const selectSchema = new mongoose.Schema({
+    result: {
+        type: String,
+        required: true
+    },
+    optionResult: {
+        type: String,
+        required: true
+    },
+    time: {
+        type: Date,
+        default: Date.now
+    }
+})
+
+const practiceRecordSchema = new mongoose.Schema({
+    key: {
+        type: String,
+        required: true
+    },
+    wrongCount: {
+        type: Number,
+        default: 0
+    },
+    rightCount: {
+        type: Number,
+        default: 0
+    },
+    selectResult: {
+        type: [selectSchema],
+        default: []
+    }
+})
+
 // 用户总体信息
 const userSchema = new mongoose.Schema({
     // 学号
@@ -76,14 +110,8 @@ const userSchema = new mongoose.Schema({
 
     // 管理用户做对、错的题库
     practiceRecord: {
-        correct: {
-            type: [String],
-            default: []
-        },
-        wrong: {
-            type: [String],
-            default: []
-        }
+        type: [practiceRecordSchema],
+        default: []
     }
 
 }, { timestamps: true })

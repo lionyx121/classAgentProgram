@@ -162,7 +162,7 @@ function pickTwoRandom(arr) {
     return [arr[index1], arr[index2]]
 }
 
-
+// 添加题库
 router.post('/addPractice', async (req, res) => {
     try {
         const { data } = req.body
@@ -215,7 +215,6 @@ router.post('/addPractice', async (req, res) => {
 //         res.status(200).json({ msg: '上传成功', file: req.files })
 //     }
 // )
-
 
 router.post('/getPractice', async (req, res) => {
     try {
@@ -286,5 +285,69 @@ router.post('/getPractice', async (req, res) => {
         res.status(500).json({ msg: '服务内部错误', error: error.message || error })
     }
 })
+
+// 提交答案
+router.post('/submitAnswer', async (req, res) => {
+    try {
+        const { username, questionKey, selectResult, selectOption } = req.body
+
+        if (!username || !questionKey) {
+            return res.status(400).json({ msg: '缺少必要参数' })
+        }
+
+        const isCorrect = selectResult === 'right'
+
+        // 如果有 我们更新数据
+        const updateResult = await User.updateOne(
+            {
+                username,
+                'practiceRecord.key': questionKey
+            },
+            {
+                $inc: {
+                    'practiceRecord.$.wrongCount': isCorrect ? 0 : 1,
+                    'practiceRecord.$.rightCount': isCorrect ? 1 : 0
+                },
+                $push: {
+                    'practiceRecord.$.selectResult': {
+                        result: selectResult,
+                        optionResult: selectOption,
+                        time: new Date()
+                    }
+                }
+            }
+        )
+
+        // 如果没有命中，说明不存在该题 → push 新数据
+        if (updateResult.matchedCount === 0) {
+            await User.updateOne(
+                { username },
+                {
+                    $push: {
+                        practiceRecord: {
+                            key: questionKey,
+                            wrongCount: isCorrect ? 0 : 1,
+                            rightCount: isCorrect ? 1 : 0,
+                            selectResult: [{
+                                result: selectResult,
+                                optionResult: selectOption,
+                                time: new Date()
+                            }]
+                        }
+                    }
+                }
+            )
+        }
+
+        res.status(200).json({ msg: '提交成功' })
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ msg: '服务内部错误', error: error.message || error })
+    }
+})
+
+
+
 
 module.exports = router
