@@ -4,16 +4,8 @@ import { useChatStore } from '@/stores/chat'
 import { useRouter } from 'vue-router'
 import ActionMenu from '@/components/ActionMenu.vue'
 import { useSSE } from '@/common/js/useSSE'
-import { usePracticeStore } from '@/stores/practice'
 
 const chatStore = useChatStore()
-const practiceStore = usePracticeStore()
-const dataList = ref<any[]>([])
-
-watch(() => chatStore.historyList, (newVal) => {
-    dataList.value = newVal
-})
-
 const router = useRouter()
 
 const { stop } = useSSE()
@@ -96,10 +88,10 @@ const Topractice = () => {
 
     <!-- 下半区域 -->
     <div class="history">
-        <div v-for="(item, i) in dataList" :key="item._id" @click="onHistoryClick(item)" class="item"
+        <div v-for="(item, i) in chatStore.historyList" :key="item._id" @click="onHistoryClick(item)" class="item"
             :class="{ active: i === chatStore.activeIndex }" @mouseenter="onHistoryEnter(item)"
             @mouseleave="onHistoryLeave">
-            <p>{{ item.title }}</p>
+            <div class="history-title">{{ item.title }}</div>
             <van-icon name="ellipsis" class="ellipsis" v-if="isMenushow === item._id" @click="onMenuClick(item, $event)"
                 size="20" />
         </div>
@@ -173,13 +165,24 @@ const Topractice = () => {
         margin: 0 auto 6px;
         border-radius: 15px;
         color: #fff;
-        padding: 0 15px;
         font-size: 14px;
         height: 40px;
         line-height: 40px;
         position: relative;
         cursor: pointer;
+        padding-left: 15px;
+        padding-right: 30px;
         transition: all 0.3s;
+
+
+        .history-title {
+            width: 95%;
+            /* 🔥 超出一行显示省略号 */
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
 
         .ellipsis {
             position: absolute;

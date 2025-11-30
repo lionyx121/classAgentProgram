@@ -58,6 +58,14 @@ export function useSSE(withCredentials = false) {
       console.log('ping', e.data.text)
     })
 
+
+    es.addEventListener('recommendQuestions', (e) => {
+      const data = JSON.parse(e.data)
+      // 保存这次的recommendQuestions
+      chatStore.updateRecommendQuestions(data.message)
+      console.log('recommendQuestions', data.message)
+    })
+
     es.addEventListener('done', () => {
       console.log('SSE服务关闭')
 

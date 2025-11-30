@@ -8,6 +8,11 @@ export const useLayoutStore = defineStore('layout', () => {
     // 去计算当前可视区域的高度
     const showHeight = ref(window.innerHeight)
 
+    // 更新isSilderShow
+    const updataIsSilderShow = () => {
+        isSilderShow.value = !isSilderShow.value
+    }
+
     window.onresize = () => {
         const width = window.innerWidth
         const height = window.innerHeight
@@ -17,6 +22,7 @@ export const useLayoutStore = defineStore('layout', () => {
 
     return {
         isSilderShow,
-        showHeight
+        showHeight,
+        updataIsSilderShow
     }
 })

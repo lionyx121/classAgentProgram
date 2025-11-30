@@ -1,10 +1,16 @@
+<script setup lang="ts">
+import { useLayoutStore } from '@/stores/layout'
+
+const layoutStore = useLayoutStore()
+</script>
+
 <template>
     <!-- 顶部 -->
     <div class="layout-header">
         <!-- 顶部 中心展示区域 -->
         <div class="layout-header-main">
             <!-- 打开侧边栏按钮 -->
-            <div class="icon-box">
+            <div class="icon-box" @click="layoutStore.updataIsSilderShow">
                 <img src="@/assets/icons/open.png"></img>
             </div>
             <!-- 顶部标题区域 -->
@@ -12,9 +18,9 @@
                 The Ocean University of China
             </div>
             <!-- 开启新对话按钮 -->
-            <div class="icon-box dialogue">
+            <!-- <div class="icon-box dialogue" >
                 <img src="@/assets/icons/newdialogue.png"></img>
-            </div>
+            </div> -->
         </div>
     </div>
 </template>
@@ -39,6 +45,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
 
             img {
                 width: 24px;
