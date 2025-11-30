@@ -212,8 +212,6 @@ const updateEmbedding = (embedding, similarity, mastery = {}) => {
         }
     })
 
-    console.log(similarity)
-
     // 2️⃣ 兴趣interest加权
     // 2️⃣ 兴趣 interest 加权（指数平滑）
     similarity.forEach(sim => {
@@ -237,7 +235,9 @@ const updateEmbedding = (embedding, similarity, mastery = {}) => {
     Object.keys(mastery).forEach(key => {
         const target = timeDecayEmbedding.find(t => t.className === key)
         if (target) {
+            // 我们要确保mastery在[-1,1]之间
             target.mastery = Math.min(1, (target.mastery + mastery[key] * 0.5))
+            target.mastery = Math.max(-1, (target.mastery + mastery[key] * 0.5))
             target.time = Date.now() // ✅ 更新该维度的时间戳
         }
     })

@@ -52,7 +52,8 @@ const updateUserInterestAndMastery = async (content, userid) => {
         )
 
         return {
-            similarityList
+            similarityLists: similarityList,
+            prideData
         }
 
     } catch (err) {
@@ -127,7 +128,12 @@ router.get('/connetSSE', async (req, res) => {
     setTimeout(() => {
         updateUserInterestAndMastery(content, userid)
             .then(result => {
-                similarityList = result.similarityList || []
+                const { similarityLists, prideData } = result
+                console.log('prideData', prideData)
+                similarityList = similarityLists || []
+                console.log('similarityList', similarityList)
+                // 把推荐的问题传给前端
+                pushEvent('recommendQuestions', { message: prideData.questions });
             })
             .catch(err => {
                 similarityList = []

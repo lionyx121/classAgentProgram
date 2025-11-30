@@ -4,6 +4,7 @@ const { getEmbedding } = require('../../utils/RAG/handleFunction/index')
 const { getHighSimilarityData } = require('../../utils/RAG/getRagData')
 const nameData = require('../../utils/RAG/handleFunction/handleData/nameData.json')
 const Practice = require('../../models/practice')
+const { updateEmbedding } = require('../../utils/RAG/getRagData')
 
 const User = require('../../models/user')
 
@@ -289,16 +290,66 @@ router.post('/getPractice', async (req, res) => {
 // 提交答案
 router.post('/submitAnswer', async (req, res) => {
     try {
-        const { username, questionKey, selectResult, selectOption } = req.body
+        const { username, questionKey, selectResult, selectOption, similarity, DifficultyLevel } = req.body
 
         if (!username || !questionKey) {
             return res.status(400).json({ msg: '缺少必要参数' })
         }
 
+        const userData = await User.findOne({ username }).lean()
+        if (!userData) return res.status(400).json({ msg: '用户不存在' })
+
         const isCorrect = selectResult === 'right'
 
-        // 如果有 我们更新数据
-        const updateResult = await User.updateOne(
+        // -----------------------------
+        //  获取做题次数
+        // -----------------------------
+        const practiceRecord = userData.practiceRecord?.find(item => item.key === questionKey)
+        let rightCount = practiceRecord?.rightCount || 0
+        let wrongCount = practiceRecord?.wrongCount || 0
+        if (isCorrect) rightCount++
+        else wrongCount++
+
+        // -----------------------------
+        // 计算 masteryScore
+        // -----------------------------
+        const masteryScore = {}
+        similarity?.forEach(item => {
+            if (item.cosine >= 0.5) {
+
+                // 【修改1：调权重分配机制】
+                const relationScore = item.cosine * 0.45
+                const difficultyScore = DifficultyLevel * (isCorrect ? 0.4 : 0.1)
+
+                const count = Math.min(3, Math.abs(rightCount - wrongCount))
+                const base = count * 0.4
+                const correctnessScore = isCorrect ? 1 : -1
+
+                let change = correctnessScore * base * (relationScore + difficultyScore)
+
+                // 【修改2：增加变化上限，减少剧烈波动】
+                const MAX_GAIN = 0.15  // 一题最多增加 0.15
+                const MAX_LOSS = -0.10 // 一题最多下降 -0.10
+                change = Math.max(MAX_LOSS, Math.min(change, MAX_GAIN))
+
+                masteryScore[item.id] = change
+            }
+        })
+
+
+        console.log('masteryScore', masteryScore)
+
+        // -----------------------------
+        // 更新 embeddings + 时间衰减
+        // -----------------------------
+        const newEmbedding = updateEmbedding(userData.embeddings, [], masteryScore)
+
+        console.log('newEmbedding', newEmbedding)
+
+        // -----------------------------
+        // 更新 practiceRecord
+        // -----------------------------
+        const updatePractice = await User.updateOne(
             {
                 username,
                 'practiceRecord.key': questionKey
@@ -311,15 +362,15 @@ router.post('/submitAnswer', async (req, res) => {
                 $push: {
                     'practiceRecord.$.selectResult': {
                         result: selectResult,
-                        optionResult: selectOption,
+                        optionResult: selectOption ?? '',
                         time: new Date()
                     }
                 }
             }
         )
 
-        // 如果没有命中，说明不存在该题 → push 新数据
-        if (updateResult.matchedCount === 0) {
+        // 如果没有命中，则说明该题是新加入
+        if (updatePractice.matchedCount === 0) {
             await User.updateOne(
                 { username },
                 {
@@ -330,7 +381,7 @@ router.post('/submitAnswer', async (req, res) => {
                             rightCount: isCorrect ? 1 : 0,
                             selectResult: [{
                                 result: selectResult,
-                                optionResult: selectOption,
+                                optionResult: selectOption ?? '',
                                 time: new Date()
                             }]
                         }
@@ -339,15 +390,20 @@ router.post('/submitAnswer', async (req, res) => {
             )
         }
 
-        res.status(200).json({ msg: '提交成功' })
+        // -----------------------------
+        // 写入新的 Embedding
+        // -----------------------------
+        await User.updateOne(
+            { username },
+            { $set: { embeddings: newEmbedding } }
+        )
+
+        return res.status(200).json({ msg: '提交成功' })
 
     } catch (error) {
-        console.error(error)
-        res.status(500).json({ msg: '服务内部错误', error: error.message || error })
+        console.error('submitAnswer Error:', error)
+        return res.status(500).json({ msg: '服务内部错误', error: error.message })
     }
 })
-
-
-
 
 module.exports = router
