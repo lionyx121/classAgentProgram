@@ -366,4 +366,15 @@ router.post('/submitAnswer', async (req, res) => {
     }
 })
 
+// 获取当前所有的题目
+router.get('/getAllPractice', async (req, res) => {
+    try {
+        const questions = await Practice.find().lean()
+        const data = questions[0].data
+        return res.status(200).json({ msg: '获取成功', len: data.length, data })
+    } catch (error) {
+        return res.status(500).json({ msg: '服务内部错误', error: error.message })
+    }
+})
+
 module.exports = router
