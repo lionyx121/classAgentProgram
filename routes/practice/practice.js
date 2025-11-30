@@ -11,39 +11,6 @@ const User = require('../../models/user')
 const multer = require('multer')
 const path = require('path')
 
-// const storage = multer.diskStorage({
-//     destination(req, file, cb) {
-//         // 去拿里面的jsonData
-//         let raw = req.body.jsonData
-//         if (Array.isArray(raw)) {
-//             raw = `[${raw.join("")}]`
-//         }
-//         const jsonData = JSON.parse(raw)[0]
-
-//         console.log('jsonData', jsonData)
-
-//         // 生成key
-//         const key = generateKey(jsonData)
-//         console.log('key', key)
-
-//         // 从 query 或 body 里拿到目录名
-//         const folder = req.query.path || req.body.path || 'default'
-
-//         const uploadPath = path.join(__dirname, '../../public/', folder)
-
-//         // 确保目录存在（不存在则创建）
-//         fs.mkdirSync(uploadPath, { recursive: true })
-
-//         cb(null, uploadPath)
-//     },
-//     filename(req, file, cb) {
-//         const ext = path.extname(file.originalname)
-//         const unique = Date.now() + '-' + Math.random().toString().slice(2, 10)
-//         cb(null, unique + ext)
-//     }
-// })
-
-// const upload = multer({ dest: 'uploads/' })
 
 class titleCache {
     constructor(capacity) {
@@ -97,7 +64,6 @@ const getTitleSimilay = async (data) => {
 
     // 3️⃣ 查找数据库中的 Practice
     let practice = await Practice.findOne({}, { knowledgePoint: 1, knowledgePonit: 1, _id: 0 })
-    console.log('当前 practice 文档：', practice)
 
     // ⚙️ 若存在拼错字段，自动修复数据库字段名
     if (practice && practice.knowledgePonit && !practice.knowledgePoint) {
@@ -171,7 +137,6 @@ router.post('/addPractice', async (req, res) => {
 
         // 计算题目-知识点映射
         const { addPracticeData, knowledgePoint } = await getTitleSimilay(data)
-        console.log('knowledgePoint', knowledgePoint)
 
         // 合并更新
         const result = await Practice.updateOne(
@@ -234,11 +199,11 @@ router.post('/getPractice', async (req, res) => {
         // 以用户对知识点兴趣程度由高到低排序的数组
         const sortedEmbeddingDataByInterest = embeddingData.sort((a, b) => b.interest - a.interest)
 
-        // 我们要给用户推荐6道题目 1、2、用户mastery低 3、4、用户感兴趣 5、6、用户mastery是0
+        // 我们要给用户推荐10道题目
         const recommendQuestions = [
-            ...sortedEmbeddingDataByMastery.slice(0, 2),
-            ...sortedEmbeddingDataByInterest.slice(0, 2),
-            ...sortedEmbeddingDataByMastery.filter(item => item.mastery === 0).slice(0, 2)
+            ...sortedEmbeddingDataByMastery.slice(0, 3),
+            ...sortedEmbeddingDataByInterest.slice(0, 4),
+            ...sortedEmbeddingDataByMastery.filter(item => item.mastery === 0).slice(0, 3)
         ]
 
         // 去重
@@ -336,15 +301,10 @@ router.post('/submitAnswer', async (req, res) => {
             }
         })
 
-
-        console.log('masteryScore', masteryScore)
-
         // -----------------------------
         // 更新 embeddings + 时间衰减
         // -----------------------------
         const newEmbedding = updateEmbedding(userData.embeddings, [], masteryScore)
-
-        console.log('newEmbedding', newEmbedding)
 
         // -----------------------------
         // 更新 practiceRecord

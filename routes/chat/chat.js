@@ -30,12 +30,18 @@ const updateUserInterestAndMastery = async (content, userid) => {
         // 打分
         const prideData = await scoreQuestion(content, similarityTitle)
 
+        // 处理mastery
+        const masteryData = {}
+        Object.keys(prideData.interest).forEach(key => {
+            masteryData[key] = prideData.interest[key] * 0.1
+        })
+
         // 更新用户 embedding
         const user = await User.findOne({ userid }).lean()
         const newEmbedding = updateEmbedding(
             user.embeddings || [],
             similarityList,
-            prideData.interest
+            masteryData
         )
         await User.updateOne({ userid }, { $set: { embeddings: newEmbedding } })
 
@@ -129,9 +135,7 @@ router.get('/connetSSE', async (req, res) => {
         updateUserInterestAndMastery(content, userid)
             .then(result => {
                 const { similarityLists, prideData } = result
-                console.log('prideData', prideData)
                 similarityList = similarityLists || []
-                console.log('similarityList', similarityList)
                 // 把推荐的问题传给前端
                 pushEvent('recommendQuestions', { message: prideData.questions });
             })

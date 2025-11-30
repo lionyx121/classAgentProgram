@@ -4,6 +4,7 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const User = require('../../models/user')
 const Class = require('../../models/classData')
+const LoginWhiteList = require('../../models/loginWhiteList')
 // const jwt = require('jsonwebtoken');
 
 // 使用 Nodemailer 发送邮件
@@ -83,8 +84,18 @@ router.post('/verifyCode', async (req, res) => {
     try {
         const { sms, email, username } = req.body
 
+        const isInLoginWhiteList = await LoginWhiteList.findOne({
+            "loginWhite.username": username
+        })
+        console.log('isInLoginWhiteList', isInLoginWhiteList)
+        // 检验学号是否在白名单中
+        if (!isInLoginWhiteList) {
+            res.status(200).json({ msg: '请联系管理员，当前学号不在可使用名单中', code: 1001 })
+            return
+        }
+
         // 封装要塞入cookie里面的数据
-        const payload = { sms, email, username };
+        // const payload = { sms, email, username };
 
         // 检验验证码是否正确
         if (userMap.get(email).code !== sms) {
@@ -148,6 +159,52 @@ router.post('/verifyCode', async (req, res) => {
         }
     } catch (error) {
         res.status(400).json({ msg: '参数错误', error: error.message || error, code: 1001 })
+    }
+})
+
+// 添加注册可使用的白名单
+router.post('/addLoginWhiteList', async (req, res) => {
+    try {
+        const { loginWhite } = req.body
+        await LoginWhiteList.updateOne(
+            {},
+            { $push: { loginWhite: loginWhite } },
+            { upsert: true }
+        )
+        res.status(200).json({ msg: '添加成功', code: 0 })
+    } catch (error) {
+        res.status(400).json({ msg: '参数错误', error: error.message || error, code: 1001 })
+    }
+})
+
+// 初始化登录白名单
+const loginWhiteListInitdata = require('../../utils/loginWhiteList/loginWhiteList.json')
+
+router.get('/initLoginWhiteList', async (req, res) => {
+    try {
+        const loginWhiteListData = []
+        loginWhiteListInitdata.forEach(item => {
+            loginWhiteListData.push({
+                username: item['学号'],
+                name: item['姓名'],
+                sex: item['性别'],
+                college: item['学院'],
+                major: item['专业'],
+                grade: item['年级'],
+                class: item['班级'],
+                number: item['序号'],
+            })
+        })
+        console.log('loginWhiteListData', loginWhiteListData)
+
+        await LoginWhiteList.updateOne(
+            {},
+            { $set: { loginWhite: loginWhiteListData } },
+            { upsert: true }
+        )
+        res.status(200).json({ msg: '初始化成功' })
+    } catch (error) {
+        res.status(400).json({ msg: '参数错误', error: error.message || error })
     }
 })
 

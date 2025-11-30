@@ -9,6 +9,61 @@ const echartsLabelData = require('../../utils/RAG/handleFunction/handleData/echa
 const graphData = require('../../utils/RAG/handleFunction/handleData/graphData.json')
 const nameData = require('../../utils/RAG/handleFunction/handleData/nameData.json')
 
+// 初始化知识点数据
+router.get('/initClassData', async (req, res) => {
+    try {
+        const data = []
+
+        echartsGraphData['data'].forEach(item => {
+            data.push({ className: item.name, classKey: item.id, askCount: 0, errorCount: 0 })
+        })
+
+        // 如果不存在则创建
+        await Class.findOneAndUpdate(
+            {},
+            { data },
+            { upsert: true, new: true }
+        )
+
+        res.json({ msg: '初始化知识点数据成功', data })
+    } catch (error) {
+        res.status(400).json({ msg: '初始化知识点数据失败', code: 1001, error: error.message || error })
+    }
+})
+
+// 初始化节点信息
+router.get('/initRootData', (req, res) => {
+    try {
+        const nowGraphHash = echartsGraphData.hash
+        const nowlabelHash = echartsLabelData.hash
+
+        const etag = nowGraphHash.toString() + nowlabelHash.toString()
+        // 请求头里面的etag
+        const clientEtag = req.headers['if-none-match'] || ''
+        const rootData = {
+            echatNode: echartsGraphData,
+            echartsLabelData,
+            fullData: graphData,
+            graphNameList: nameData
+        }
+
+        // 检查二者是否相等
+        if (etag === clientEtag) {
+            // 内容没变
+            res.status(304).end()
+            return
+        }
+
+        // 内容有更新
+        res.setHeader('ETag', etag)
+        res.status(200).json({ rootData })
+
+    } catch (error) {
+        res.status(400).json({ error: error.message || error, msg: '初始化节点失败' })
+    }
+})
+
+
 const useGrapgData = (fullData, graphNameList) => {
     const colorList = [
         "#3B82F6", // 蓝色：掌握程度很低（冷静）
@@ -27,45 +82,36 @@ const useGrapgData = (fullData, graphNameList) => {
         "link": []
     }
 
-    const graphSet = new Set()
-
-    const getGraphData = (obj, key, index) => {
-        const name = graphNameList[key].name
-        // 如果已经添加过了，就不添加了
-        if (graphSet.has(name)) return
-        // 添加节点
-        const node = {
-            id: key,
-            name: name,
-            color: colorList[index],
-            symbolSize: 14,
-            draggable: true
-        }
-        graphData['data'].push(node)
-        graphSet.add(name)
-
-        const temp = obj['包含'] || []
-
-        // 如果没有包含数组，就不添加link
-        if (temp.length === 0) return
-
-        temp.forEach((item) => {
-            const link = {
-                source: name,
-                target: graphNameList[item].name,
-                name: '前导'
-            }
-            graphData['link'].push(link)
-            let target = index + 1 > 9 ? 9 : index + 1
-            getGraphData(fullData[item], item, target)
-        })
+    // 做一个根据用户的mastery去进行颜色匹配的函数
+    const getColor = (mastery) => {
+        if (mastery >= 0.7) return colorList[8]
+        if (mastery >= 0.5) return colorList[7]
+        if (mastery >= 0.3) return colorList[6]
+        if (mastery >= 0.1) return colorList[5]
+        if (mastery >= -0.1) return colorList[4]
+        if (mastery >= -0.3) return colorList[3]
+        if (mastery >= -0.5) return colorList[2]
+        if (mastery >= -0.7) return colorList[1]
+        return colorList[0]
     }
 
-    for (const key in fullData) {
-        getGraphData(fullData[key], key, 0)
+    const getSuggestion = (mastery) => {
+        if (mastery >= 0.7) return "掌握得很好！可以尝试进阶拓展内容、做高难度练习巩固实力。"
+        if (mastery >= 0.5) return "已经很不错啦！可以增加综合性题目来查缺补漏。"
+        if (mastery >= 0.3) return "掌握基本概念，但仍有提升空间，建议复习关键公式并结合例题强化理解。"
+        if (mastery >= 0.1) return "对知识点有初步了解，可以通过更多练习逐步提高正确率。"
+        if (mastery >= -0.1) return "正处在学习探索状态，建议从基础概念和典型例题入手打好底子。"
+        if (mastery >= -0.3) return "掌握情况偏弱，建议重点回顾课程内容并完成老师推荐练习。"
+        if (mastery >= -0.5) return "理解上可能存在明显误区，需要针对错题进行反思和重新学习。"
+        if (mastery >= -0.7) return "不太熟悉该部分内容，可以先从简易例题开始建立信心。"
+        return "学习困难明显，建议跟随系统学习路径：先复习基础概念 → 再做讲解题 → 最后尝试考试题型。"
     }
 
-    const getShowData = (nodeKey, nodeList) => {
+    const getShowData = async (nodeKey, nodeList, username) => {
+
+        // 去获取当前用户的相关信息
+        const userData = await User.findOne({ username }).lean()
+
         const showData = {
             "data": [],
             "link": []
@@ -181,6 +227,21 @@ const useGrapgData = (fullData, graphNameList) => {
 
         showData['data'].push(val)
 
+        // 对showData中的每个节点进行处理
+        showData['data'].forEach(item => {
+            const target = userData.embeddings.find(t => t.className == item.name)
+            if (target) {
+                item['mastery'] = target.mastery
+                item['color'] = getColor(target.mastery)
+                item['suggestion'] = getSuggestion(item.mastery)
+            } else {
+                item['mastery'] = 0
+                item['color'] = getColor(0)
+                item['suggestion'] = getSuggestion(0)
+            }
+        })
+
+
         return showData
     }
 
@@ -190,65 +251,16 @@ const useGrapgData = (fullData, graphNameList) => {
     }
 }
 
-// 初始化知识点数据
-router.post('/initClassData', async (req, res) => {
-    try {
-        const graphNameList = req.body
-        const data = []
-        for (const key in graphNameList) {
-            const name = graphNameList[key].name
-            data.push({ className: name, classKey: key, askCount: 0, errorCount: 0 })
-        }
-
-        // 如果不存在则创建
-        await Class.findOneAndUpdate(
-            {},
-            { data },
-            { upsert: true, new: true }
-        )
-
-        res.json({ msg: '初始化知识点数据成功', data })
-    } catch (error) {
-        res.status(400).json({ msg: '初始化知识点数据失败', code: 1001, error: error.message || error })
-    }
-})
-
-// 初始化节点信息
-router.get('/initRootData', (req, res) => {
-    try {
-        const nowGraphHash = echartsGraphData.hash
-        const nowlabelHash = echartsLabelData.hash
-
-        const etag = nowGraphHash.toString() + nowlabelHash.toString()
-        // 请求头里面的etag
-        const clientEtag = req.headers['if-none-match'] || ''
-        const rootData = {
-            echatNode: echartsGraphData,
-            echartsLabelData,
-            fullData: graphData,
-            graphNameList: nameData
-        }
-
-        // 检查二者是否相等
-        if (etag === clientEtag) {
-            // 内容没变
-            res.status(304).end()
-            return
-        }
-
-        // 内容有更新
-        res.setHeader('ETag', etag)
-        res.status(200).json({ rootData })
-
-    } catch (error) {
-        res.status(400).json({ error: error.message || error, msg: '初始化节点失败' })
-    }
-})
+const { getShowData } = useGrapgData(graphData, nameData)
 
 // 获取要展示的节点的信息(拼接颜色和当前对该知识点的掌握程度)
-router.post('/getShowClassData', (req, res) => {
+router.post('/getShowClassData', async (req, res) => {
     try {
-        const { getShowData } = useGrapgData(graphData, nameData)
+        const { nodeKey, username } = req.body
+
+        const graphData = await getShowData(nodeKey, echartsGraphData['data'], username)
+
+        res.status(200).json({ graphData })
     } catch (error) {
         res.status(400).json({ error: error.message || error, msg: '获取要展示的节点的信息失败' })
     }

@@ -197,7 +197,7 @@ async function scoreQuestion(str, relatedTopics = []) {
 
 
 // 更新用户知识点向量表
-const updateEmbedding = (embedding, similarity, mastery = {}) => {
+const updateEmbedding = (embedding, similarity, mastery = {}, flag = 'mastery') => {
     const lambdaInterest = Math.log(2) / 3  // 🔥 interest：3 天半衰期（较快）
     const lambdaMastery = Math.log(2) / 14   // 🔥 mastery：14 天半衰期（较慢）
 
@@ -235,9 +235,13 @@ const updateEmbedding = (embedding, similarity, mastery = {}) => {
     Object.keys(mastery).forEach(key => {
         const target = timeDecayEmbedding.find(t => t.className === key)
         if (target) {
+            const temp = target.mastery + mastery[key] * 0.5
+            // 处理分数 如果flag不是mastery 让它最多只能到0.35
+            let score = flag === 'mastery' ? temp : Math.min(0.35, temp)
+
             // 我们要确保mastery在[-1,1]之间
-            target.mastery = Math.min(1, (target.mastery + mastery[key] * 0.5))
-            target.mastery = Math.max(-1, (target.mastery + mastery[key] * 0.5))
+            target.mastery = Math.min(1, score)
+            target.mastery = Math.max(-1, score)
             target.time = Date.now() // ✅ 更新该维度的时间戳
         }
     })
