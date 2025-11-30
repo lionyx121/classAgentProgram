@@ -8,6 +8,8 @@ import todoList from '@/views/todoList/index.vue'
 import practice from '@/views/practice/index.vue'
 import homeMain from '@/views/HomeView/components/homeMain.vue'
 import option from '@/views/option/index.vue'
+import extraResource from '@/views/extraResource/index.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +23,7 @@ const router = createRouter({
         { path: '/echartsGraph', component: echartsGraph },
         { path: '/echartsLabel', component: echartsLabel },
         { path: '/practice', component: practice },
+        { path: '/extraResource', component: extraResource },
       ]
     },
     { path: '/login', component: login },

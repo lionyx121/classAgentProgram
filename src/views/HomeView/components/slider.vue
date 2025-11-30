@@ -50,17 +50,22 @@ const menu = ref({
 })
 const isMenuVisible = ref(false)
 
-const onMenuClick = async (item: any, e: MouseEvent) => {
-    e.stopPropagation()
-    isMenuVisible.value = true
-    await nextTick()
-    menu.value.top = e.clientY
-    menu.value.itemValue = item
-}
+// const onMenuClick = async (item: any, e: MouseEvent) => {
+//     e.stopPropagation()
+//     isMenuVisible.value = true
+//     await nextTick()
+//     menu.value.top = e.clientY
+//     menu.value.itemValue = item
+// }
 
 const Topractice = () => {
     router.push({ path: '/practice' })
 }
+
+const toExtraResource = () =>{
+    router.push({ path: '/extraResource' })
+}
+
 </script>
 
 <template>
@@ -83,6 +88,10 @@ const Topractice = () => {
                 <van-icon name="eye-o" size="20" />
                 <span>知识图谱</span>
             </div>
+            <div class="funcBox" @click="toExtraResource">
+                <van-icon name="point-gift-o" size="20" />
+                <span>额外资源</span>
+            </div>
         </div>
     </div>
 
@@ -92,8 +101,8 @@ const Topractice = () => {
             :class="{ active: i === chatStore.activeIndex }" @mouseenter="onHistoryEnter(item)"
             @mouseleave="onHistoryLeave">
             <div class="history-title">{{ item.title }}</div>
-            <van-icon name="ellipsis" class="ellipsis" v-if="isMenushow === item._id" @click="onMenuClick(item, $event)"
-                size="20" />
+            <!-- <van-icon name="ellipsis" class="ellipsis" v-if="isMenushow === item._id" @click="onMenuClick(item, $event)"
+                size="20" /> -->
         </div>
     </div>
 
@@ -108,7 +117,7 @@ const Topractice = () => {
     position: fixed;
     top: 0;
     left: 0;
-    height: 190px;
+    height: 200px;
     border-bottom: 1px solid #242424;
     z-index: 99;
     background-color: #181818;
@@ -144,7 +153,7 @@ const Topractice = () => {
             align-items: center;
             padding-left: 10px;
             color: #fff;
-            gap: 10px;
+            gap: 15px;
             font-size: 14px;
         }
 

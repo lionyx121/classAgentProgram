@@ -4,16 +4,39 @@ import { onMounted, ref } from "vue"
 import { useGrapgData } from "./getGrapgData.js"
 import { useEchartsStore } from "@/stores/echarts.js"
 import { useRoute } from "vue-router"
+import { getShowClassData } from "@/api/root.js"
+import { useUserInfoStore } from "@/stores/userInfo.js"
 
 const { echatNode, fullData, graphNameList } = useEchartsStore()
 
+// 美化节点信息输出
+const getNodeTooltipText = (data: any) => {
+  const masteryPercent = (data.mastery * 100).toFixed(0)
+
+  return `
+  <div style="font-size: 14px; line-height: 22px;">
+    <div>🧬 <strong>${data.name}</strong></div>
+    <div>📊 掌握程度：<strong>${masteryPercent}%</strong></div>
+    <div>💡 学习建议：${data.suggestion}</div>
+  </div>
+  `
+}
+
+// 定义一个响应式数据去接应相关节点信息
+const graphData = ref<any>({})
+
+const userInfoStore = useUserInfoStore()
+
 const myChart = ref<echarts.EChartsType | null>(null)
-const { getShowData } = useGrapgData(fullData, graphNameList)
 const router = useRoute()
 
-onMounted(() => {
+onMounted(async () => {
   const target: any = router.query.id || '1'
-  const graphData: any = getShowData(target, echatNode['data'])
+  // 从后端获取当前要展示节点的相关信息
+  const res = await getShowClassData(target, userInfoStore.userInfo.username)
+  graphData.value = res.graphData
+
+  console.log('graphData', graphData.value)
 
   // ✅ 初始化图表实例
   myChart.value = echarts.init(document.getElementById('main')!)
@@ -28,9 +51,10 @@ onMounted(() => {
       formatter: (params: any) => {
         // params.data 表示当前节点或连线数据
         if (params.dataType === "node") {
-          return `🧬 节点：${params.data.name}`
+          const str = getNodeTooltipText(params.data)
+          return str
         } else if (params.dataType === "edge") {
-          return `🔗 关系：${params.data.name}<br/>${params.data.source} → ${params.data.target}`
+          return `🔗 关系：${params.data.name}`
         }
         return ""
       }
@@ -78,8 +102,8 @@ onMounted(() => {
           }
         },
 
-        data: graphData.data,  // 节点数据
-        links: graphData.link  // 连线数据
+        data: graphData.value.data,  // 节点数据
+        links: graphData.value.link  // 连线数据
       }
     ]
   }
@@ -93,20 +117,27 @@ onMounted(() => {
     myChart.value?.resize()
   })
 
-  myChart.value.on('click', (params: any) => {
+  myChart.value.on('click', async (params: any): Promise<any> => {
     if (params.dataType === 'node') {
-      const clickedNodeName = params.data.name
-      const option = myChart.value!.getOption()
 
+      const option = myChart.value.getOption()
       const series = option.series[0]
-      const graphData = getShowData(params.data.id, echatNode['data'])
 
-      series.data = graphData.data
-      series.links = graphData.link
+      const res = await getShowClassData(params.data.id, userInfoStore.userInfo.username)
 
-      myChart.value!.setOption(option)
+      if (!res?.graphData) return
+
+      // 更新响应式数据
+      graphData.value = res.graphData
+
+      // 更新图表数据（这里要用 graphData.value）
+      series.data = graphData.value.data
+      series.links = graphData.value.link
+
+      myChart.value.setOption(option)
     }
   })
+
 })
 
 </script>

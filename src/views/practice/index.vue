@@ -71,6 +71,8 @@ const changeQuestion = (isNext = true) => {
     if (isNext) {
         index = Math.min(index + 1, len - 1)
     } else {
+        // 如果当前index是0直接return 点击上一题
+        if (index === 0) return
         index = Math.max(index - 1, 0)
     }
 
@@ -152,7 +154,7 @@ watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
     .questionBox {
         width: 80%;
         position: absolute;
-        top: 10%;
+        top: 5%;
         left: 15%;
 
         .option-img {
@@ -197,8 +199,8 @@ watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
                 }
 
                 .item-img {
-                    max-width: 83px;
-                    max-height: 83px;
+                    max-width: 70px;
+                    max-height: 70px;
                     object-fit: contain; // 保留比例但不超框
                     filter: invert(1); // 保持你的反色风格
                 }
@@ -237,7 +239,7 @@ watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
         }
 
         .btn-box {
-            margin-top: 30px;
+            margin-top: 10px;
             width: 60%;
             height: 37px;
             display: flex;
