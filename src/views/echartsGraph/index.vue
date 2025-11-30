@@ -36,8 +36,6 @@ onMounted(async () => {
   const res = await getShowClassData(target, userInfoStore.userInfo.username)
   graphData.value = res.graphData
 
-  console.log('graphData', graphData.value)
-
   // ✅ 初始化图表实例
   myChart.value = echarts.init(document.getElementById('main')!)
 

@@ -164,9 +164,9 @@ const toExtraResource = () =>{
 }
 
 .history {
-    margin-top: 200px;
+    margin-top: 210px;
     width: 100%;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 210px);
     overflow-y: auto;
 
     .item {
