@@ -115,25 +115,26 @@ onMounted(async () => {
     myChart.value?.resize()
   })
 
-  myChart.value.on('click', async (params: any): Promise<any> => {
-    if (params.dataType === 'node') {
+  myChart.value!.on('click', (params: any) => {
+    if (params.dataType !== 'node') return
+    if (!myChart.value) return
 
-      const option = myChart.value.getOption()
-      const series = option.series[0]
+      ; (async () => {
+        const option = myChart.value!.getOption()
+        const series = (option.series as any)[0]
 
-      const res = await getShowClassData(params.data.id, userInfoStore.userInfo.username)
+        const res = await getShowClassData(params.data.id, userInfoStore.userInfo.username)
+        if (!res?.graphData) return
 
-      if (!res?.graphData) return
+        // 更新响应式数据
+        graphData.value = res.graphData
 
-      // 更新响应式数据
-      graphData.value = res.graphData
+        // 更新图表数据
+        series.data = graphData.value.data
+        series.links = graphData.value.link
 
-      // 更新图表数据（这里要用 graphData.value）
-      series.data = graphData.value.data
-      series.links = graphData.value.link
-
-      myChart.value.setOption(option)
-    }
+        myChart.value!.setOption(option)
+      })()
   })
 
 })
