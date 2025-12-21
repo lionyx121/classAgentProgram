@@ -384,5 +384,37 @@ router.get('/getHistory', async (req, res) => {
     }
 })
 
+// 获取当前历史的学习路径 -timeline
+router.post('/getTimeLine', async (req, res) => {
+    try {
+        const { username, historyId } = req.body
+        if (!username) {
+            return res.status(400).json({ success: false, message: 'Missing username' })
+        }
+        if (!historyId) {
+            return res.status(400).json({ success: false, message: 'Missing historyId' })
+        }
+
+        const user = await User.findOne({ username }).lean()
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: 'User not found' })
+        }
+
+        const history = user.history.find(item => item._id?.toString() === historyId)
+
+        res.status(200).json({
+            success: true,
+            data: history || [],
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: error.message || error
+        })
+    }
+})
 
 module.exports = router;

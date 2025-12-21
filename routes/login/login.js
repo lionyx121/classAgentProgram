@@ -177,6 +177,20 @@ router.post('/addLoginWhiteList', async (req, res) => {
     }
 })
 
+// 查找可使用的白名单
+router.get('/findLoginWhiteList', async (req, res) => {
+    try {
+        const loginWhiteList = await LoginWhiteList.findOne(
+            {}
+        ).lean()
+        console.log(loginWhiteList)
+        res.status(200).json({ msg: '查找成功', loginWhiteList: loginWhiteList.loginWhite })
+    } catch (error) {
+        res.status(400).json({ msg: '参数错误', error: error.message || error, code: 1001 })
+    }
+})
+
+
 // 初始化登录白名单
 const loginWhiteListInitdata = require('../../utils/loginWhiteList/loginWhiteList.json')
 
