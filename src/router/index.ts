@@ -9,6 +9,7 @@ import practice from '@/views/practice/index.vue'
 import homeMain from '@/views/HomeView/components/homeMain.vue'
 import option from '@/views/option/index.vue'
 import extraResource from '@/views/extraResource/index.vue'
+import historyView from '@/views/historyView/index.vue'
 
 
 const router = createRouter({
@@ -24,6 +25,7 @@ const router = createRouter({
         { path: '/echartsLabel', component: echartsLabel },
         { path: '/practice', component: practice },
         { path: '/extraResource', component: extraResource },
+        { path: '/historyView', component: historyView },
       ]
     },
     { path: '/login', component: login },

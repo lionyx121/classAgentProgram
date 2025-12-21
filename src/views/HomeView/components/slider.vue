@@ -50,19 +50,21 @@ const menu = ref({
 })
 const isMenuVisible = ref(false)
 
-// const onMenuClick = async (item: any, e: MouseEvent) => {
-//     e.stopPropagation()
-//     isMenuVisible.value = true
-//     await nextTick()
-//     menu.value.top = e.clientY
-//     menu.value.itemValue = item
-// }
+const historyId = ref<string>('')
+const onMenuClick = async (item: any, e: MouseEvent) => {
+    e.stopPropagation()
+    historyId.value = item._id
+    isMenuVisible.value = true
+    await nextTick()
+    menu.value.top = e.clientY
+    menu.value.itemValue = item
+}
 
 const Topractice = () => {
     router.push({ path: '/practice' })
 }
 
-const toExtraResource = () =>{
+const toExtraResource = () => {
     router.push({ path: '/extraResource' })
 }
 
@@ -101,14 +103,14 @@ const toExtraResource = () =>{
             :class="{ active: i === chatStore.activeIndex }" @mouseenter="onHistoryEnter(item)"
             @mouseleave="onHistoryLeave">
             <div class="history-title">{{ item.title }}</div>
-            <!-- <van-icon name="ellipsis" class="ellipsis" v-if="isMenushow === item._id" @click="onMenuClick(item, $event)"
-                size="20" /> -->
+            <van-icon name="ellipsis" class="ellipsis" v-if="isMenushow === item._id" @click="onMenuClick(item, $event)"
+                size="20" />
         </div>
     </div>
 
     <!-- 菜单 -->
-    <ActionMenu :menuList="menu.menuList" :top="menu.top" :itemValue="menu.itemValue" @close="isMenuVisible = false"
-        v-if="isMenuVisible" />
+    <ActionMenu :menuList="menu.menuList" :top="menu.top" :itemValue="menu.itemValue" :historyId="historyId"
+        @close="isMenuVisible = false" v-if="isMenuVisible" />
 </template>
 
 <style scoped lang="scss">

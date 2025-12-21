@@ -7,7 +7,7 @@ interface ChatClientIdParams {
 }
 
 // 获取clientid
-export const getChatClientId = ({userid, username, questions}: ChatClientIdParams): Promise<string> =>{
+export const getChatClientId = ({ userid, username, questions }: ChatClientIdParams): Promise<string> => {
     return request.post('/api/chat/getClientId', {
         userid,
         username,
@@ -16,7 +16,15 @@ export const getChatClientId = ({userid, username, questions}: ChatClientIdParam
 }
 
 // 获取聊天历史记录
-export const getChatHistory = ({username}: {username: string}) =>{
+export const getChatHistory = ({ username }: { username: string }) => {
     const url = `/api/chat/getHistory?username=${username}`
     return request.get(url)
+}
+
+// 获取学习路径
+export const getTimeLine = ({ username, historyId }: { username: string, historyId: string }) => {
+    return request.post('/api/chat/getTimeLine', {
+        username,
+        historyId,
+    })
 }

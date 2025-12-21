@@ -2,6 +2,7 @@ import { ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import { useUserInfoStore } from '@/stores/userInfo'
 import { getPracticeData } from '@/api/practice'
+import { getRandomNumber } from '@/common/js/utils'
 
 interface questionShow {
     title: string,
@@ -21,6 +22,12 @@ interface questionShow {
     similarity: any
 }
 
+interface KnowledgeItem {
+    type: string,
+    label: string,
+    key: string
+}
+
 export const usePracticeStore = defineStore('practice', () => {
 
     const userInfoStore = useUserInfoStore()
@@ -31,6 +38,7 @@ export const usePracticeStore = defineStore('practice', () => {
     // 从后端获取题目
     const getPractice = async () => {
         const { resultData } = await getPracticeData(userInfoStore.userInfo.username || '')
+        console.log('resultData', resultData)
         if (resultData) {
             // questionShow.value.push(...resultData)
             const temp = [...questionShow.value, ...resultData]
@@ -60,9 +68,33 @@ export const usePracticeStore = defineStore('practice', () => {
         questionShow.value = [newVal]
     }
 
+    // 相关知识点的数组
+    const knowledgeList = ref<KnowledgeItem[]>([])
+
+    const typeList = ['primary', 'success', 'info', 'warning', 'danger']
+
+    const getKnowLedgeList = (current: any) => {
+        const similarityList = current.similarity.slice(0, 5)
+        const tempList: KnowledgeItem[] = []
+        similarityList.forEach((item: any) => {
+            const randomType = typeList[getRandomNumber(0, typeList.length - 1)]
+            tempList.push({
+                type: randomType,
+                label: item.id,
+                key: item.key
+            })
+        })
+        knowledgeList.value = tempList
+        console.log('knowledgeList', knowledgeList.value)
+    }
+
     // 当用户点击了选项之后，更新questionShow去记录用户的选择
     const updateUserSelect = (select: string) => {
         questionShow.value[currentQuestionIndex.value].userSelect = select
+
+        // 更新knowledgeList 相关知识点的数组
+        const current = questionShow.value[currentQuestionIndex.value]
+        getKnowLedgeList(current)
     }
 
     // 监听currentQuestionIndex 当currentQuestionIndex处在questionShow.value.length - 1的时候我们需要向后端请求新的题目
@@ -77,6 +109,7 @@ export const usePracticeStore = defineStore('practice', () => {
         updateQuestionShow,
         initQuestionShow,
         currentQuestionIndex,
-        updateUserSelect
+        updateUserSelect,
+        knowledgeList
     }
 })

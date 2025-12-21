@@ -4,10 +4,13 @@ import { ref, onMounted, watch } from 'vue'
 import { usePracticeStore } from '@/stores/practice'
 import { submitAnswer } from '@/api/practice'
 import { useUserInfoStore } from '@/stores/userInfo'
+import { useRouter } from 'vue-router';
 
 onMounted(() => {
     practiceStore.initQuestionShow()
 })
+
+const router = useRouter();
 
 // 当前滑入的选项
 const optionSlider = ref<string | null>(null)
@@ -82,6 +85,7 @@ const changeQuestion = (isNext = true) => {
 
 // 记录用户选择
 watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
+    // 当用户的题目发生变化的时候 
     const current = practiceStore.questionShow[practiceStore.currentQuestionIndex]
     if (current.userSelect) {
         optionWrong.value = current.userSelect
@@ -139,7 +143,17 @@ watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
 
             <!-- 解析部分 -->
             <div v-html="md.render(`解析：${practiceStore.questionShow[practiceStore.currentQuestionIndex].analysis}`)"
-                class="questionBox-analysis" v-if="optionWrong"></div>
+                class="questionBox-analysis" v-if="optionWrong">
+            </div>
+
+            <!-- 相关知识点 -->
+            <div class="knowledgeBox" v-if="optionWrong">
+                <div>相关知识点：</div>
+                <el-tag v-for="item in practiceStore.knowledgeList" :key="item.key" :type="item.type"
+                    class="knowledgeBox-tag" @click="router.push({ path: '/echartsGraph', query: { id: item.key } })">
+                    {{ item.label }}
+                </el-tag>
+            </div>
         </div>
     </div>
 </template>
@@ -261,6 +275,18 @@ watch(() => practiceStore.currentQuestionIndex, (newIndex, oldIndex) => {
             .next-question:hover {
                 background-color: #32CA99;
                 color: #fff;
+            }
+        }
+
+        .knowledgeBox {
+            margin-top: 20px;
+            width: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+
+            .knowledgeBox-tag {
+                cursor: pointer;
             }
         }
 

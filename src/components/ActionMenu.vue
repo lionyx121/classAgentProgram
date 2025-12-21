@@ -2,6 +2,7 @@
 import { number } from 'echarts'
 import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue'
 import type { PropType } from 'vue'
+import { useRouter } from 'vue-router'
 
 interface MenuItem {
     title: string,
@@ -24,9 +25,12 @@ const props = defineProps({
     itemValue: {
         type: Object,
         default: () => ({})
+    },
+    historyId: {
+        type: String,
+        default: ''
     }
 })
-
 
 const actionMenu = ref<HTMLElement | null>(null)
 
@@ -37,7 +41,7 @@ watch(() => props.top, (newVal, oldVal) => {
     } else {
         actionMenu.value.style.bottom = `${innerHeight - newVal - actionMenu.value.clientHeight}px`
     }
-}, {immediate: true})
+}, { immediate: true })
 
 const emit = defineEmits(['close'])
 
@@ -55,13 +59,27 @@ onMounted(() => {
 onBeforeUnmount(() => {
     document.removeEventListener('click', handleClickOutside)
 })
+
+const router = useRouter()
+
+// 点击了菜单的子元素
+const handleClick = (item: MenuItem) => {
+    // 点击了学习路径
+    if (item.title === '学习路径') {
+        router.push({ path: '/historyView', query: { historyId: props.historyId } })
+    }
+
+    // 关闭菜单
+    emit('close')
+}
+
 </script>
 
 <template>
     <div class="actionMenu" v-if="menuList" ref="actionMenu">
         <div v-for="(menuitem, index) in menuList" :key="index" class="actionMenuGroup">
             <div v-for="(item, i) in menuitem" :key="i" class="actionMenuItem"
-                :class="{ danger: item.type === 'danger' }">
+                :class="{ danger: item.type === 'danger' }" @click="handleClick(item)">
                 <el-icon :size="15">
                     <component :is="item.icon" />
                 </el-icon>

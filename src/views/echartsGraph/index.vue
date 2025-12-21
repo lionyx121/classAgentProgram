@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import * as echarts from "echarts"
 import { onMounted, ref } from "vue"
-import { useGrapgData } from "./getGrapgData.js"
-import { useEchartsStore } from "@/stores/echarts.js"
 import { useRoute } from "vue-router"
 import { getShowClassData } from "@/api/root.js"
 import { useUserInfoStore } from "@/stores/userInfo.js"
 
-const { echatNode, fullData, graphNameList } = useEchartsStore()
+
+// <div style="font-size: 14px; line-height: 22px;">
+//     <div>🧬 <strong>${data.name}</strong></div>
+//     <div>📊 掌握程度：<strong>${masteryPercent}%</strong></div>
+//     <div>💡 学习建议：${data.suggestion}</div>
+//   </div>
 
 // 美化节点信息输出
 const getNodeTooltipText = (data: any) => {
@@ -16,8 +19,6 @@ const getNodeTooltipText = (data: any) => {
   return `
   <div style="font-size: 14px; line-height: 22px;">
     <div>🧬 <strong>${data.name}</strong></div>
-    <div>📊 掌握程度：<strong>${masteryPercent}%</strong></div>
-    <div>💡 学习建议：${data.suggestion}</div>
   </div>
   `
 }
@@ -34,6 +35,12 @@ onMounted(async () => {
   const target: any = router.query.id || '1'
   // 从后端获取当前要展示节点的相关信息
   const res = await getShowClassData(target, userInfoStore.userInfo.username)
+
+  // 处理res让它的draggable为false
+  res.graphData.data.forEach((item: any) => {
+    item.draggable = false
+  })
+
   graphData.value = res.graphData
 
   // ✅ 初始化图表实例
@@ -119,22 +126,22 @@ onMounted(async () => {
     if (params.dataType !== 'node') return
     if (!myChart.value) return
 
-      ; (async () => {
-        const option = myChart.value!.getOption()
-        const series = (option.series as any)[0]
+    (async () => {
+      const option = myChart.value!.getOption()
+      const series = (option.series as any)[0]
 
-        const res = await getShowClassData(params.data.id, userInfoStore.userInfo.username)
-        if (!res?.graphData) return
+      const res = await getShowClassData(params.data.id, userInfoStore.userInfo.username)
+      if (!res?.graphData) return
 
-        // 更新响应式数据
-        graphData.value = res.graphData
+      // 更新响应式数据
+      graphData.value = res.graphData
 
-        // 更新图表数据
-        series.data = graphData.value.data
-        series.links = graphData.value.link
+      // 更新图表数据
+      series.data = graphData.value.data
+      series.links = graphData.value.link
 
-        myChart.value!.setOption(option)
-      })()
+      myChart.value!.setOption(option)
+    })()
   })
 
 })
