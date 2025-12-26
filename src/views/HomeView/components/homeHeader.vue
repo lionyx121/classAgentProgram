@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useLayoutStore } from '@/stores/layout'
+import Breadcrumb from '@/components/breadcrumb.vue'
 
 const layoutStore = useLayoutStore()
 </script>
@@ -23,13 +24,18 @@ const layoutStore = useLayoutStore()
             </div> -->
         </div>
     </div>
+    <!-- 面包屑组件 -->
+    <div class="breadcrumb">
+        <Breadcrumb></Breadcrumb>
+    </div>
 </template>
 
 <style scoped lang="scss">
 .layout-header {
-    height: 100%;
+    height: 50px;
     width: 100%;
     background-color: #212121;
+    border-bottom: 1px solid #2C2C2C;
 
     .layout-header-main {
         width: 100%;
@@ -67,5 +73,9 @@ const layoutStore = useLayoutStore()
 
 
     }
+}
+
+.breadcrumb {
+    height: 40px;
 }
 </style>

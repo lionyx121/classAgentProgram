@@ -28,3 +28,20 @@ export const getTimeLine = ({ username, historyId }: { username: string, history
         historyId,
     })
 }
+
+// 删除历史记录
+export const deleteHistory = ({ username, historyId }: { username: string, historyId: string }) => {
+    return request.post('/api/chat/deleteHistory', {
+        username,
+        historyId,
+    })
+}
+
+// 更新历史记录的标题
+export const updataHistoryTitle = ({ username, historyId, newTitle }: { username: string, historyId: string, newTitle: string }) => {
+    return request.post('/api/chat/updataHistoryTitle', {
+        username,
+        historyId,
+        newTitle
+    })
+}

@@ -18,3 +18,17 @@ export const submitAnswer = ({ username, questionKey, DifficultyLevel, similarit
         selectResult,
     })
 }
+
+export const getAllKnowledgePoint = () => {
+    return request.get('/api/practice/getAllKnowledgePoint')
+}
+
+export const addPractice = (practiceList: any) => {
+    return request.post('/api/practice/addPractice', practiceList)
+}
+
+export const concatQuestion = (questions: any[]) => {
+    return request.post('/api/practice/concatQuestion', {
+        questions
+    })
+}

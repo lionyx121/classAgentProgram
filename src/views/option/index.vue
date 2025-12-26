@@ -41,10 +41,6 @@ const handleFileChange = (e: Event, type: keyof optionPicData) => {
 
     fileData.append(type, file)
     optionPicData.value[type] = URL.createObjectURL(file)
-
-    for (const [key, value] of fileData.entries()) {
-        console.log(key, value)
-    }
 }
 
 const deleteImg = (type: keyof optionPicData) => {

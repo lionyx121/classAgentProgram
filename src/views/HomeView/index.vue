@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import homeHeader from './components/homeHeader.vue';
 import homeBottom from './components/homeBottom.vue';
-import homeMain from './components/homeMain.vue';
 import slider from './components/slider.vue';
 import { useLayoutStore } from '@/stores/layout';
 import { watch, nextTick, ref, onMounted, onUnmounted } from 'vue'
@@ -62,7 +61,6 @@ watch(() => route.path, (newPath) => {
     isGraph.value = newPath !== '/main'
 }, { immediate: true })
 
-const test = ref(null)
 </script>
 
 
@@ -75,7 +73,7 @@ const test = ref(null)
         <div class="layout-right">
             <!-- 顶部 -->
             <div class="header">
-                <homeHeader ref="test"></homeHeader>
+                <homeHeader></homeHeader>
             </div>
             <!-- 中间 -->
             <div class="main" @scroll="handleScroll">
@@ -108,7 +106,7 @@ const test = ref(null)
         flex-direction: column;
 
         .header {
-            height: 60px;
+            height: 90px;
             border-bottom: 1px solid #2c2c2c;
         }
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { number } from 'echarts'
 import { ref, computed, onMounted, watch, onBeforeUnmount } from 'vue'
 import type { PropType } from 'vue'
 import { useRouter } from 'vue-router'
@@ -43,7 +42,7 @@ watch(() => props.top, (newVal, oldVal) => {
     }
 }, { immediate: true })
 
-const emit = defineEmits(['close'])
+const emit = defineEmits(['close', 'updataHistoryTitle', 'historyDelect'])
 
 const handleClickOutside = (e: MouseEvent) => {
     const el = actionMenu.value
@@ -68,10 +67,19 @@ const handleClick = (item: MenuItem) => {
     if (item.title === '学习路径') {
         router.push({ path: '/historyView', query: { historyId: props.historyId } })
     }
+    // 点击了重命名
+    if (item.title === '重命名') {
+        emit('updataHistoryTitle', item.title)
+    }
+    // 点击了删除
+    if (item.title === '删除') {
+        emit('historyDelect')
+    }
 
     // 关闭菜单
     emit('close')
 }
+
 
 </script>
 

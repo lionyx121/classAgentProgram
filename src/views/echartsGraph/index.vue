@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import * as echarts from "echarts"
 import { onMounted, ref } from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { getShowClassData } from "@/api/root.js"
 import { useUserInfoStore } from "@/stores/userInfo.js"
+import { Search } from '@element-plus/icons-vue'
 
+const emit = defineEmits(['content-update'])
 
 // <div style="font-size: 14px; line-height: 22px;">
 //     <div>🧬 <strong>${data.name}</strong></div>
@@ -29,10 +31,11 @@ const graphData = ref<any>({})
 const userInfoStore = useUserInfoStore()
 
 const myChart = ref<echarts.EChartsType | null>(null)
-const router = useRoute()
+const route = useRoute()
+const router = useRouter()
 
 onMounted(async () => {
-  const target: any = router.query.id || '1'
+  const target: any = route.query.id || '1'
   // 从后端获取当前要展示节点的相关信息
   const res = await getShowClassData(target, userInfoStore.userInfo.username)
 
@@ -146,15 +149,57 @@ onMounted(async () => {
 
 })
 
+
+// 拼接当前页面主节点相关信息给 知识点相关练习 页面使用
+const toSearchPractice = () => {
+  const mainNode = graphData.value.data[graphData.value.data.length - 1]
+  if (!mainNode) return
+
+  const { name, id } = mainNode
+
+  router.push({
+    path: '/searchPractice',
+    query: { knowledgeName: name, knowledgeKey: id }
+  })
+}
+
+
 </script>
 
 <template>
   <div id="main"></div>
+  <button class="search-btn" @click="toSearchPractice">
+    <el-icon size="15">
+      <Search />
+    </el-icon>
+    <div>知识点相关练习</div>
+  </button>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 #main {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 90px);
   background-color: #212121;
+}
+
+.search-btn {
+  position: absolute;
+  right: 30px;
+  top: 100px;
+  border-radius: 8px;
+  border: none;
+  padding: 8px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 5px;
+  color: #3E99F6;
+  background-color: #212121;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.search-btn:hover {
+  background-color: #303030;
 }
 </style>

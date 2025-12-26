@@ -86,7 +86,7 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .chart-container {
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 100px);
     background-color: #212121;
 }
 </style>

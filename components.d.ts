@@ -9,6 +9,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionMenu: typeof import('./src/components/ActionMenu.vue')['default']
+    Breadcrumb: typeof import('./src/components/breadcrumb.vue')['default']
+    ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
+    ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
@@ -32,6 +36,7 @@ declare module 'vue' {
     ElTimeline: typeof import('element-plus/es')['ElTimeline']
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTimePicker: typeof import('element-plus/es')['ElTimePicker']
+    Practice: typeof import('./src/components/practice.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Tabs: typeof import('./src/components/tabs.vue')['default']

@@ -17,7 +17,7 @@ export default defineConfig({
       resolvers: [VantResolver(), ElementPlusResolver()],
     }),
     Components({
-      resolvers: [VantResolver(), ElementPlusResolver()],
+      resolvers: [VantResolver(), ElementPlusResolver({ importStyle: 'css' })],
     }),
   ],
   resolve: {

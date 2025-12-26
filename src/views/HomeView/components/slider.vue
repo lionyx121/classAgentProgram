@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, ref, watch, onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
 import { useRouter } from 'vue-router'
 import ActionMenu from '@/components/ActionMenu.vue'
 import { useSSE } from '@/common/js/useSSE'
+import { deleteHistory, updataHistoryTitle } from '@/api/chat'
+import { useUserInfoStore } from '@/stores/userInfo'
+import { ElMessage } from 'element-plus'
 
 const chatStore = useChatStore()
+const userInfoStore = useUserInfoStore()
+
 const router = useRouter()
 
 const { stop } = useSSE()
@@ -51,9 +56,12 @@ const menu = ref({
 const isMenuVisible = ref(false)
 
 const historyId = ref<string>('')
+const historyTitle = ref<string>('')
 const onMenuClick = async (item: any, e: MouseEvent) => {
     e.stopPropagation()
     historyId.value = item._id
+    historyTitle.value = item.title
+
     isMenuVisible.value = true
     await nextTick()
     menu.value.top = e.clientY
@@ -68,6 +76,68 @@ const toExtraResource = () => {
     router.push({ path: '/extraResource' })
 }
 
+const toSearchPractice = () => {
+    router.push({ path: '/searchPractice', })
+}
+
+
+// 监听history区域宽度的变化
+const history = ref<HTMLElement | null>(null)
+let ro: ResizeObserver | null = null
+const width = ref(0)
+
+onMounted(() => {
+    if (!history.value) return
+
+    const layoutTop = document.querySelector<HTMLElement>('.layout-top')
+    ro = new ResizeObserver(([entry]) => {
+        width.value = entry.contentRect.width
+        // 此时history发生变化了 我们去改变layout-top的width
+        if (layoutTop) {
+            layoutTop.style.width = `${width.value}px`
+        }
+    })
+
+    ro.observe(history.value)
+})
+
+const updataDialogVisible = ref(false)
+
+const onUpdataHistoryTitle = async () => {
+    const res: any = await updataHistoryTitle({
+        username: userInfoStore.userInfo.username as string,
+        historyId: historyId.value,
+        newTitle: historyTitle.value
+    })
+    if (res.success) {
+        ElMessage({
+            message: res.message,
+            type: 'success',
+        })
+        updataDialogVisible.value = false
+    } else {
+        ElMessage.error(res.message)
+    }
+}
+
+const delectDialogVisible = ref(false)
+const onDeleteHistory = async () => {
+    const res: any = await deleteHistory({
+        username: userInfoStore.userInfo.username as string,
+        historyId: historyId.value,
+    })
+    if (res.success) {
+        ElMessage({
+            message: '删除历史记录成功',
+            type: 'success',
+        })
+    } else {
+        ElMessage.error('删除历史记录失败')
+    }
+
+    delectDialogVisible.value = false
+}
+
 </script>
 
 <template>
@@ -79,26 +149,40 @@ const toExtraResource = () => {
         </div>
         <div class="func">
             <div class="funcBox" @click="onNewChat">
-                <van-icon name="edit" size="20" />
+                <el-icon size="17">
+                    <Edit />
+                </el-icon>
                 <span>新聊天</span>
             </div>
             <div class="funcBox" @click="Topractice">
-                <van-icon name="search" size="20" />
-                <span>练习一下</span>
+                <el-icon size="17">
+                    <Notebook />
+                </el-icon>
+                <span>开始练习</span>
+            </div>
+            <div class="funcBox" @click="toSearchPractice">
+                <el-icon size="17">
+                    <Search />
+                </el-icon>
+                <span>知识点相关练习</span>
             </div>
             <div class="funcBox" @click="toLabelGraph">
-                <van-icon name="eye-o" size="20" />
+                <el-icon size="17">
+                    <Connection />
+                </el-icon>
                 <span>知识图谱</span>
             </div>
             <div class="funcBox" @click="toExtraResource">
-                <van-icon name="point-gift-o" size="20" />
+                <el-icon size="17">
+                    <Collection />
+                </el-icon>
                 <span>额外资源</span>
             </div>
         </div>
     </div>
 
     <!-- 下半区域 -->
-    <div class="history">
+    <div class="history" ref="history">
         <div v-for="(item, i) in chatStore.historyList" :key="item._id" @click="onHistoryClick(item)" class="item"
             :class="{ active: i === chatStore.activeIndex }" @mouseenter="onHistoryEnter(item)"
             @mouseleave="onHistoryLeave">
@@ -110,7 +194,35 @@ const toExtraResource = () => {
 
     <!-- 菜单 -->
     <ActionMenu :menuList="menu.menuList" :top="menu.top" :itemValue="menu.itemValue" :historyId="historyId"
-        @close="isMenuVisible = false" v-if="isMenuVisible" />
+        @close="isMenuVisible = false" v-if="isMenuVisible" @historyDelect="delectDialogVisible = true"
+        @updataHistoryTitle="updataDialogVisible = true" />
+
+
+    <!-- dialog提示框 更新历史记录的标题 -->
+    <el-dialog v-model="updataDialogVisible" title="更新历史记录的标题(6-10字)" width="500">
+        <el-input v-model="historyTitle" style="width: 400px" placeholder="Please input" clearable />
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="updataDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="onUpdataHistoryTitle">
+                    确认
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
+
+    <!-- dialog提示框 删除历史记录 -->
+    <el-dialog v-model="delectDialogVisible" title="确认删除该历史记录?" width="500">
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="delectDialogVisible = false">取消</el-button>
+                <el-button type="primary" @click="onDeleteHistory">
+                    确认
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
+
 </template>
 
 <style scoped lang="scss">
@@ -145,6 +257,7 @@ const toExtraResource = () => {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        font-size: 12px;
 
         .funcBox {
             width: 95%;
@@ -153,10 +266,9 @@ const toExtraResource = () => {
             height: 36px;
             display: flex;
             align-items: center;
-            padding-left: 10px;
+            padding: 5px 0px 5px 10px;
             color: #fff;
             gap: 15px;
-            font-size: 14px;
         }
 
         .funcBox:hover {
